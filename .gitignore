@@ -1,0 +1,12 @@
+# MacOS system files
+.DS_Store
+.localized
+Icon?
+.Spotlight-V100
+.Trashes
+.fseventsd
+.VolumeIcon.icns
+Thumbs.db
+
+dark/**
+light/**
