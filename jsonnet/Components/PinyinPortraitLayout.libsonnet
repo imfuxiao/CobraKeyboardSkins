@@ -73,6 +73,7 @@ local createButtonNode = function(isDark=false, button, name)
       {};
 
     local backgroundStyle = Utils.newBackgroundStyle(isDark, std.get(node, 'backgroundStyle', default={}));
+    local selectedBackgroundStyle = Utils.newBackgroundStyle(isDark, std.get(node, 'selectedBackgroundStyle', default={}), 'selectedBackgroundStyle');
 
     // 生成单个符号按键样式
     local createSymbolStyle = function(symbol)
@@ -84,6 +85,7 @@ local createButtonNode = function(isDark=false, button, name)
         {};
 
       local symbolBackgroundStyle = Utils.newBackgroundStyle(isDark, std.get(symbol, 'backgroundStyle', default={}));
+
       local symbolForegroundStyle = Utils.newForegroundStyle(isDark, std.get(symbol, 'foregroundStyle', default={}, inc_hidden=true));
       {
         name: name,
@@ -112,8 +114,10 @@ local createButtonNode = function(isDark=false, button, name)
             + insets
             + selectedIndex
             + backgroundStyle.internal
+            + selectedBackgroundStyle.internal
             + symbolsStyle.internal,
         }
+        + selectedBackgroundStyle.external
         + backgroundStyle.external
         + symbolsStyle.external,
     }
@@ -189,7 +193,7 @@ local shiftButton = Keyboard.buttons.shift {
     width: '1.5/10',
   },
   bounds: {
-    width: '79/100',
+    width: '85/100',
     alignment: 'left',
   },
 };
@@ -205,20 +209,14 @@ local backspaceButton = Keyboard.buttons.backspace {
     width: '1.5/10',
   },
   bounds: {
-    width: '79/100',
+    width: '85/100',
     alignment: 'right',
   },
 };
 
 local numericButton = Keyboard.buttons.numeric {
   size: {
-    width: '1.25/10',
-  },
-};
-
-local emojisButton = Keyboard.buttons.emojis {
-  size: {
-    width: '1.25/10',
+    width: '2.5/10',
   },
 };
 
@@ -234,41 +232,40 @@ local enterButton = Keyboard.buttons.enter {
   },
 };
 
-local qButtonName = createButtonName(qButton);
-local wButtonName = createButtonName(wButton);
-local eButtonName = createButtonName(eButton);
-local rButtonName = createButtonName(rButton);
-local tButtonName = createButtonName(tButton);
-local yButtonName = createButtonName(yButton);
-local uButtonName = createButtonName(uButton);
-local iButtonName = createButtonName(iButton);
-local oButtonName = createButtonName(oButton);
-local pButtonName = createButtonName(pButton);
+local qButtonName = 'qButton';  // createButtonName(qButton);
+local wButtonName = 'wButton';  // createButtonName(wButton);
+local eButtonName = 'eButton';  // createButtonName(eButton);
+local rButtonName = 'rButton';  // createButtonName(rButton);
+local tButtonName = 'tButton';  // createButtonName(tButton);
+local yButtonName = 'yButton';  // createButtonName(yButton);
+local uButtonName = 'uButton';  // createButtonName(uButton);
+local iButtonName = 'iButton';  // createButtonName(iButton);
+local oButtonName = 'oButton';  // createButtonName(oButton);
+local pButtonName = 'pButton';  // createButtonName(pButton);
 
-local aButtonName = createButtonName(aButton);
-local sButtonName = createButtonName(sButton);
-local dButtonName = createButtonName(dButton);
-local fButtonName = createButtonName(fButton);
-local gButtonName = createButtonName(gButton);
-local hButtonName = createButtonName(hButton);
-local jButtonName = createButtonName(jButton);
-local kButtonName = createButtonName(kButton);
-local lButtonName = createButtonName(lButton);
+local aButtonName = 'aButton';  // createButtonName(aButton);
+local sButtonName = 'sButton';  // createButtonName(sButton);
+local dButtonName = 'dButton';  // createButtonName(dButton);
+local fButtonName = 'fButton';  // createButtonName(fButton);
+local gButtonName = 'gButton';  // createButtonName(gButton);
+local hButtonName = 'hButton';  // createButtonName(hButton);
+local jButtonName = 'jButton';  // createButtonName(jButton);
+local kButtonName = 'kButton';  // createButtonName(kButton);
+local lButtonName = 'lButton';  // createButtonName(lButton);
 
-local shiftButtonName = createButtonName(shiftButton);
-local zButtonName = createButtonName(zButton);
-local xButtonName = createButtonName(xButton);
-local cButtonName = createButtonName(cButton);
-local vButtonName = createButtonName(vButton);
-local bButtonName = createButtonName(bButton);
-local nButtonName = createButtonName(nButton);
-local mButtonName = createButtonName(mButton);
-local backspaceButtonName = createButtonName(backspaceButton);
+local shiftButtonName = 'shiftButton';  // createButtonName(shiftButton);
+local zButtonName = 'zButton';  // createButtonName(zButton);
+local xButtonName = 'xButton';  // createButtonName(xButton);
+local cButtonName = 'cButton';  // createButtonName(cButton);
+local vButtonName = 'vButton';  // createButtonName(vButton);
+local bButtonName = 'bButton';  // createButtonName(bButton);
+local nButtonName = 'nButton';  // createButtonName(nButton);
+local mButtonName = 'mButton';  // createButtonName(mButton);
+local backspaceButtonName = 'backspaceButton';  // createButtonName(backspaceButton);
 
-local numericButtonName = createButtonName(numericButton);
-local emojisButtonName = createButtonName(emojisButton);
-local spaceButtonName = createButtonName(spaceButton);
-local enterButtonName = createButtonName(enterButton);
+local numericButtonName = 'numericButton';  // createButtonName(numericButton);
+local spaceButtonName = 'spaceButton';  // createButtonName(spaceButton);
+local enterButtonName = 'enterButton';  // createButtonName(enterButton);
 
 // 键盘布局
 local keyboardLayout = {
@@ -382,9 +379,6 @@ local keyboardLayout = {
             Cell: numericButtonName,
           },
           {
-            Cell: emojisButtonName,
-          },
-          {
             Cell: spaceButtonName,
           },
           {
@@ -409,6 +403,27 @@ local keyboardLayout = {
     local systemButtonBackgroundStyle = if std.objectHas(Keyboard, 'systemButtonBackgroundStyle') then
       {
         systemButtonBackgroundStyle: Utils.newStyle(isDark, Keyboard.systemButtonBackgroundStyle),
+      }
+    else
+      {};
+
+    local blueSystemButtonBackgroundStyle = if std.objectHas(Keyboard, 'blueSystemButtonBackgroundStyle') then
+      {
+        blueSystemButtonBackgroundStyle: Utils.newStyle(isDark, Keyboard.blueSystemButtonBackgroundStyle),
+      }
+    else
+      {};
+
+    local enterButtonWhiteForegroundStyle = if std.objectHas(Keyboard, 'enterButtonWhiteForegroundStyle') then
+      {
+        enterButtonWhiteForegroundStyle: Utils.newStyle(isDark, Keyboard.enterButtonWhiteForegroundStyle),
+      }
+    else
+      {};
+
+    local enterButtonBlackForegroundStyle = if std.objectHas(Keyboard, 'enterButtonBlackForegroundStyle') then
+      {
+        enterButtonBlackForegroundStyle: Utils.newStyle(isDark, Keyboard.enterButtonBlackForegroundStyle),
       }
     else
       {};
@@ -438,6 +453,9 @@ local keyboardLayout = {
     }
     + alphabeticButtonBackgroundStyle
     + systemButtonBackgroundStyle
+    + blueSystemButtonBackgroundStyle
+    + enterButtonWhiteForegroundStyle
+    + enterButtonBlackForegroundStyle
     + hintBackgroundStyle
     + hintSymbolSelectedBackgroundStyle
     + buttonAnimation
@@ -477,7 +495,6 @@ local keyboardLayout = {
     + createButtonNode(isDark, mButton, mButtonName)
     + createButtonNode(isDark, backspaceButton, backspaceButtonName)
     + createButtonNode(isDark, numericButton, numericButtonName)
-    + createButtonNode(isDark, emojisButton, emojisButtonName)
     + createButtonNode(isDark, spaceButton, spaceButtonName)
     + createButtonNode(isDark, enterButton, enterButtonName),
 }

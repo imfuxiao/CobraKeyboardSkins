@@ -1,8 +1,15 @@
-.phony: all build clean
+.PHONY: all compile build clean
 
-build:
+all: build
+
+compile:
 	mkdir -p dark light
-	jsonnet -m . jsonnet/main.jsonnet
+	jsonnet -S -m . jsonnet/main.jsonnet
+
+build: compile
+	rm -rf build && mkdir -p build/default
+	cp -r demo.png config.yaml light dark jsonnet build/default/
+	cd build && zip -r default.hskin default/ -x "*.DS_Store" "*/.*"
 
 clean:
-	rm -rf dark light
+	rm -rf dark light *.hskin *.zip *.yaml build

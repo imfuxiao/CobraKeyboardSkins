@@ -16,17 +16,6 @@ local Fonts = import 'Fonts.libsonnet';
     normalColor: Colors.backgroundColor,
   },
 
-  // 字母按键通用背景样式
-  alphabeticButtonBackgroundStyle: {
-    isOriginal: true,  // 使用原生背景色, false 则使用图片背景
-    insets: { top: 6, left: 3, bottom: 6, right: 3 },
-    normalColor: Colors.alphabeticButtonNormalBackgroundColor,
-    highlightColor: Colors.alphabeticButtonHighlightBackgroundColor,
-    cornerRadius: 6,
-    normalLowerEdgeColor: Colors.lowerEdgeOfButtonNormalColor,
-    highlightLowerEdgeColor: Colors.lowerEdgeOfButtonHighlightColor,
-    animation: root.buttonAnimation.name,
-  },
 
   // 蓝色按键通用背景样式
   local _blueButtonBackgroundStyle = Basic.systemButtonBackgroundStyle {
@@ -58,19 +47,14 @@ local Fonts = import 'Fonts.libsonnet';
     normalColor: Colors.secondaryTextColor,
     highlightColor: Colors.secondaryTextColor,
     center: {
-      y: 0.1,
+      x: 0.7,
+      y: 0.25,
     },
   },
 
-  // 按键气泡或长按通用背景样式
-  hintBackgroundStyle: {
-    isOriginal: true,
-    normalColor: Colors.hintBackgroundColor,
-    cornerRadius: 6,
-  },
 
   // 按键气泡或者长按通用前景样式
-  hintForegroundStyle: {
+  hintForegroundStyle:: {
     normalColor: Colors.primaryTextColor,
     fontSize: Fonts.hintFontSize,
     fontWeight: Fonts.hintFontWeight,
@@ -92,35 +76,7 @@ local Fonts = import 'Fonts.libsonnet';
     fontSize: Fonts.hintSymbolFontSize,
     fontWeight: Fonts.hintSymbolFontWeight,
     normalColor: Colors.primaryTextColor,
-    highlightColor: Colors.primaryTextColor,
-  },
-
-  // 字母按键长按符号选中背景样式
-  hintSymbolSelectedBackgroundStyle: {
-    isOriginal: true,  // 使用原生背景色, false 则使用图片背景
-    normalColor: Colors.hintSymbolSelectedColor,
-    cornerRadius: 6,
-  },
-
-  // 按键动画
-  buttonAnimation: {
-    name: 'alphabeticBackgroundAnimation',
-    animations: [
-      {
-        type: 'bounds',
-        duration: 40,
-        repeatCount: 1,
-        fromScale: 1,
-        toScale: 0.87,
-      },
-      {
-        type: 'bounds',
-        duration: 80,
-        repeatCount: 1,
-        fromScale: 0.87,
-        toScale: 1,
-      },
-    ],
+    highlightColor: Colors.white,
   },
 
   buttons: {
@@ -130,7 +86,7 @@ local Fonts = import 'Fonts.libsonnet';
     local basicButtonHintBackgroundStyle = { backgroundStyle: 'hintBackgroundStyle' },
     local basicHintSymbolsStyle = root.hintSymbolsInsets + basicButtonHintBackgroundStyle,
     local basicHintSymbolsSelectedBackgroundStyle = {
-      backgroundStyle: 'hintSymbolSelectedBackgroundStyle',
+      selectedBackgroundStyle: 'hintSymbolSelectedBackgroundStyle',
     },
 
     // 创建字母按键的通用函数
@@ -168,9 +124,15 @@ local Fonts = import 'Fonts.libsonnet';
         if isSystemButton then basicSystemButtonBackgroundStyle else basicAlphabeticButtonBackgroundStyle;
 
 
-      local buttonBasicForegroundStyle = (if isSystemButton then root.systemButtonForegroundStyle else root.alphabeticButtonForegroundStyle);
-
       local createForegroundStyle = function(node, foregroundStyleName='foregroundStyle')
+        local buttonBasicForegroundStyle =
+          if isSystemButton then
+            root.systemButtonForegroundStyle
+          else
+            if foregroundStyleName == 'uppercasedStateForegroundStyle' || foregroundStyleName == 'capsLockedStateForegroundStyle' then
+              root.alphabeticButtonUppercasedStateForegroundStyle
+            else
+              root.alphabeticButtonForegroundStyle;
         if std.objectHas(styles, foregroundStyleName) then
           if std.type(styles[foregroundStyleName]) == 'string' then
             { [foregroundStyleName]: styles.foregroundStyle }
@@ -241,18 +203,18 @@ local Fonts = import 'Fonts.libsonnet';
         local style = styles.hintSymbolsStyle;
 
         local symbolsStyle = if std.objectHas(style, 'symbolsStyle') && std.type(style.symbolsStyle) == 'array' then
-          std.foldl(function(acc, symbolStyle)
-            local backgroundStyle = if std.objectHas(symbolStyle, 'backgroundStyle') then
+          std.foldl(function(acc, subSymbolStyle)
+            local backgroundStyle = if std.objectHas(subSymbolStyle, 'backgroundStyle') then
               {
-                backgroundStyle: symbolStyle.backgroundStyle,
+                backgroundStyle: subSymbolStyle.backgroundStyle,
               }
             else
-              basicHintSymbolsSelectedBackgroundStyle;
+              {};
 
             acc + [
               {
-                action: symbolStyle.action,
-                foregroundStyle: symbolStyle.foregroundStyle + root.hintSymbolForegroundStyle,
+                action: subSymbolStyle.action,
+                foregroundStyle: root.hintSymbolForegroundStyle + subSymbolStyle.foregroundStyle,
               } + backgroundStyle,
             ]
                     , style.symbolsStyle, [])
@@ -264,10 +226,12 @@ local Fonts = import 'Fonts.libsonnet';
             (if std.objectHas(style, 'size') then { size: style.size } else root.hintSize)
             + (if std.objectHas(style, 'insets') then { insets: style.insets } else root.hintSymbolsInsets)
             + (if std.objectHas(style, 'selectedIndex') then { selectedIndex: style.selectedIndex } else {})
-            + (if std.objectHas(style, 'backgroundStyle') then
-                 { backgroundStyle: style.backgroundStyle }
-               else basicHintSymbolsSelectedBackgroundStyle)
-            + basicButtonHintBackgroundStyle
+            + (
+              if std.objectHas(style, 'backgroundStyle') then
+                { backgroundStyle: style.backgroundStyle }
+              else basicButtonHintBackgroundStyle
+            )
+            + basicHintSymbolsSelectedBackgroundStyle
             + { symbolsStyle: symbolsStyle },
         }
       else
@@ -662,6 +626,7 @@ local Fonts = import 'Fonts.libsonnet';
 
     backspace: createButton(actions={
       action: 'backspace',
+      repeatAction: 'backspace',
     }, styles={
       foregroundStyle: { systemImageName: 'delete.left' },
     }, isSystemButton=true, hiddenHintStyle=true),
@@ -671,7 +636,7 @@ local Fonts = import 'Fonts.libsonnet';
       swipeUpAction: { shortcutCommand: '#次选上屏' },
     }, styles={
       foregroundStyle: { systemImageName: 'space' },
-    }),
+    }, hiddenHintStyle=true),
 
     local enterBackgroundStyle = |||
       // JavaScript

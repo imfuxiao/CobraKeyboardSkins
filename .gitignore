@@ -8,6 +8,7 @@ Icon?
 .VolumeIcon.icns
 Thumbs.db
 
-dark/**
-light/**
+dark/
+light/
 config.yaml
+build/

@@ -1,6 +1,8 @@
 {
   local root = self,
 
+  white: "#FFFFFF",
+
   // 键盘背景色
   backgroundColor: {
     dark: '#00000003',
@@ -10,25 +12,25 @@
   // 非系统按键（如回车、删除等）正常状态下背景颜色
   alphabeticButtonNormalBackgroundColor: {
     dark: '#707070',
-    light: '#FFFFFF',
+    light: root.white,
   },
 
   // 非系统按键（如车、删除等）高亮状态下背景颜色
   alphabeticButtonHighlightBackgroundColor: {
-    dark: '#3F3F40',
-    light: '#E6E6E6',
+    dark: root.systemButtonNormalBackgroundColor.dark,
+    light: root.systemButtonNormalBackgroundColor.light
   },
 
   // 系统按键（如回车、删除等）正常状态下背景颜色
   systemButtonNormalBackgroundColor: {
     dark: '#3F3F40',
-    light: '#E6E6E6',
+    light: '#00000026',
   },
 
   // 系统按键（如回车、删除等）高亮状态下背景颜色
   systemButtonHighlightBackgroundColor: {
-    dark: '#707070',
-    light: '#FFFFFF',
+    dark: root.alphabeticButtonNormalBackgroundColor.dark,
+    light: root.alphabeticButtonNormalBackgroundColor.light,
   },
 
   blueButtonNormalBackgroundColor: {
@@ -103,5 +105,9 @@
   // 长按选中颜色
   hintSymbolSelectedColor: root.blueButtonNormalBackgroundColor,
 
+  hintBorderColor: {
+    dark: '#6E6E6E',
+    light: '#69686A',
+  }
 
 }

@@ -30,7 +30,7 @@ local Fonts = import 'Fonts.libsonnet';
   // text 与 systemImageName 二选一
   // 优先使用 systemImageName
   toolbarPrimaryButton: {
-    enable: true,
+    enable: false,
     action: { openURL: 'hamster3://' },
     foregroundStyle: [
       {
@@ -50,72 +50,72 @@ local Fonts = import 'Fonts.libsonnet';
         } + root.toolbarButtonForegroundStyle,
       ],
     },
-    {
-      action: { shortcutCommand: '#中英切换' },
-      foregroundStyle: [
-        {
-          text: |||
-            // JavaScript
-            function getText() {
-              return $getRimeOptionState("ascii_mode") ? "英" : "中";
-            }
-          |||,
-        } + root.toolbarButtonForegroundStyle,
-      ],
-    },
-    {
-      action: { shortcutCommand: '#toggleScriptView' },
-      foregroundStyle: [
-        {
-          systemImageName: 'function',
-        } + root.toolbarButtonForegroundStyle,
-      ],
-    },
-    {
-      action: { shortcutCommand: '#showPasteboardView' },
-      foregroundStyle: [
-        {
-          systemImageName: 'doc.on.clipboard',
-        } + root.toolbarButtonForegroundStyle,
-      ],
-    },
-    {
-      action: { shortcutCommand: '#简繁切换' },
-      foregroundStyle: [
-        {
-          text: |||
-            // JavaScript
-            function getText() {
-              return $getRimeOptionState("traditional_chinese") ? "简" : "繁";
-            }
-          |||,
-        } + root.toolbarButtonForegroundStyle,
-      ],
-    },
-    {
-      action: { shortcutCommand: '#RimeSwitcher' },
-      foregroundStyle: [
-        {
-          systemImageName: 'switch.2',
-        } + root.toolbarButtonForegroundStyle,
-      ],
-    },
-    {
-      action: { shortcutCommand: '#行尾' },
-      foregroundStyle: [
-        {
-          systemImageName: 'forward.end',
-        } + root.toolbarButtonForegroundStyle,
-      ],
-    },
-    {
-      action: { shortcutCommand: '#行首' },
-      foregroundStyle: [
-        {
-          systemImageName: 'backward.end',
-        } + root.toolbarButtonForegroundStyle,
-      ],
-    },
+    // {
+    //   action: { shortcutCommand: '#中英切换' },
+    //   foregroundStyle: [
+    //     {
+    //       text: |||
+    //         // JavaScript
+    //         function getText() {
+    //           return $getRimeOptionState("ascii_mode") ? "英" : "中";
+    //         }
+    //       |||,
+    //     } + root.toolbarButtonForegroundStyle,
+    //   ],
+    // },
+    // {
+    //   action: { shortcutCommand: '#toggleScriptView' },
+    //   foregroundStyle: [
+    //     {
+    //       systemImageName: 'function',
+    //     } + root.toolbarButtonForegroundStyle,
+    //   ],
+    // },
+    // {
+    //   action: { shortcutCommand: '#showPasteboardView' },
+    //   foregroundStyle: [
+    //     {
+    //       systemImageName: 'doc.on.clipboard',
+    //     } + root.toolbarButtonForegroundStyle,
+    //   ],
+    // },
+    // {
+    //   action: { shortcutCommand: '#简繁切换' },
+    //   foregroundStyle: [
+    //     {
+    //       text: |||
+    //         // JavaScript
+    //         function getText() {
+    //           return $getRimeOptionState("traditional_chinese") ? "简" : "繁";
+    //         }
+    //       |||,
+    //     } + root.toolbarButtonForegroundStyle,
+    //   ],
+    // },
+    // {
+    //   action: { shortcutCommand: '#RimeSwitcher' },
+    //   foregroundStyle: [
+    //     {
+    //       systemImageName: 'switch.2',
+    //     } + root.toolbarButtonForegroundStyle,
+    //   ],
+    // },
+    // {
+    //   action: { shortcutCommand: '#行尾' },
+    //   foregroundStyle: [
+    //     {
+    //       systemImageName: 'forward.end',
+    //     } + root.toolbarButtonForegroundStyle,
+    //   ],
+    // },
+    // {
+    //   action: { shortcutCommand: '#行首' },
+    //   foregroundStyle: [
+    //     {
+    //       systemImageName: 'backward.end',
+    //     } + root.toolbarButtonForegroundStyle,
+    //   ],
+    // },
   ],
 
 

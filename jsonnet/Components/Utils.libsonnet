@@ -4,38 +4,47 @@
   newStyle(isDark=false, node)::
     if std.type(node) == 'object' then
       local normalColor = if std.objectHas(node, 'normalColor') then
-        if isDark then
-          {
-            normalColor: node.normalColor.dark,
-          }
+        if std.type(node.normalColor) == 'string' then
+          { normalColor: node.normalColor }
         else
-          {
-            normalColor: node.normalColor.light,
-          }
+          if isDark then
+            {
+              normalColor: node.normalColor.dark,
+            }
+          else
+            {
+              normalColor: node.normalColor.light,
+            }
       else
         {};
 
       local highlightColor = if std.objectHas(node, 'highlightColor') then
-        if isDark then
-          {
-            highlightColor: node.highlightColor.dark,
-          }
+        if std.type(node.highlightColor) == 'string' then
+          { highlightColor: node.highlightColor }
         else
-          {
-            highlightColor: node.highlightColor.light,
-          }
+          if isDark then
+            {
+              highlightColor: node.highlightColor.dark,
+            }
+          else
+            {
+              highlightColor: node.highlightColor.light,
+            }
       else
         {};
 
       local textColor = if std.objectHas(node, 'textColor') then
-        if isDark then
-          {
-            textColor: node.textColor.dark,
-          }
+        if std.type(node.textColor) == 'string' then
+          { textColor: node.textColor }
         else
-          {
-            textColor: node.textColor.light,
-          }
+          if isDark then
+            {
+              textColor: node.textColor.dark,
+            }
+          else
+            {
+              textColor: node.textColor.light,
+            }
       else
         {};
 
@@ -68,26 +77,32 @@
         {};
 
       local normalLowerEdgeColor = if std.objectHas(node, 'normalLowerEdgeColor') then
-        if isDark then
-          {
-            normalLowerEdgeColor: node.normalLowerEdgeColor.dark,
-          }
+        if std.type(node.normalLowerEdgeColor) == 'string' then
+          { normalLowerEdgeColor: node.normalLowerEdgeColor }
         else
-          {
-            normalLowerEdgeColor: node.normalLowerEdgeColor.light,
-          }
+          if isDark then
+            {
+              normalLowerEdgeColor: node.normalLowerEdgeColor.dark,
+            }
+          else
+            {
+              normalLowerEdgeColor: node.normalLowerEdgeColor.light,
+            }
       else
         {};
 
       local highlightLowerEdgeColor = if std.objectHas(node, 'highlightLowerEdgeColor') then
-        if isDark then
-          {
-            highlightLowerEdgeColor: node.highlightLowerEdgeColor.dark,
-          }
+        if std.type(node.highlightLowerEdgeColor) == 'string' then
+          { highlightLowerEdgeColor: node.highlightLowerEdgeColor }
         else
-          {
-            highlightLowerEdgeColor: node.highlightLowerEdgeColor.light,
-          }
+          if isDark then
+            {
+              highlightLowerEdgeColor: node.highlightLowerEdgeColor.dark,
+            }
+          else
+            {
+              highlightLowerEdgeColor: node.highlightLowerEdgeColor.light,
+            }
       else
         {};
 
@@ -124,6 +139,36 @@
       else
         {};
 
+      local center = if std.objectHas(node, 'center') then
+        { center: node.center }
+      else
+        {};
+
+      local contentMode = if std.objectHas(node, 'contentMode') then
+        { contentMode: node.contentMode }
+      else
+        {};
+
+      local borderColor = if std.objectHas(node, 'borderColor') then
+        if std.type(node.borderColor) == 'string' then
+          { borderColor: node.borderColor }
+        else
+          if isDark then
+            {
+              borderColor: node.borderColor.dark,
+            }
+          else
+            {
+              borderColor: node.borderColor.light,
+            }
+      else
+        {};
+
+      local borderSize = if std.objectHas(node, 'borderSize') then
+        { borderSize: node.borderSize }
+      else
+        {};
+
       normalColor
       + highlightColor
       + textColor
@@ -138,17 +183,21 @@
       + fontSize
       + animation
       + original
+      + center
+      + contentMode
+      + borderColor
+      + borderSize
     else {},
 
-  newBackgroundStyle(isDark=false, node)::
-    if std.type(node) == 'object' then
+  newBackgroundStyle(isDark=false, node, styleKeyName='backgroundStyle')::
+    if std.type(node) == 'object' && std.length(node) > 0 then
       local style = root.newStyle(isDark, node);
 
       local name = std.md5(std.toString(style));
 
-      { internal: { backgroundStyle: name }, external: { [name]: style } }
+      { internal: { [styleKeyName]: name }, external: { [name]: style } }
     else if std.type(node) == 'string' then
-      { internal: { backgroundStyle: node }, external: {} }
+      { internal: { [styleKeyName]: node }, external: {} }
     else
       { internal: {}, external: {} },
 
