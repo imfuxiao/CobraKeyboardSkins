@@ -2,7 +2,10 @@
 
 all: build
 
-compile:
+clean:
+	rm -rf dark light *.hskin *.zip *.yaml build
+
+compile: clean
 	mkdir -p dark light
 	jsonnet -S -m . jsonnet/main.jsonnet
 
@@ -10,6 +13,3 @@ build: compile
 	rm -rf build && mkdir -p build/default
 	cp -r demo.png config.yaml light dark jsonnet build/default/
 	cd build && zip -r default.hskin default/ -x "*.DS_Store" "*/.*"
-
-clean:
-	rm -rf dark light *.hskin *.zip *.yaml build

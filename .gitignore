@@ -12,3 +12,5 @@ dark/
 light/
 config.yaml
 build/
+*_bak/
+*.json
