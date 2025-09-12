@@ -146,6 +146,7 @@ local newTextStyle(params={}, isDark=false) =
     params,
     [
       'insets',
+      'center',
       'text',
       'fontSize',
       'fontWeight',
