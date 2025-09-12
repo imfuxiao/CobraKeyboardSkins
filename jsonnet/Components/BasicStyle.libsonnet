@@ -36,7 +36,7 @@ local newKeyboardBackgroundStyle(isDark=false, params={}) = {
 local alphabeticButtonBackgroundStyleName = 'alphabeticButtonBackgroundStyle';
 local newAlphabeticButtonBackgroundStyle(isDark=false, params={}) = {
   [alphabeticButtonBackgroundStyleName]: utils.newGeometryStyle({
-    insets: keyboardParams.keyboard.button.backgroundInsets,
+    insets: keyboardParams.keyboard.button.backgroundInsets.iPhone.portrait,
     normalColor: colors.standardButtonBackgroundColor,
     highlightColor: colors.standardButtonHighlightedBackgroundColor,
     cornerRadius: buttonCornerRadius,
@@ -89,7 +89,7 @@ local newAlphabeticButtonHintStyle(isDark=false, params={}) =
 local systemButtonBackgroundStyleName = 'systemButtonBackgroundStyle';
 local newSystemButtonBackgroundStyle(isDark=false, params={}) = {
   [systemButtonBackgroundStyleName]: utils.newGeometryStyle({
-    insets: keyboardParams.keyboard.button.backgroundInsets,
+    insets: keyboardParams.keyboard.button.backgroundInsets.iPhone.portrait,
     normalColor: colors.systemButtonBackgroundColor,
     highlightColor: colors.systemButtonHighlightedBackgroundColor,
     cornerRadius: buttonCornerRadius,
@@ -112,7 +112,7 @@ local newEnterButtonForegroundStyle(isDark=false, params={}) = {
 local blueButtonBackgroundStyleName = 'blueButtonBackgroundStyle';
 local newBlueButtonBackgroundStyle(isDark=false, params={}) = {
   [blueButtonBackgroundStyleName]: utils.newGeometryStyle({
-    insets: keyboardParams.keyboard.button.backgroundInsets,
+    insets: keyboardParams.keyboard.button.backgroundInsets.iPhone.portrait,
     normalColor: colors.blueButtonBackgroundColor,
     highlightColor: colors.blueButtonHighlightedBackgroundColor,
     cornerRadius: buttonCornerRadius,

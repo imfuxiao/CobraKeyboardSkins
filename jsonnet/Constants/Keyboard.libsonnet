@@ -78,10 +78,24 @@ local fonts = import 'Fonts.libsonnet';
   },
 
   keyboard: {
-    height: 216,
+    height: {
+      iPhone: {
+        portrait: 216,  // 54 * 4
+        landscape: 160,  // 40 * 4
+      },
+      iPad: {
+        portrait: 256,  // 64 * 4
+        landscape: 344,  // 86 * 4
+      },
+    },
 
     button: {
-      backgroundInsets: { top: 6, left: 3, bottom: 6, right: 3 },
+      backgroundInsets: {
+        iPhone: {
+          portrait: { top: 6, left: 3, bottom: 6, right: 3 },
+          landscape: { top: 3, left: 3, bottom: 3, right: 3 },
+        },
+      },
     },
 
     // 按键定义

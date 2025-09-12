@@ -140,7 +140,7 @@ local alphabeticKeyboardLayout = {
 
 local newKeyLayout(isDark=false) =
   {
-    keyboardHeight: params.keyboard.height.iPhone.portrait,
+    keyboardHeight: params.keyboard.height.iPhone.landscape,
     keyboardStyle: utils.newBackgroundStyle(style=basicStyle.keyboardBackgroundStyleName),
   }
   + alphabeticKeyboardLayout
@@ -310,24 +310,29 @@ local newKeyLayout(isDark=false) =
     params.keyboard.spaceButton.params,
     needHint=false
   )
-  + basicStyle.newSystemButton(params.keyboard.enterButton.name,
-                               isDark,
-                               {
-                                 size: { width: '280/1125' },
-                                 backgroundStyle: basicStyle.enterButtonBackgroundStyle,
-                                 foregroundStyle: basicStyle.enterButtonForegroundStyle,
-                               } + params.keyboard.enterButton.params)
-;
+  + basicStyle.newSystemButton(
+    params.keyboard.enterButton.name,
+    isDark,
+    {
+      size: { width: '280/1125' },
+      backgroundStyle: basicStyle.enterButtonBackgroundStyle,
+      foregroundStyle: basicStyle.enterButtonForegroundStyle,
+    } + params.keyboard.enterButton.params
+  );
+
+local extraParams = {
+  insets: params.keyboard.button.backgroundInsets.iPhone.landscape,
+};
 
 {
   new(isDark):
     preedit.new(isDark)
     + toolbar.new(isDark)
     + basicStyle.newKeyboardBackgroundStyle(isDark)
-    + basicStyle.newAlphabeticButtonBackgroundStyle(isDark)
+    + basicStyle.newAlphabeticButtonBackgroundStyle(isDark, extraParams)
     + basicStyle.newAlphabeticButtonHintStyle(isDark)
-    + basicStyle.newSystemButtonBackgroundStyle(isDark)
-    + basicStyle.newBlueButtonBackgroundStyle(isDark)
+    + basicStyle.newSystemButtonBackgroundStyle(isDark, extraParams)
+    + basicStyle.newBlueButtonBackgroundStyle(isDark, extraParams)
     + basicStyle.newBlueButtonForegroundStyle(isDark, params.keyboard.enterButton.params)
     + basicStyle.newAlphabeticHintBackgroundStyle(isDark, { cornerRadius: 10 })
     + newKeyLayout(isDark)
