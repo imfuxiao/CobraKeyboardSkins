@@ -1,5 +1,5 @@
 local colors = import '../Constants/Colors.libsonnet';
-local keyboard = import '../Constants/Keyboard.libsonnet';
+local keyboardParams = import '../Constants/Keyboard.libsonnet';
 local basicStyle = import 'BasicStyle.libsonnet';
 local utils = import 'Utils.libsonnet';
 
@@ -37,7 +37,7 @@ local newCandidateStyle(param={}, isDark=false) =
     isDark
   );
 
-local newToolbar(isDark=false) =
+local newToolbar(isDark=false, params={}) =
 
 
   local candidateStateButtonStyleName = 'candidateStateButtonStyle';
@@ -45,7 +45,7 @@ local newToolbar(isDark=false) =
     [candidateStateButtonStyleName]:
       utils.newForegroundStyle(style=candidateStateButtonStyleName + 'ForegroundStyle'),
     [candidateStateButtonStyleName + 'ForegroundStyle']:
-      utils.newSystemImageStyle(keyboard.toolbar.horizontalCandidateStyle.candidateStateButton, isDark),
+      utils.newSystemImageStyle(keyboardParams.toolbar.horizontalCandidateStyle.candidateStateButton, isDark),
   };
 
 
@@ -53,7 +53,7 @@ local newToolbar(isDark=false) =
 
   local verticalCandidateAreaStyleName = 'verticalCandidateOfCandidateStyle';
   local verticalCandidateAreaStyle = {
-    [verticalCandidateAreaStyleName]: newCandidateStyle(keyboard.toolbar.verticalCandidateStyle.candidateStyle, isDark),
+    [verticalCandidateAreaStyleName]: newCandidateStyle(keyboardParams.toolbar.verticalCandidateStyle.candidateStyle, isDark),
   };
 
   local verticalCandidatePageUpButtonStyleName = 'verticalCandidatePageUpButtonStyle';
@@ -62,7 +62,7 @@ local newToolbar(isDark=false) =
       utils.newBackgroundStyle(style=basicStyle.systemButtonBackgroundStyleName)
       + utils.newForegroundStyle(style=verticalCandidatePageUpButtonStyleName + 'ForegroundStyle'),
     [verticalCandidatePageUpButtonStyleName + 'ForegroundStyle']:
-      utils.newSystemImageStyle(keyboard.toolbar.verticalCandidateStyle.pageUpButton, isDark),
+      utils.newSystemImageStyle(keyboardParams.toolbar.verticalCandidateStyle.pageUpButton, isDark),
   };
 
   local verticalCandidatePageDownButtonStyleName = 'verticalCandidatePageDownButtonStyle';
@@ -71,7 +71,7 @@ local newToolbar(isDark=false) =
       utils.newBackgroundStyle(style=basicStyle.systemButtonBackgroundStyleName)
       + utils.newForegroundStyle(style=verticalCandidatePageDownButtonStyleName + 'ForegroundStyle'),
     [verticalCandidatePageDownButtonStyleName + 'ForegroundStyle']:
-      utils.newSystemImageStyle(keyboard.toolbar.verticalCandidateStyle.pageDownButton, isDark),
+      utils.newSystemImageStyle(keyboardParams.toolbar.verticalCandidateStyle.pageDownButton, isDark),
   };
 
 
@@ -81,7 +81,7 @@ local newToolbar(isDark=false) =
       utils.newBackgroundStyle(style=basicStyle.systemButtonBackgroundStyleName)
       + utils.newForegroundStyle(style=verticalCandidateReturnButtonStyleName + 'ForegroundStyle'),
     [verticalCandidateReturnButtonStyleName + 'ForegroundStyle']:
-      utils.newSystemImageStyle(keyboard.toolbar.verticalCandidateStyle.returnButton, isDark),
+      utils.newSystemImageStyle(keyboardParams.toolbar.verticalCandidateStyle.returnButton, isDark),
   };
 
   local verticalCandidateBackspaceButtonStyleName = 'verticalCandidateBackspaceButtonStyle';
@@ -95,16 +95,16 @@ local newToolbar(isDark=false) =
           systemImageName: 'delete.left',
           normalColor: colors.toolbarButtonForegroundColor,
           highlightColor: colors.toolbarButtonHighlightedForegroundColor,
-          fontSize: keyboard.toolbar.verticalCandidateStyle.pageUpButton.fontSize,
+          fontSize: keyboardParams.toolbar.verticalCandidateStyle.pageUpButton.fontSize,
         },
         isDark
       ),
   };
 
-  local verticalCandidateStyle = newCandidateStyle(keyboard.toolbar.verticalCandidateStyle, isDark);
+  local verticalCandidateStyle = newCandidateStyle(keyboardParams.toolbar.verticalCandidateStyle, isDark);
 
   {
-    toolbarHeight: keyboard.toolbar.height,
+    toolbarHeight: keyboardParams.toolbar.height,
     toolbar:
       utils.newBackgroundStyle(style=toolbarBackgroundStyleName)
       + {
@@ -116,10 +116,10 @@ local newToolbar(isDark=false) =
         candidateContextMenu: candidateContextMenuStyleName,
       },
     [horizontalCandidateStyleName]:
-      newCandidateStyle(keyboard.toolbar.horizontalCandidateStyle, isDark)
+      newCandidateStyle(keyboardParams.toolbar.horizontalCandidateStyle + params, isDark)
       { candidateStateButtonStyle: candidateStateButtonStyleName },
     [verticalCandidateStyleName]:
-      utils.extractProperties(keyboard.toolbar.verticalCandidateStyle, ['insets', 'backgroundInsets', 'bottomRowHeight'])
+      utils.extractProperties(keyboardParams.toolbar.verticalCandidateStyle, ['insets', 'backgroundInsets', 'bottomRowHeight'])
       {
         backgroundStyle: verticalCandidateBackgroundStyleName,
         candidateStyle: verticalCandidateAreaStyleName,
@@ -128,9 +128,13 @@ local newToolbar(isDark=false) =
         returnButtonStyle: verticalCandidateReturnButtonStyleName,
         backspaceButtonStyle: verticalCandidateBackspaceButtonStyleName,
       },
-    [candidateContextMenuStyleName]: {
+    [candidateContextMenuStyleName]: [
       // TODO: 长按候选字菜单
-    },
+      // {
+      //   name: '空格',
+      //   action: 'space',
+      // },
+    ],
   }
   + candidateStateButtonStyle
   + verticalCandidateAreaStyle

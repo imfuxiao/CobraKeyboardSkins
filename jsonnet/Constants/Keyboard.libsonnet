@@ -84,8 +84,8 @@ local fonts = import 'Fonts.libsonnet';
         landscape: 160,  // 40 * 4
       },
       iPad: {
-        portrait: 256,  // 64 * 4
-        landscape: 344,  // 86 * 4
+        portrait: 311,  // 64 * 4 + 55
+        landscape: 414,  // 86 * 4 + 70
       },
     },
 
@@ -94,6 +94,10 @@ local fonts = import 'Fonts.libsonnet';
         iPhone: {
           portrait: { top: 6, left: 3, bottom: 6, right: 3 },
           landscape: { top: 3, left: 3, bottom: 3, right: 3 },
+        },
+        ipad: {
+          portrait: { top: 3, left: 3, bottom: 3, right: 3 },
+          landscape: { top: 4, left: 6, bottom: 4, right: 6 },
         },
       },
     },
@@ -160,6 +164,7 @@ local fonts = import 'Fonts.libsonnet';
       params: {
         action: { character: 'o' },
         uppercasedStateAction: { character: 'O' },
+        swipeUpAction: { openURL: '#pasteboardContent' },
       },
     },
     pButton: {
@@ -176,6 +181,7 @@ local fonts = import 'Fonts.libsonnet';
       params: {
         action: { character: 'a' },
         uppercasedStateAction: { character: 'A' },
+        swipeUpAction: { shortcut: '#selectText' },
       },
     },
     sButton: {
@@ -190,6 +196,7 @@ local fonts = import 'Fonts.libsonnet';
       params: {
         action: { character: 'd' },
         uppercasedStateAction: { character: 'D' },
+        swipeUpAction: { shortcut: '#deleteText' },
       },
     },
     fButton: {
@@ -218,6 +225,7 @@ local fonts = import 'Fonts.libsonnet';
       params: {
         action: { character: 'j' },
         uppercasedStateAction: { character: 'J' },
+        swipeUpAction: { shortcut: '#toggleScriptView' },
       },
     },
     kButton: {
@@ -241,6 +249,8 @@ local fonts = import 'Fonts.libsonnet';
       params: {
         action: { character: 'z' },
         uppercasedStateAction: { character: 'Z' },
+        swipeUpAction: { shortcut: '#undo' },
+        swipeDownAction: { shortcut: '#redo' },
       },
     },
     xButton: {
@@ -248,6 +258,7 @@ local fonts = import 'Fonts.libsonnet';
       params: {
         action: { character: 'x' },
         uppercasedStateAction: { character: 'X' },
+        swipeUpAction: { shortcut: '#cut' },
       },
     },
     cButton: {
@@ -255,6 +266,7 @@ local fonts = import 'Fonts.libsonnet';
       params: {
         action: { character: 'c' },
         uppercasedStateAction: { character: 'C' },
+        swipeUpAction: { shortcut: '#copy' },
       },
     },
     vButton: {
@@ -262,6 +274,7 @@ local fonts = import 'Fonts.libsonnet';
       params: {
         action: { character: 'v' },
         uppercasedStateAction: { character: 'V' },
+        swipeUpAction: { shortcut: '#paste' },
       },
     },
     bButton: {
@@ -291,60 +304,70 @@ local fonts = import 'Fonts.libsonnet';
       name: 'oneButton',
       params: {
         action: { character: '1' },
+        swipeUpAction: { character: '!' },
       },
     },
     twoButton: {
       name: 'twoButton',
       params: {
         action: { character: '2' },
+        swipeUpAction: { character: '@' },
       },
     },
     threeButton: {
       name: 'threeButton',
       params: {
         action: { character: '3' },
+        swipeUpAction: { character: '#' },
       },
     },
     fourButton: {
       name: 'fourButton',
       params: {
         action: { character: '4' },
+        swipeUpAction: { character: '$' },
       },
     },
     fiveButton: {
       name: 'fiveButton',
       params: {
         action: { character: '5' },
+        swipeUpAction: { character: '%' },
       },
     },
     sixButton: {
       name: 'sixButton',
       params: {
         action: { character: '6' },
+        swipeUpAction: { character: '^' },
       },
     },
     sevenButton: {
       name: 'sevenButton',
       params: {
         action: { character: '7' },
+        swipeUpAction: { character: '&' },
       },
     },
     eightButton: {
       name: 'eightButton',
       params: {
         action: { character: '8' },
+        swipeUpAction: { character: '*' },
       },
     },
     nineButton: {
       name: 'nineButton',
       params: {
         action: { character: '9' },
+        swipeUpAction: { character: '(' },
       },
     },
     zeroButton: {
       name: 'zeroButton',
       params: {
         action: { character: '0' },
+        swipeUpAction: { character: ')' },
       },
     },
 
@@ -357,6 +380,14 @@ local fonts = import 'Fonts.libsonnet';
         notification: [
           'preeditChangedForSpaceButtonNotification',
         ],
+      },
+    },
+
+    tabButton: {
+      name: 'tabButton',
+      params: {
+        action: 'tab',
+        systemImageName: 'arrow.right.to.line',
       },
     },
 
@@ -381,6 +412,22 @@ local fonts = import 'Fonts.libsonnet';
       },
       capsLockedParams: {
         systemImageName: 'capslock.fill',
+      },
+    },
+
+    asciiModeButton: {
+      name: 'asciiModeButton',
+      params: {
+        action: { shortcut: '#中英切换' },
+        text: '中/英',
+      },
+    },
+
+    dismissButton: {
+      name: 'dismissButton',
+      params: {
+        action: 'dismissKeyboard',
+        systemImageName: 'keyboard.chevron.compact.down',
       },
     },
 
@@ -420,6 +467,14 @@ local fonts = import 'Fonts.libsonnet';
       },
     },
 
+    otherKeyboardButton: {
+      name: 'otherKeyboardButton',
+      params: {
+        action: 'nextKeyboard',
+        systemImageName: 'globe',
+      },
+    },
+
     // 标点符号键
 
     // 连接号(减号)
@@ -427,6 +482,7 @@ local fonts = import 'Fonts.libsonnet';
       name: 'hyphenButton',
       params: {
         action: { character: '-' },
+        swipeUpAction: { character: '——' },
       },
     },
     // 斜杠
@@ -434,6 +490,7 @@ local fonts = import 'Fonts.libsonnet';
       name: 'forwardSlashButton',
       params: {
         action: { character: '/' },
+        swipeUpAction: { character: '?' },
       },
     },
     // 冒号
@@ -465,6 +522,7 @@ local fonts = import 'Fonts.libsonnet';
       name: 'chineseSemicolonButton',
       params: {
         action: { symbol: '；' },
+        swipeUpAction: { symbol: '：' },
       },
     },
 
@@ -541,6 +599,7 @@ local fonts = import 'Fonts.libsonnet';
       name: 'chineseCommaButton',
       params: {
         action: { symbol: '，' },
+        swipeUpAction: { symbol: '《' },
       },
     },
     commaButton: {
@@ -553,6 +612,7 @@ local fonts = import 'Fonts.libsonnet';
       name: 'chinesePeriodButton',
       params: {
         action: { symbol: '。' },
+        swipeUpAction: { symbol: '》' },
       },
     },
     periodButton: {
@@ -566,6 +626,7 @@ local fonts = import 'Fonts.libsonnet';
       name: 'ideographicCommaButton',
       params: {
         action: { symbol: '、' },
+        swipeUpAction: { symbol: '|' },
       },
     },
     // 中文问号
@@ -608,6 +669,7 @@ local fonts = import 'Fonts.libsonnet';
       name: 'leftSingleQuoteButton',
       params: {
         action: { symbol: '‘' },
+        swipeUpAction: { symbol: '“' },
       },
     },
     // 中文右单引号(有方向性的单引号)
@@ -622,6 +684,7 @@ local fonts = import 'Fonts.libsonnet';
       name: 'equalButton',
       params: {
         action: { character: '=' },
+        swipeUpAction: { character: '+' },
       },
     },
     leftBracketButton: {
@@ -642,6 +705,7 @@ local fonts = import 'Fonts.libsonnet';
       name: 'leftChineseBracketButton',
       params: {
         action: { symbol: '【' },
+        swipeUpAction: { symbol: '「' },
       },
     },
 
@@ -650,6 +714,7 @@ local fonts = import 'Fonts.libsonnet';
       name: 'rightChineseBracketButton',
       params: {
         action: { symbol: '】' },
+        swipeUpAction: { symbol: '」' },
       },
     },
 
@@ -851,6 +916,7 @@ local fonts = import 'Fonts.libsonnet';
       name: 'graveButton',
       params: {
         action: { character: '`' },
+        swipeUpAction: { character: '~' },
       },
     },
 
@@ -862,5 +928,20 @@ local fonts = import 'Fonts.libsonnet';
       },
     },
 
+    // 「 中文左引号
+    leftChineseAngleQuoteButton: {
+      name: 'leftChineseAngleQuoteButton',
+      params: {
+        action: { symbol: '「' },
+      },
+    },
+
+    // 」 中文右引号
+    rightChineseAngleQuoteButton: {
+      name: 'rightChineseAngleQuoteButton',
+      params: {
+        action: { symbol: '」' },
+      },
+    },
   },
 }

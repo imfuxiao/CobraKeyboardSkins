@@ -7,6 +7,8 @@ local NumericPortrait = import 'Components/NumericPortrait.libsonnet';
 local SymbolicLandscape = import 'Components/SymbolicLandscape.libsonnet';
 local SymbolicPortrait = import 'Components/SymbolicPortrait.libsonnet';
 
+local iPadPinyin = import 'Components/iPadPinyin.libsonnet';
+
 local pinyinPortraitFileName = 'pinyinPortrait';
 local lightPinyinPortraitFileContent = PinyinPortrait.new(isDark=false);
 local darkPinyinPortraitFileContent = PinyinPortrait.new(isDark=true);
@@ -31,11 +33,24 @@ local symbolicLandscapeName = 'symbolicLandscape';
 local lightSymbolicLandscapeFileContent = SymbolicLandscape.new(isDark=false);
 local darkSymbolicLandscapeFileContent = SymbolicLandscape.new(isDark=true);
 
+local iPadPinyinPortraitName = 'iPadPinyinPortrait';
+local lightIpadPinyinPortraitContent = iPadPinyin.new(isDark=false, isPortrait=true);
+local darkIpadPinyinPortraitContent = iPadPinyin.new(isDark=true, isPortrait=true);
+
+local iPadPinyinLandscapeName = 'iPadPinyinLandscape';
+local lightIpadPinyinLandscapeContent = iPadPinyin.new(isDark=false, isPortrait=false);
+local darkIpadPinyinLandscapeContent = iPadPinyin.new(isDark=true, isPortrait=false);
+
 local config = {
   pinyin: {
     iPhone: {
       portrait: pinyinPortraitFileName,
       landscape: pinyinLandscapeFileName,
+    },
+    iPad: {
+      portrait: iPadPinyinPortraitName,
+      landscape: iPadPinyinLandscapeName,
+      floating: pinyinPortraitFileName,
     },
   },
   numeric: {
@@ -43,11 +58,6 @@ local config = {
       portrait: numericPortraitFileName,
       landscape: numericLandscapeName,
     },
-    // iPad: {
-    //   portrait: iPad_numeric_26_portrait,
-    //   landscape: iPad_numeric_26_landscape,
-    //   floating: numeric_9_portrait,
-    // },
   },
 
   // 符号键盘
@@ -56,11 +66,6 @@ local config = {
       portrait: symbolicPortraitFileName,
       landscape: symbolicLandscapeName,
     },
-    // iPad: {
-    //   portrait: iPad_symbolic_portrait,
-    //   landscape: iPad_symbolic_landscape,
-    //   floating: iPad_symbolic_float,
-    // },
   },
 };
 
@@ -88,4 +93,10 @@ local config = {
   ['dark/' + symbolicPortraitFileName + '.yaml']: std.toString(darkSymbolicPortraitFileContent),
   ['light/' + symbolicLandscapeName + '.yaml']: std.toString(lightSymbolicLandscapeFileContent),
   ['dark/' + symbolicLandscapeName + '.yaml']: std.toString(darkSymbolicLandscapeFileContent),
+
+  // iPad 拼音键盘
+  ['light/' + iPadPinyinPortraitName + '.yaml']: std.toString(lightIpadPinyinPortraitContent),
+  ['dark/' + iPadPinyinPortraitName + '.yaml']: std.toString(darkIpadPinyinPortraitContent),
+  ['light/' + iPadPinyinLandscapeName + '.yaml']: std.toString(lightIpadPinyinLandscapeContent),
+  ['dark/' + iPadPinyinLandscapeName + '.yaml']: std.toString(darkIpadPinyinLandscapeContent),
 }

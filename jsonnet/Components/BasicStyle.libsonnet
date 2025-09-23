@@ -134,12 +134,12 @@ local enterButtonBackgroundStyle = [
   {
     styleName: systemButtonBackgroundStyleName,
     conditionKey: '$returnKeyType',
-    conditionValue: [0, 2, 3, 5, 6],
+    conditionValue: [0, 2, 3, 5, 6, 8, 11],
   },
   {
     styleName: blueButtonBackgroundStyleName,
     conditionKey: '$returnKeyType',
-    conditionValue: [1, 4, 7],
+    conditionValue: [1, 4, 7, 9, 10],
   },
 ];
 
@@ -147,12 +147,12 @@ local enterButtonForegroundStyle = [
   {
     styleName: enterButtonForegroundStyleName,
     conditionKey: '$returnKeyType',
-    conditionValue: [0, 2, 3, 5, 6],
+    conditionValue: [0, 2, 3, 5, 6, 8, 11],
   },
   {
     styleName: blueButtonForegroundStyleName,
     conditionKey: '$returnKeyType',
-    conditionValue: [1, 4, 7],
+    conditionValue: [1, 4, 7, 9, 10],
   },
 ];
 
@@ -175,7 +175,12 @@ local newImageSystemButtonForegroundStyle(isDark=false, params={}) =
 local newAlphabeticButton(name, isDark=false, params={}, needHint=true) =
   {
     [name]: utils.newBackgroundStyle(style=alphabeticButtonBackgroundStyleName)
-            + utils.newForegroundStyle(style=name + 'ForegroundStyle')
+            + (
+              if std.objectHas(params, 'foregroundStyleName') then
+                { foregroundStyle: params.foregroundStyleName }
+              else
+                utils.newForegroundStyle(style=name + 'ForegroundStyle')
+            )
             + (
               if std.objectHas(params, 'uppercasedStateAction') then
                 utils.newForegroundStyle('uppercasedStateForegroundStyle', name + 'UppercaseForegroundStyle')
@@ -207,9 +212,12 @@ local newAlphabeticButton(name, isDark=false, params={}, needHint=true) =
               ]
             ),
   }
-  + {
-    [name + 'ForegroundStyle']: newAlphabeticButtonForegroundStyle(isDark, params),
-  }
+  + (
+    if std.objectHas(params, 'foregroundStyle') then
+      params.foregroundStyle
+    else
+      { [name + 'ForegroundStyle']: newAlphabeticButtonForegroundStyle(isDark, params) }
+  )
   + (
     if std.objectHas(params, 'uppercasedStateAction') then
       {
@@ -313,7 +321,7 @@ local newCommitCandidateForegroundStyle(isDark=false, params={}) = {
     normalColor: colors.standardButtonForegroundColor,
     highlightColor: colors.standardButtonHighlightedForegroundColor,
     fontSize: fonts.systemButtonTextFontSize,
-  } + params, false) + params,
+  } + params, isDark) + params,
 };
 
 

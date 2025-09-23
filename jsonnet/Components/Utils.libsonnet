@@ -84,6 +84,7 @@ local newSystemImageStyle(params={}, isDark=false) =
     params,
     [
       'insets',
+      'center',
       'systemImageName',
       'highlightSystemImageName',
       'contentMode',

@@ -297,12 +297,14 @@ local newKeyLayout(isDark=false) =
   )
 
   // Fourth Row
-  + basicStyle.newSystemButton(params.keyboard.numericButton.name,
-                               isDark,
-                               {
-                                 size:
-                                   { width: '280/1125' },
-                               } + params.keyboard.numericButton.params)
+  + basicStyle.newSystemButton(
+    params.keyboard.numericButton.name,
+    isDark,
+    {
+      size:
+        { width: '280/1125' },
+    } + params.keyboard.numericButton.params
+  )
 
   + basicStyle.newAlphabeticButton(
     params.keyboard.spaceButton.name,
@@ -310,13 +312,15 @@ local newKeyLayout(isDark=false) =
     params.keyboard.spaceButton.params,
     needHint=false
   )
-  + basicStyle.newSystemButton(params.keyboard.enterButton.name,
-                               isDark,
-                               {
-                                 size: { width: '280/1125' },
-                                 backgroundStyle: basicStyle.enterButtonBackgroundStyle,
-                                 foregroundStyle: basicStyle.enterButtonForegroundStyle,
-                               } + params.keyboard.enterButton.params)
+  + basicStyle.newSystemButton(
+    params.keyboard.enterButton.name,
+    isDark,
+    {
+      size: { width: '280/1125' },
+      backgroundStyle: basicStyle.enterButtonBackgroundStyle,
+      foregroundStyle: basicStyle.enterButtonForegroundStyle,
+    } + params.keyboard.enterButton.params
+  )
 ;
 
 {
