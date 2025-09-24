@@ -149,7 +149,7 @@ local keyboardLayout = {
           { Cell: params.keyboard.otherKeyboardButton.name },
           { Cell: params.keyboard.numericButton.name },
           { Cell: params.keyboard.spaceButton.name },
-          { Cell: params.keyboard.symbolicButton.name },
+          { Cell: params.keyboard.numericButton.name },
           { Cell: params.keyboard.dismissButton.name },
         ],
       },
@@ -811,11 +811,11 @@ local newKeyLayout(isDark=false, isPortrait=false) =
     needHint=false
   )
   + basicStyle.newSystemButton(
-    params.keyboard.symbolicButton.name,
+    params.keyboard.numericButton.name,
     isDark,
     {
       size: { width: '1.65/16' },
-    } + params.keyboard.symbolicButton.params
+    } + params.keyboard.numericButton.params
   )
   + basicStyle.newSystemButton(
     params.keyboard.dismissButton.name,

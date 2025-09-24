@@ -1,37 +1,32 @@
-local PinyinLandscape = import 'Components/PinyinLandscape.libsonnet';
-local PinyinPortrait = import 'Components/PinyinPortrait.libsonnet';
-
-local NumericLandscape = import 'Components/NumericLandscape.libsonnet';
-local NumericPortrait = import 'Components/NumericPortrait.libsonnet';
-
-local SymbolicLandscape = import 'Components/SymbolicLandscape.libsonnet';
-local SymbolicPortrait = import 'Components/SymbolicPortrait.libsonnet';
-
+local iPhoneNumeric = import 'Components/iPhoneNumeric.libsonnet';
+local iPhonePinyin = import 'Components/iPhonePinyin.libsonnet';
+local iPhoneSymbolic = import 'Components/iPhoneSymbolic.libsonnet';
 local iPadPinyin = import 'Components/iPadPinyin.libsonnet';
+local iPadNumeric = import 'Components/iPadNumeric.libsonnet';
 
 local pinyinPortraitFileName = 'pinyinPortrait';
-local lightPinyinPortraitFileContent = PinyinPortrait.new(isDark=false);
-local darkPinyinPortraitFileContent = PinyinPortrait.new(isDark=true);
+local lightPinyinPortraitFileContent = iPhonePinyin.new(isDark=false, isPortrait=true);
+local darkPinyinPortraitFileContent = iPhonePinyin.new(isDark=true, isPortrait=true);
 
 local pinyinLandscapeFileName = 'pinyinLandscape';
-local lightPinyinLandscapeFileContent = PinyinLandscape.new(isDark=false);
-local darkPinyinLandscapeFileContent = PinyinLandscape.new(isDark=true);
+local lightPinyinLandscapeFileContent = iPhonePinyin.new(isDark=false, isPortrait=false);
+local darkPinyinLandscapeFileContent = iPhonePinyin.new(isDark=true, isPortrait=false);
 
 local numericPortraitFileName = 'numericPortrait';
-local lightNumericPortraitFileContent = NumericPortrait.new(isDark=false);
-local darkNumericPortraitFileContent = NumericPortrait.new(isDark=true);
+local lightNumericPortraitFileContent = iPhoneNumeric.new(isDark=false, isPortrait=true);
+local darkNumericPortraitFileContent = iPhoneNumeric.new(isDark=true, isPortrait=true);
 
 local numericLandscapeName = 'numericLandscape';
-local lightNumericLandscapeFileContent = NumericLandscape.new(isDark=false);
-local darkNumericLandscapeFileContent = NumericLandscape.new(isDark=true);
+local lightNumericLandscapeFileContent = iPhoneNumeric.new(isDark=false, isPortrait=false);
+local darkNumericLandscapeFileContent = iPhoneNumeric.new(isDark=true, isPortrait=false);
 
 local symbolicPortraitFileName = 'symbolicPortrait';
-local lightSymbolicPortraitFileContent = SymbolicPortrait.new(isDark=false);
-local darkSymbolicPortraitFileContent = SymbolicPortrait.new(isDark=true);
+local lightSymbolicPortraitFileContent = iPhoneSymbolic.new(isDark=false, isPortrait=true);
+local darkSymbolicPortraitFileContent = iPhoneSymbolic.new(isDark=true, isPortrait=true);
 
 local symbolicLandscapeName = 'symbolicLandscape';
-local lightSymbolicLandscapeFileContent = SymbolicLandscape.new(isDark=false);
-local darkSymbolicLandscapeFileContent = SymbolicLandscape.new(isDark=true);
+local lightSymbolicLandscapeFileContent = iPhoneSymbolic.new(isDark=false, isPortrait=false);
+local darkSymbolicLandscapeFileContent = iPhoneSymbolic.new(isDark=true, isPortrait=false);
 
 local iPadPinyinPortraitName = 'iPadPinyinPortrait';
 local lightIpadPinyinPortraitContent = iPadPinyin.new(isDark=false, isPortrait=true);
@@ -40,6 +35,14 @@ local darkIpadPinyinPortraitContent = iPadPinyin.new(isDark=true, isPortrait=tru
 local iPadPinyinLandscapeName = 'iPadPinyinLandscape';
 local lightIpadPinyinLandscapeContent = iPadPinyin.new(isDark=false, isPortrait=false);
 local darkIpadPinyinLandscapeContent = iPadPinyin.new(isDark=true, isPortrait=false);
+
+local iPadNumericPortraitName = 'iPadNumericPortrait';
+local lightIpadNumericPortraitContent = iPadNumeric.new(isDark=false, isPortrait=true);
+local darkIpadNumericPortraitContent = iPadNumeric.new(isDark=true, isPortrait=true);
+
+local iPadNumericLandscapeName = 'iPadNumericLandscape';
+local lightIpadNumericLandscapeContent = iPadNumeric.new(isDark=false, isPortrait=false);
+local darkIpadNumericLandscapeContent = iPadNumeric.new(isDark=true, isPortrait=false);
 
 local config = {
   pinyin: {
@@ -58,6 +61,11 @@ local config = {
       portrait: numericPortraitFileName,
       landscape: numericLandscapeName,
     },
+    iPad: {
+      portrait: iPadNumericPortraitName,
+      landscape: iPadNumericLandscapeName,
+      floating: numericPortraitFileName,
+    },
   },
 
   // 符号键盘
@@ -65,6 +73,11 @@ local config = {
     iPhone: {
       portrait: symbolicPortraitFileName,
       landscape: symbolicLandscapeName,
+    },
+    iPad: {
+      portrait: iPadPinyinPortraitName,
+      landscape: iPadPinyinLandscapeName,
+      floating: symbolicPortraitFileName,
     },
   },
 };
@@ -99,4 +112,10 @@ local config = {
   ['dark/' + iPadPinyinPortraitName + '.yaml']: std.toString(darkIpadPinyinPortraitContent),
   ['light/' + iPadPinyinLandscapeName + '.yaml']: std.toString(lightIpadPinyinLandscapeContent),
   ['dark/' + iPadPinyinLandscapeName + '.yaml']: std.toString(darkIpadPinyinLandscapeContent),
+
+  // iPad 数字键盘
+  ['light/' + iPadNumericPortraitName + '.yaml']: std.toString(lightIpadNumericPortraitContent),
+  ['dark/' + iPadNumericPortraitName + '.yaml']: std.toString(darkIpadNumericPortraitContent),
+  ['light/' + iPadNumericLandscapeName + '.yaml']: std.toString(lightIpadNumericLandscapeContent),
+  ['dark/' + iPadNumericLandscapeName + '.yaml']: std.toString(darkIpadNumericLandscapeContent),
 }

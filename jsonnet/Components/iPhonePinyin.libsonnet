@@ -138,9 +138,10 @@ local alphabeticKeyboardLayout = {
 };
 
 
-local newKeyLayout(isDark=false) =
+local newKeyLayout(isDark=false, isPortrait=true) =
+  local keyboardHeight = if isPortrait then params.keyboard.height.iPhone.portrait else params.keyboard.height.iPhone.landscape;
   {
-    keyboardHeight: params.keyboard.height.iPhone.portrait,
+    keyboardHeight: keyboardHeight,
     keyboardStyle: utils.newBackgroundStyle(style=basicStyle.keyboardBackgroundStyleName),
   }
   + alphabeticKeyboardLayout
@@ -324,17 +325,23 @@ local newKeyLayout(isDark=false) =
 ;
 
 {
-  new(isDark):
+  new(isDark, isPortrait):
+    local insets = if isPortrait then params.keyboard.button.backgroundInsets.iPhone.portrait else params.keyboard.button.backgroundInsets.iPhone.landscape;
+
+    local extraParams = {
+      insets: insets,
+    };
+
     preedit.new(isDark)
     + toolbar.new(isDark)
     + basicStyle.newKeyboardBackgroundStyle(isDark)
-    + basicStyle.newAlphabeticButtonBackgroundStyle(isDark)
+    + basicStyle.newAlphabeticButtonBackgroundStyle(isDark, extraParams)
     + basicStyle.newAlphabeticButtonHintStyle(isDark)
-    + basicStyle.newSystemButtonBackgroundStyle(isDark)
-    + basicStyle.newBlueButtonBackgroundStyle(isDark)
+    + basicStyle.newSystemButtonBackgroundStyle(isDark, extraParams)
+    + basicStyle.newBlueButtonBackgroundStyle(isDark, extraParams)
     + basicStyle.newBlueButtonForegroundStyle(isDark, params.keyboard.enterButton.params)
     + basicStyle.newAlphabeticHintBackgroundStyle(isDark, { cornerRadius: 10 })
-    + newKeyLayout(isDark)
+    + newKeyLayout(isDark, isPortrait)
     + basicStyle.newEnterButtonForegroundStyle(isDark, params.keyboard.enterButton.params)
     + basicStyle.newCommitCandidateForegroundStyle(isDark, { text: '选定' })
     // Notifications
