@@ -367,7 +367,11 @@ local newKeyLayout(isDark=false, isPortrait=false) =
 {
   new(isDark, isPortrait):
 
-    local insets = if isPortrait then params.keyboard.button.backgroundInsets.iPhone.portrait else params.keyboard.button.backgroundInsets.iPhone.landscape;
+    local insets = if isPortrait
+    then
+      params.keyboard.button.backgroundInsets.iPhone.portrait
+    else
+      params.keyboard.button.backgroundInsets.iPhone.landscape;
 
     local extraParams = {
       insets: insets,

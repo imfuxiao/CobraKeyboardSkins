@@ -8,7 +8,7 @@ local preeditForegroundStyleName = 'preeditForegroundStyle';
 
 local newPreedit(isDark=false, params={}) = {
   preeditHeight: keyboardParams.preedit.height,
-  preedit: {
+  preeditStyle: {
              insets: keyboardParams.preedit.insets,
            }
            + utils.newBackgroundStyle(style=preeditBackgroundStyleName)
