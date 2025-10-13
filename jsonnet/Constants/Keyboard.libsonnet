@@ -54,7 +54,7 @@ local fonts = import 'Fonts.libsonnet';
       candidateCollectionStyle: {
         insets: { top: 8, bottom: 8, left: 8, right: 8 },
         backgroundColor: colors.keyboardBackgroundColor,
-        maxRows: 6,
+        maxRows: 5,
         maxColumns: 6,
         separatorColor: colors.candidateSeparatorColor,
       },

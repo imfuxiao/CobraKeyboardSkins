@@ -131,7 +131,7 @@ local newVerticalCandidateCollectionStyle(isDark) = {
       ],
       isDark
     ),
-  verticalCandidateStyle: newCandidateStyle(keyboardParams.candidateStyle, isDark),
+  verticalCandidateStyle: newCandidateStyle(keyboardParams.candidateStyle { insets: { left: 6, right: 6, top: 4, bottom: 4 } }, isDark),
 };
 
 local verticalLastRowStyle = {
