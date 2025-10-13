@@ -4,17 +4,11 @@ local basicStyle = import 'BasicStyle.libsonnet';
 local utils = import 'Utils.libsonnet';
 
 
-local toolbarBackgroundStyleName = basicStyle.keyboardBackgroundStyleName;
-local horizontalCandidateStyleName = 'horizontalCandidateStyle';
-local verticalCandidateStyleName = 'verticalCandidateStyle';
-local candidateContextMenuStyleName = 'candidateContextMenuStyle';
-
 local newCandidateStyle(param={}, isDark=false) =
   utils.extractProperties(
     param,
     [
       'insets',
-      'backgroundInsets',
       'indexFontSize',
       'textFontSize',
       'commentFontSize',
@@ -37,98 +31,188 @@ local newCandidateStyle(param={}, isDark=false) =
     isDark
   );
 
-local newToolbar(isDark=false, params={}) =
+local toolbarBackgroundStyleName = basicStyle.keyboardBackgroundStyleName;
+local horizontalCandidateBackgroundStyleName = basicStyle.keyboardBackgroundStyleName;
+local verticalCandidateBackgroundStyleName = basicStyle.keyboardBackgroundStyleName;
 
+// MARK: - 横排候选字
 
-  local candidateStateButtonStyleName = 'candidateStateButtonStyle';
-  local candidateStateButtonStyle = {
-    [candidateStateButtonStyleName]:
-      utils.newForegroundStyle(style=candidateStateButtonStyleName + 'ForegroundStyle'),
-    [candidateStateButtonStyleName + 'ForegroundStyle']:
-      utils.newSystemImageStyle(keyboardParams.toolbar.horizontalCandidateStyle.candidateStateButton, isDark),
-  };
-
-
-  local verticalCandidateBackgroundStyleName = basicStyle.keyboardBackgroundStyleName;
-
-  local verticalCandidateAreaStyleName = 'verticalCandidateOfCandidateStyle';
-  local verticalCandidateAreaStyle = {
-    [verticalCandidateAreaStyleName]: newCandidateStyle(keyboardParams.toolbar.verticalCandidateStyle.candidateStyle, isDark),
-  };
-
-  local verticalCandidatePageUpButtonStyleName = 'verticalCandidatePageUpButtonStyle';
-  local verticalCandidatePageUpButtonStyle = {
-    [verticalCandidatePageUpButtonStyleName]:
-      utils.newBackgroundStyle(style=basicStyle.systemButtonBackgroundStyleName)
-      + utils.newForegroundStyle(style=verticalCandidatePageUpButtonStyleName + 'ForegroundStyle'),
-    [verticalCandidatePageUpButtonStyleName + 'ForegroundStyle']:
-      utils.newSystemImageStyle(keyboardParams.toolbar.verticalCandidateStyle.pageUpButton, isDark),
-  };
-
-  local verticalCandidatePageDownButtonStyleName = 'verticalCandidatePageDownButtonStyle';
-  local verticalCandidatePageDownButtonStyle = {
-    [verticalCandidatePageDownButtonStyleName]:
-      utils.newBackgroundStyle(style=basicStyle.systemButtonBackgroundStyleName)
-      + utils.newForegroundStyle(style=verticalCandidatePageDownButtonStyleName + 'ForegroundStyle'),
-    [verticalCandidatePageDownButtonStyleName + 'ForegroundStyle']:
-      utils.newSystemImageStyle(keyboardParams.toolbar.verticalCandidateStyle.pageDownButton, isDark),
-  };
-
-
-  local verticalCandidateReturnButtonStyleName = 'verticalCandidateReturnButtonStyle';
-  local verticalCandidateReturnButtonStyle = {
-    [verticalCandidateReturnButtonStyleName]:
-      utils.newBackgroundStyle(style=basicStyle.systemButtonBackgroundStyleName)
-      + utils.newForegroundStyle(style=verticalCandidateReturnButtonStyleName + 'ForegroundStyle'),
-    [verticalCandidateReturnButtonStyleName + 'ForegroundStyle']:
-      utils.newSystemImageStyle(keyboardParams.toolbar.verticalCandidateStyle.returnButton, isDark),
-  };
-
-  local verticalCandidateBackspaceButtonStyleName = 'verticalCandidateBackspaceButtonStyle';
-  local verticalCandidateBackspaceButtonStyle = {
-    [verticalCandidateBackspaceButtonStyleName]:
-      utils.newBackgroundStyle(style=basicStyle.systemButtonBackgroundStyleName)
-      + utils.newForegroundStyle(style=verticalCandidateBackspaceButtonStyleName + 'ForegroundStyle'),
-    [verticalCandidateBackspaceButtonStyleName + 'ForegroundStyle']:
-      utils.newSystemImageStyle(
+local horizontalCandidatesCollectionViewName = 'horizontalCandidates';
+local expandButtonName = 'expandButton';
+local horizontalCandidatesLayout = [
+  {
+    HStack: {
+      subviews: [
         {
-          systemImageName: 'delete.left',
-          normalColor: colors.toolbarButtonForegroundColor,
-          highlightColor: colors.toolbarButtonHighlightedForegroundColor,
-          fontSize: keyboardParams.toolbar.verticalCandidateStyle.pageUpButton.fontSize,
+          Cell: horizontalCandidatesCollectionViewName,
         },
-        isDark
-      ),
-  };
+        {
+          Cell: expandButtonName,
+        },
+      ],
+    },
+  },
+];
 
-  local verticalCandidateStyle = newCandidateStyle(keyboardParams.toolbar.verticalCandidateStyle, isDark);
+local newHorizontalCandidatesCollectionView(isDark=false) = {
+  [horizontalCandidatesCollectionViewName]: {
+    type: 'horizontalCandidates',
+    candidateStyle: 'horizontalCandidateStyle',
+  },
+  horizontalCandidateStyle: newCandidateStyle(keyboardParams.candidateStyle, isDark),
+};
 
+local newExpandButton(isDark) = {
+  [expandButtonName]:
+    {
+      size: { width: 44 },
+      action: { shortcut: '#candidatesBarStateToggle' },
+    }
+    + utils.newForegroundStyle(style=expandButtonName + 'ForegroundStyle'),
+  [expandButtonName + 'ForegroundStyle']:
+    utils.newSystemImageStyle(keyboardParams.horizontalCandidateStyle.expandButton, isDark),
+};
+
+
+// MARK: - 纵排候选字
+
+local verticalCandidateCollectionViewName = 'verticalCandidates';
+local verticalLastRowStyleName = 'verticalLastRowStyle';
+local verticalCandidatePageUpButtonStyleName = 'verticalPageUpButtonStyle';
+local verticalCandidatePageDownButtonStyleName = 'verticalPageDownButtonStyle';
+local verticalCandidateReturnButtonStyleName = 'verticalReturnButtonStyle';
+local verticalCandidateBackspaceButtonStyleName = 'verticalBackspaceButtonStyle';
+
+local verticalCandidatesLayout = [
+  {
+    HStack: {
+      subviews: [
+        {
+          Cell: verticalCandidateCollectionViewName,
+        },
+      ],
+    },
+  },
+  {
+    HStack: {
+      style: verticalLastRowStyleName,
+      subviews: [
+        {
+          Cell: verticalCandidatePageUpButtonStyleName,
+        },
+        {
+          Cell: verticalCandidatePageDownButtonStyleName,
+        },
+        {
+          Cell: verticalCandidateReturnButtonStyleName,
+        },
+        {
+          Cell: verticalCandidateBackspaceButtonStyleName,
+        },
+      ],
+    },
+  },
+];
+
+
+local newVerticalCandidateCollectionStyle(isDark) = {
+  [verticalCandidateCollectionViewName]:
+    {
+      type: 'verticalCandidates',
+      insets: keyboardParams.verticalCandidateStyle.candidateCollectionStyle.insets,
+      maxRows: keyboardParams.verticalCandidateStyle.candidateCollectionStyle.maxRows,
+      maxColumns: keyboardParams.verticalCandidateStyle.candidateCollectionStyle.maxColumns,
+      candidateStyle: 'verticalCandidateStyle',
+    } +
+    utils.extractColors(
+      keyboardParams.verticalCandidateStyle.candidateCollectionStyle,
+      [
+        'separatorColor',
+      ],
+      isDark
+    ),
+  verticalCandidateStyle: newCandidateStyle(keyboardParams.candidateStyle, isDark),
+};
+
+local verticalLastRowStyle = {
+  [verticalLastRowStyleName]:
+    {
+      size: { height: keyboardParams.verticalCandidateStyle.bottomRowHeight },
+    },
+};
+
+local newVerticalCandidatePageUpButtonStyle(isDark) = {
+  [verticalCandidatePageUpButtonStyleName]:
+    utils.newBackgroundStyle(style=basicStyle.systemButtonBackgroundStyleName)
+    + utils.newForegroundStyle(style=verticalCandidatePageUpButtonStyleName + 'ForegroundStyle')
+    + {
+      action: keyboardParams.verticalCandidateStyle.pageUpButton.action,
+    },
+  [verticalCandidatePageUpButtonStyleName + 'ForegroundStyle']:
+    utils.newSystemImageStyle(keyboardParams.verticalCandidateStyle.pageUpButton, isDark),
+};
+
+local newVerticalCandidatePageDownButtonStyle(isDark) = {
+  [verticalCandidatePageDownButtonStyleName]:
+    utils.newBackgroundStyle(style=basicStyle.systemButtonBackgroundStyleName)
+    + utils.newForegroundStyle(style=verticalCandidatePageDownButtonStyleName + 'ForegroundStyle')
+    + {
+      action: keyboardParams.verticalCandidateStyle.pageDownButton.action,
+    },
+  [verticalCandidatePageDownButtonStyleName + 'ForegroundStyle']:
+    utils.newSystemImageStyle(keyboardParams.verticalCandidateStyle.pageDownButton, isDark),
+};
+
+
+local newVerticalCandidateReturnButtonStyle(isDark) = {
+  [verticalCandidateReturnButtonStyleName]:
+    utils.newBackgroundStyle(style=basicStyle.systemButtonBackgroundStyleName)
+    + utils.newForegroundStyle(style=verticalCandidateReturnButtonStyleName + 'ForegroundStyle')
+    + {
+      action: keyboardParams.verticalCandidateStyle.returnButton.action,
+    },
+  [verticalCandidateReturnButtonStyleName + 'ForegroundStyle']:
+    utils.newSystemImageStyle(keyboardParams.verticalCandidateStyle.returnButton, isDark),
+};
+
+local newVerticalCandidateBackspaceButtonStyle(isDark) = {
+  [verticalCandidateBackspaceButtonStyleName]:
+    utils.newBackgroundStyle(style=basicStyle.systemButtonBackgroundStyleName)
+    + utils.newForegroundStyle(style=verticalCandidateBackspaceButtonStyleName + 'ForegroundStyle')
+    + {
+      action: 'backspace',
+    },
+  [verticalCandidateBackspaceButtonStyleName + 'ForegroundStyle']:
+    utils.newSystemImageStyle(
+      {
+        systemImageName: 'delete.left',
+        normalColor: colors.toolbarButtonForegroundColor,
+        highlightColor: colors.toolbarButtonHighlightedForegroundColor,
+        fontSize: keyboardParams.verticalCandidateStyle.pageUpButton.fontSize,
+      },
+      isDark
+    ),
+};
+
+
+local newToolbar(isDark=false, params={}) =
   {
     toolbarHeight: keyboardParams.toolbar.height,
-    toolbar:
-      utils.newBackgroundStyle(style=toolbarBackgroundStyleName)
-      + {
-        // TODO: 工具栏按键
-      }
-      + {
-        horizontalCandidateStyle: horizontalCandidateStyleName,
-        verticalCandidateStyle: verticalCandidateStyleName,
-        candidateContextMenu: candidateContextMenuStyleName,
+    toolbarStyle: utils.newBackgroundStyle(style=toolbarBackgroundStyleName),
+    toolbarLayout: {},
+    horizontalCandidatesStyle:
+      utils.extractProperties(keyboardParams.horizontalCandidateStyle + params, ['insets'])
+      {
+        backgroundStyle: horizontalCandidateBackgroundStyleName,
       },
-    [horizontalCandidateStyleName]:
-      newCandidateStyle(keyboardParams.toolbar.horizontalCandidateStyle + params, isDark)
-      { candidateStateButtonStyle: candidateStateButtonStyleName },
-    [verticalCandidateStyleName]:
-      utils.extractProperties(keyboardParams.toolbar.verticalCandidateStyle, ['insets', 'backgroundInsets', 'bottomRowHeight'])
+    horizontalCandidatesLayout: horizontalCandidatesLayout,
+    verticalCandidatesStyle:
+      utils.extractProperties(keyboardParams.verticalCandidateStyle + params, ['insets'])
       {
         backgroundStyle: verticalCandidateBackgroundStyleName,
-        candidateStyle: verticalCandidateAreaStyleName,
-        pageUpButtonStyle: verticalCandidatePageUpButtonStyleName,
-        pageDownButtonStyle: verticalCandidatePageDownButtonStyleName,
-        returnButtonStyle: verticalCandidateReturnButtonStyleName,
-        backspaceButtonStyle: verticalCandidateBackspaceButtonStyleName,
       },
-    [candidateContextMenuStyleName]: [
+    verticalCandidatesLayout: verticalCandidatesLayout,
+    candidateContextMenu: [
       // TODO: 长按候选字菜单
       // {
       //   name: '空格',
@@ -136,13 +220,16 @@ local newToolbar(isDark=false, params={}) =
       // },
     ],
   }
-  + candidateStateButtonStyle
-  + verticalCandidateAreaStyle
-  + verticalCandidatePageUpButtonStyle
-  + verticalCandidatePageDownButtonStyle
-  + verticalCandidateReturnButtonStyle
-  + verticalCandidateBackspaceButtonStyle;
+  + newHorizontalCandidatesCollectionView(isDark)
+  + newExpandButton(isDark)
+  + newVerticalCandidateCollectionStyle(isDark)
+  + verticalLastRowStyle
+  + newVerticalCandidatePageUpButtonStyle(isDark)
+  + newVerticalCandidatePageDownButtonStyle(isDark)
+  + newVerticalCandidateReturnButtonStyle(isDark)
+  + newVerticalCandidateBackspaceButtonStyle(isDark);
 
+// 导出
 {
   new: newToolbar,
 }
