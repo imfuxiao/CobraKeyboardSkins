@@ -100,22 +100,22 @@ local alphabeticKeyboardLayout = {
             Cell: params.keyboard.symbolicButton.name,
           },
           {
-            Cell: params.keyboard.chineseQuestionMarkButton.name,
-          },
-          {
-            Cell: params.keyboard.chineseExclamationMarkButton.name,
-          },
-          {
-            Cell: params.keyboard.hashButton.name,
-          },
-          {
-            Cell: params.keyboard.ideographicCommaButton.name,
+            Cell: params.keyboard.chinesePeriodButton.name,
           },
           {
             Cell: params.keyboard.chineseCommaButton.name,
           },
           {
-            Cell: params.keyboard.chinesePeriodButton.name,
+            Cell: params.keyboard.ideographicCommaButton.name,
+          },
+          {
+            Cell: params.keyboard.hashButton.name,
+          },
+          {
+            Cell: params.keyboard.chineseQuestionMarkButton.name,
+          },
+          {
+            Cell: params.keyboard.chineseExclamationMarkButton.name,
           },
           {
             Cell: params.keyboard.periodButton.name,
