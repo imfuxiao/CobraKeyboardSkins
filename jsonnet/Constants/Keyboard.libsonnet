@@ -126,6 +126,7 @@ local fonts = import 'Fonts.libsonnet';
       params: {
         action: { character: 'e' },
         uppercasedStateAction: { character: 'E' },
+        swipeUpAction: { keyboardType: 'emojis' },
       },
     },
     rButton: {
@@ -176,6 +177,7 @@ local fonts = import 'Fonts.libsonnet';
       params: {
         action: { character: 'p' },
         uppercasedStateAction: { character: 'P' },
+        swipeUpAction: { shortcut: '#showPasteboardView' },
       },
     },
 
@@ -185,7 +187,8 @@ local fonts = import 'Fonts.libsonnet';
       params: {
         action: { character: 'a' },
         uppercasedStateAction: { character: 'A' },
-        swipeUpAction: { shortcut: '#selectText' },
+        # swipeUpAction: { shortcut: '#selectText' },
+        swipeUpAction: { shortcut: '#中英切换' },
       },
     },
     sButton: {
@@ -193,6 +196,7 @@ local fonts = import 'Fonts.libsonnet';
       params: {
         action: { character: 's' },
         uppercasedStateAction: { character: 'S' },
+        swipeUpAction: { shortcut: '#toggleScriptView' },
       },
     },
     dButton: {
@@ -200,7 +204,7 @@ local fonts = import 'Fonts.libsonnet';
       params: {
         action: { character: 'd' },
         uppercasedStateAction: { character: 'D' },
-        swipeUpAction: { shortcut: '#deleteText' },
+        # swipeUpAction: { shortcut: '#deleteText' },
       },
     },
     fButton: {
@@ -229,7 +233,6 @@ local fonts = import 'Fonts.libsonnet';
       params: {
         action: { character: 'j' },
         uppercasedStateAction: { character: 'J' },
-        swipeUpAction: { shortcut: '#toggleScriptView' },
       },
     },
     kButton: {
@@ -253,8 +256,8 @@ local fonts = import 'Fonts.libsonnet';
       params: {
         action: { character: 'z' },
         uppercasedStateAction: { character: 'Z' },
-        swipeUpAction: { shortcut: '#undo' },
-        swipeDownAction: { shortcut: '#redo' },
+        // swipeUpAction: { shortcut: '#undo' },
+        // swipeDownAction: { shortcut: '#redo' },
       },
     },
     xButton: {
@@ -262,7 +265,7 @@ local fonts = import 'Fonts.libsonnet';
       params: {
         action: { character: 'x' },
         uppercasedStateAction: { character: 'X' },
-        swipeUpAction: { shortcut: '#cut' },
+        // swipeUpAction: { shortcut: '#cut' },
       },
     },
     cButton: {
@@ -270,7 +273,7 @@ local fonts = import 'Fonts.libsonnet';
       params: {
         action: { character: 'c' },
         uppercasedStateAction: { character: 'C' },
-        swipeUpAction: { shortcut: '#copy' },
+        // swipeUpAction: { shortcut: '#copy' },
       },
     },
     vButton: {
@@ -278,7 +281,7 @@ local fonts = import 'Fonts.libsonnet';
       params: {
         action: { character: 'v' },
         uppercasedStateAction: { character: 'V' },
-        swipeUpAction: { shortcut: '#paste' },
+        // swipeUpAction: { shortcut: '#paste' },
       },
     },
     bButton: {

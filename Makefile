@@ -11,5 +11,5 @@ compile: clean
 
 build: compile
 	rm -rf build && mkdir -p build/default
-	cp -r demo.png config.yaml light dark jsonnet build/default/
+	cp -r README.md demo.png config.yaml light dark jsonnet build/default/
 	cd build && zip -r default.cskin default/ -x "*.DS_Store" "*/.*" "*/Test*"
