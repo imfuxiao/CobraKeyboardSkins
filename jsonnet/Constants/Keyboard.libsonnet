@@ -27,8 +27,11 @@ local fonts = import 'Fonts.libsonnet';
     textColor: colors.candidateForegroundColor,
     commentColor: colors.candidateForegroundColor,
     indexFontSize: fonts.candidateIndexFontSize,
+    #indexFontWeight: 'ultraLight',
     textFontSize: fonts.candidateTextFontSize,
+    #textFontWeight: 'regular',
     commentFontSize: fonts.candidateCommentFontSize,
+    #commentFontWeight: 'black',
   },
 
   horizontalCandidateStyle:

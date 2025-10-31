@@ -10,8 +10,11 @@ local newCandidateStyle(param={}, isDark=false) =
     [
       'insets',
       'indexFontSize',
+      'indexFontWeight',
       'textFontSize',
+      'textFontWeight',
       'commentFontSize',
+      'commentFontWeight',
     ]
   )
   + utils.extractColors(
