@@ -386,6 +386,7 @@ local fonts = import 'Fonts.libsonnet';
       name: 'spaceButton',
       params: {
         action: 'space',
+        swipeUpAction: { shortcut: "#次选上屏"},
         systemImageName: 'space',
         notification: [
           'preeditChangedForSpaceButtonNotification',
@@ -628,7 +629,8 @@ local fonts = import 'Fonts.libsonnet';
     periodButton: {
       name: 'periodButton',
       params: {
-        action: { symbol: '.' },
+        action: { character: '.' },
+        swipeUpAction: { character: ',' },
       },
     },
     // 顿号(只在中文中使用)
