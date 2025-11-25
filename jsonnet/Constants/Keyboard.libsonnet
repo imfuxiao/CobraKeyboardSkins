@@ -172,7 +172,6 @@ local fonts = import 'Fonts.libsonnet';
       params: {
         action: { character: 'o' },
         uppercasedStateAction: { character: 'O' },
-        swipeUpAction: { openURL: '#pasteboardContent' },
       },
     },
     pButton: {
@@ -800,6 +799,7 @@ local fonts = import 'Fonts.libsonnet';
       name: 'plusButton',
       params: {
         action: { character: '+' },
+        swipeUpAction: { character: '=' },
       },
     },
 

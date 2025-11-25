@@ -1,3 +1,4 @@
+local fonts = import '../Constants/Fonts.libsonnet';
 local params = import '../Constants/Keyboard.libsonnet';
 local basicStyle = import 'BasicStyle.libsonnet';
 local preedit = import 'Preedit.libsonnet';
@@ -6,6 +7,14 @@ local utils = import 'Utils.libsonnet';
 
 local portraitNormalButtonSize = {
   size: { width: '112.5/1125' },
+};
+
+local doubleLabelUpParams = {
+  center: {
+    x: 0.75,
+    y: 0.3,
+  },
+  fontSize: fonts.iPhone.button.doubleLabelSmallFontSize,
 };
 
 local hintStyle = {
@@ -212,8 +221,27 @@ local newKeyLayout(isDark=false, isPortrait=false) =
   + basicStyle.newAlphabeticButton(
     params.keyboard.plusButton.name,
     isDark,
-    portraitNormalButtonSize + params.keyboard.plusButton.params + hintStyle
-  )
+    portraitNormalButtonSize + params.keyboard.plusButton.params
+    + { hintStyle: hintStyle.hintStyle { swipeUpForegroundStyle: params.keyboard.equalButton.name + 'SwipeUpHintForegroundStyle' } }
+    + {
+      foregroundStyleName: [
+        params.keyboard.plusButton.name + 'ForegroundStyle',
+        params.keyboard.equalButton.name + 'ForegroundStyle',
+      ],
+    }
+    + {
+      foregroundStyle: {
+        [params.keyboard.plusButton.name + 'ForegroundStyle']:
+          basicStyle.newAlphabeticButtonForegroundStyle(isDark, params.keyboard.plusButton.params),
+        [params.keyboard.equalButton.name + 'ForegroundStyle']:
+          basicStyle.newAlphabeticButtonSwipeForegroundStyle(isDark, params.keyboard.equalButton.params + doubleLabelUpParams),
+      },
+    }
+  ) + {
+    [params.keyboard.equalButton.name + 'SwipeUpHintForegroundStyle']:
+      basicStyle.newAlphabeticButtonHintStyle(isDark) + basicStyle.getKeyboardActionText(params.keyboard.equalButton.params),
+  }
+
   + basicStyle.newAlphabeticButton(
     params.keyboard.hyphenButton.name,
     isDark,

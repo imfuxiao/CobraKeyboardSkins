@@ -60,6 +60,21 @@ local newAlphabeticButtonForegroundStyle(isDark=false, params={}) =
       fontSize: fonts.standardButtonTextFontSize,
     } + params, isDark) + getKeyboardActionText(params);
 
+// 字母键按钮前景样式
+local newAlphabeticButtonSwipeForegroundStyle(isDark=false, params={}) =
+  if std.objectHas(params, 'systemImageName') then
+    utils.newSystemImageStyle({
+      normalColor: colors.labelColor.secondary,
+      highlightColor: colors.labelColor.secondary,
+      fontSize: fonts.standardButtonImageFontSize,
+    } + params, isDark)
+  else
+    utils.newTextStyle({
+      normalColor: colors.labelColor.secondary,
+      highlightColor: colors.labelColor.secondary,
+      fontSize: fonts.standardButtonTextFontSize,
+    } + params, isDark) + getKeyboardActionText(params);
+
 // 大写字母键按钮前景样式
 local newAlphabeticButtonUppercaseForegroundStyle(isDark=false, params={}) =
   utils.newTextStyle({
@@ -333,6 +348,7 @@ local newCommitCandidateForegroundStyle(isDark=false, params={}) = {
   newAlphabeticButtonBackgroundStyle: newAlphabeticButtonBackgroundStyle,
 
   newAlphabeticButtonForegroundStyle: newAlphabeticButtonForegroundStyle,
+  newAlphabeticButtonSwipeForegroundStyle: newAlphabeticButtonSwipeForegroundStyle,
 
   newAlphabeticButtonUppercaseForegroundStyle: newAlphabeticButtonUppercaseForegroundStyle,
 
@@ -354,6 +370,7 @@ local newCommitCandidateForegroundStyle(isDark=false, params={}) = {
   newImageSystemButtonForegroundStyle: newImageSystemButtonForegroundStyle,
 
   newAlphabeticButton: newAlphabeticButton,
+  getKeyboardActionText: getKeyboardActionText,
 
   newSystemButton: newSystemButton,
 

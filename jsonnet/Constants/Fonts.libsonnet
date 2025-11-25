@@ -25,4 +25,10 @@
       doubleLabelSmallFontSize: 14
     },
   },
+  iPhone: {
+    button: {
+      doubleLabelFontSize: 16,
+      doubleLabelSmallFontSize: 11
+    },
+  }
 }
