@@ -61,16 +61,28 @@ local alphabeticKeyboardLayout = {
       HStack: {
         subviews: [
           {
-            Cell: params.keyboard.hyphenButton.name,
+            Cell: params.keyboard.exclamationMarkButton.name,
           },
           {
-            Cell: params.keyboard.forwardSlashButton.name,
+            Cell: params.keyboard.atButton.name,
           },
           {
-            Cell: params.keyboard.chineseColonButton.name,
+            Cell: params.keyboard.hashButton.name,
           },
           {
-            Cell: params.keyboard.chineseSemicolonButton.name,
+            Cell: params.keyboard.dollarButton.name,
+          },
+          {
+            Cell: params.keyboard.percentButton.name,
+          },
+          {
+            Cell: params.keyboard.caretButton.name,
+          },
+          {
+            Cell: params.keyboard.ampersandButton.name,
+          },
+          {
+            Cell: params.keyboard.asteriskButton.name,
           },
           {
             Cell: params.keyboard.leftParenthesisButton.name,
@@ -78,11 +90,35 @@ local alphabeticKeyboardLayout = {
           {
             Cell: params.keyboard.rightParenthesisButton.name,
           },
+        ],
+      },
+    },
+    {
+      HStack: {
+        subviews: [
           {
-            Cell: params.keyboard.dollarButton.name,
+            Cell: params.keyboard.hyphenButton.name,
           },
           {
-            Cell: params.keyboard.atButton.name,
+            Cell: params.keyboard.plusButton.name,
+          },
+          {
+            Cell: params.keyboard.equalButton.name,
+          },
+          {
+            Cell: params.keyboard.backslashButton.name,
+          },
+          {
+            Cell: params.keyboard.colonButton.name,
+          },
+          {
+            Cell: params.keyboard.semicolonButton.name,
+          },
+          {
+            Cell: params.keyboard.leftBracketButton.name,
+          },
+          {
+            Cell: params.keyboard.leftBraceButton.name,
           },
           {
             Cell: params.keyboard.leftCurlyQuoteButton.name,
@@ -109,7 +145,7 @@ local alphabeticKeyboardLayout = {
             Cell: params.keyboard.ideographicCommaButton.name,
           },
           {
-            Cell: params.keyboard.hashButton.name,
+            Cell: params.keyboard.verticalBarButton.name,
           },
           {
             Cell: params.keyboard.chineseQuestionMarkButton.name,
@@ -154,114 +190,164 @@ local newKeyLayout(isDark=false, isPortrait=false) =
     keyboardStyle: utils.newBackgroundStyle(style=basicStyle.keyboardBackgroundStyleName),
   }
   + alphabeticKeyboardLayout
-  // First Row
+
+  // zero Row
+
   + basicStyle.newAlphabeticButton(
     params.keyboard.oneButton.name,
     isDark,
-    portraitNormalButtonSize + params.keyboard.oneButton.params + hintStyle
+    params.keyboard.oneButton.params + hintStyle
   )
   + basicStyle.newAlphabeticButton(
     params.keyboard.twoButton.name,
     isDark,
-    portraitNormalButtonSize + params.keyboard.twoButton.params + hintStyle
+    params.keyboard.twoButton.params + hintStyle
   )
   + basicStyle.newAlphabeticButton(
     params.keyboard.threeButton.name,
     isDark,
-    portraitNormalButtonSize + params.keyboard.threeButton.params + hintStyle
+    params.keyboard.threeButton.params + hintStyle
   )
   + basicStyle.newAlphabeticButton(
     params.keyboard.fourButton.name,
     isDark,
-    portraitNormalButtonSize + params.keyboard.fourButton.params + hintStyle
+    params.keyboard.fourButton.params + hintStyle
   )
   + basicStyle.newAlphabeticButton(
     params.keyboard.fiveButton.name,
     isDark,
-    portraitNormalButtonSize + params.keyboard.fiveButton.params + hintStyle
+    params.keyboard.fiveButton.params + hintStyle
   )
   + basicStyle.newAlphabeticButton(
     params.keyboard.sixButton.name,
     isDark,
-    portraitNormalButtonSize + params.keyboard.sixButton.params + hintStyle
+    params.keyboard.sixButton.params + hintStyle
   )
   + basicStyle.newAlphabeticButton(
     params.keyboard.sevenButton.name,
     isDark,
-    portraitNormalButtonSize + params.keyboard.sevenButton.params + hintStyle
+    params.keyboard.sevenButton.params + hintStyle
   )
   + basicStyle.newAlphabeticButton(
     params.keyboard.eightButton.name,
     isDark,
-    portraitNormalButtonSize + params.keyboard.eightButton.params + hintStyle
+    params.keyboard.eightButton.params + hintStyle
   )
   + basicStyle.newAlphabeticButton(
     params.keyboard.nineButton.name,
     isDark,
-    portraitNormalButtonSize + params.keyboard.nineButton.params + hintStyle
+    params.keyboard.nineButton.params + hintStyle
   )
   + basicStyle.newAlphabeticButton(
     params.keyboard.zeroButton.name,
     isDark,
-    portraitNormalButtonSize + params.keyboard.zeroButton.params + hintStyle
+    params.keyboard.zeroButton.params + hintStyle
   )
 
-  // Second Row
+  // First Row
+
   + basicStyle.newAlphabeticButton(
-    params.keyboard.hyphenButton.name,
+    params.keyboard.exclamationMarkButton.name,
     isDark,
-    portraitNormalButtonSize + params.keyboard.hyphenButton.params + hintStyle,
-  )
-  + basicStyle.newAlphabeticButton(
-    params.keyboard.forwardSlashButton.name,
-    isDark,
-    portraitNormalButtonSize + params.keyboard.forwardSlashButton.params + hintStyle
-  )
-  + basicStyle.newAlphabeticButton(
-    params.keyboard.chineseColonButton.name,
-    isDark,
-    portraitNormalButtonSize
-    + chineseSymbolicOffset
-    + params.keyboard.chineseColonButton.params
-    + hintStyle
-  )
-  + basicStyle.newAlphabeticButton(
-    params.keyboard.chineseSemicolonButton.name,
-    isDark,
-    portraitNormalButtonSize
-    + chineseSymbolicOffset
-    + params.keyboard.chineseSemicolonButton.params
-    + hintStyle
-  )
-  + basicStyle.newAlphabeticButton(
-    params.keyboard.leftParenthesisButton.name,
-    isDark,
-    portraitNormalButtonSize + params.keyboard.leftParenthesisButton.params + hintStyle
-  )
-  + basicStyle.newAlphabeticButton(
-    params.keyboard.rightParenthesisButton.name,
-    isDark,
-    portraitNormalButtonSize + params.keyboard.rightParenthesisButton.params + hintStyle
-  )
-  + basicStyle.newAlphabeticButton(
-    params.keyboard.dollarButton.name,
-    isDark,
-    portraitNormalButtonSize + params.keyboard.dollarButton.params + hintStyle
+    params.keyboard.exclamationMarkButton.params + hintStyle
   )
   + basicStyle.newAlphabeticButton(
     params.keyboard.atButton.name,
     isDark,
-    portraitNormalButtonSize + params.keyboard.atButton.params + hintStyle
+    params.keyboard.atButton.params + hintStyle
+  )
+  + basicStyle.newAlphabeticButton(
+    params.keyboard.hashButton.name,
+    isDark,
+    params.keyboard.hashButton.params + hintStyle
+  )
+  + basicStyle.newAlphabeticButton(
+    params.keyboard.dollarButton.name,
+    isDark,
+    params.keyboard.dollarButton.params + hintStyle
+  )
+  + basicStyle.newAlphabeticButton(
+    params.keyboard.percentButton.name,
+    isDark,
+    params.keyboard.percentButton.params + hintStyle
+  )
+  + basicStyle.newAlphabeticButton(
+    params.keyboard.caretButton.name,
+    isDark,
+    params.keyboard.caretButton.params + hintStyle
+  )
+  + basicStyle.newAlphabeticButton(
+    params.keyboard.ampersandButton.name,
+    isDark,
+    params.keyboard.ampersandButton.params + hintStyle
+  )
+  + basicStyle.newAlphabeticButton(
+    params.keyboard.asteriskButton.name,
+    isDark,
+    params.keyboard.asteriskButton.params + hintStyle
+  )
+  + basicStyle.newAlphabeticButton(
+    params.keyboard.leftParenthesisButton.name,
+    isDark,
+    params.keyboard.leftParenthesisButton.params + hintStyle
+  )
+  + basicStyle.newAlphabeticButton(
+    params.keyboard.rightParenthesisButton.name,
+    isDark,
+    params.keyboard.rightParenthesisButton.params + hintStyle
+  )
+
+  // Second Row
+
+  + basicStyle.newAlphabeticButton(
+    params.keyboard.hyphenButton.name,
+    isDark,
+    params.keyboard.hyphenButton.params + hintStyle,
+  )
+  + basicStyle.newAlphabeticButton(
+    params.keyboard.plusButton.name,
+    isDark,
+    params.keyboard.plusButton.params + hintStyle
+  )
+  + basicStyle.newAlphabeticButton(
+    params.keyboard.equalButton.name,
+    isDark,
+    params.keyboard.equalButton.params + hintStyle
+  )
+  + basicStyle.newAlphabeticButton(
+    params.keyboard.backslashButton.name,
+    isDark,
+    params.keyboard.backslashButton.params + hintStyle
+  )
+  + basicStyle.newAlphabeticButton(
+    params.keyboard.colonButton.name,
+    isDark,
+    params.keyboard.colonButton.params + hintStyle
+  )
+  + basicStyle.newAlphabeticButton(
+    params.keyboard.semicolonButton.name,
+    isDark,
+    params.keyboard.semicolonButton.params + hintStyle
+  )
+  + basicStyle.newAlphabeticButton(
+    params.keyboard.leftBracketButton.name,
+    isDark,
+    params.keyboard.leftBracketButton.params + hintStyle
+  )
+  + basicStyle.newAlphabeticButton(
+    params.keyboard.leftBraceButton.name,
+    isDark,
+    params.keyboard.leftBraceButton.params + hintStyle
   )
   + basicStyle.newAlphabeticButton(
     params.keyboard.leftCurlyQuoteButton.name,
     isDark,
-    portraitNormalButtonSize + params.keyboard.leftCurlyQuoteButton.params + hintStyle
+    params.keyboard.leftCurlyQuoteButton.params + hintStyle
   )
   + basicStyle.newAlphabeticButton(
     params.keyboard.rightCurlyQuoteButton.name,
     isDark,
-    portraitNormalButtonSize + params.keyboard.rightCurlyQuoteButton.params + hintStyle
+    params.keyboard.rightCurlyQuoteButton.params + hintStyle
   )
 
   // Third Row
@@ -278,6 +364,35 @@ local newKeyLayout(isDark=false, isPortrait=false) =
   )
 
   + basicStyle.newAlphabeticButton(
+    params.keyboard.chinesePeriodButton.name,
+    isDark,
+    portraitNormalButtonSize
+    + chineseSymbolicOffset
+    + params.keyboard.chinesePeriodButton.params
+    + hintStyle
+  )
+  + basicStyle.newAlphabeticButton(
+    params.keyboard.chineseCommaButton.name,
+    isDark,
+    portraitNormalButtonSize
+    + chineseSymbolicOffset
+    + params.keyboard.chineseCommaButton.params
+    + hintStyle
+  )
+  + basicStyle.newAlphabeticButton(
+    params.keyboard.ideographicCommaButton.name,
+    isDark,
+    portraitNormalButtonSize + params.keyboard.ideographicCommaButton.params + hintStyle
+  )
+  + basicStyle.newAlphabeticButton(
+    params.keyboard.verticalBarButton.name,
+    isDark,
+    portraitNormalButtonSize
+    + chineseSymbolicOffset
+    + params.keyboard.verticalBarButton.params
+    + hintStyle
+  )
+  + basicStyle.newAlphabeticButton(
     params.keyboard.chineseQuestionMarkButton.name,
     isDark,
     portraitNormalButtonSize
@@ -291,35 +406,6 @@ local newKeyLayout(isDark=false, isPortrait=false) =
     portraitNormalButtonSize
     + chineseSymbolicOffset
     + params.keyboard.chineseExclamationMarkButton.params
-    + hintStyle
-  )
-  + basicStyle.newAlphabeticButton(
-    params.keyboard.hashButton.name,
-    isDark,
-    portraitNormalButtonSize + params.keyboard.hashButton.params + hintStyle
-  )
-  + basicStyle.newAlphabeticButton(
-    params.keyboard.ideographicCommaButton.name,
-    isDark,
-    portraitNormalButtonSize
-    + chineseSymbolicOffset
-    + params.keyboard.ideographicCommaButton.params
-    + hintStyle
-  )
-  + basicStyle.newAlphabeticButton(
-    params.keyboard.chineseCommaButton.name,
-    isDark,
-    portraitNormalButtonSize
-    + chineseSymbolicOffset
-    + params.keyboard.chineseCommaButton.params
-    + hintStyle
-  )
-  + basicStyle.newAlphabeticButton(
-    params.keyboard.chinesePeriodButton.name,
-    isDark,
-    portraitNormalButtonSize
-    + chineseSymbolicOffset
-    + params.keyboard.chinesePeriodButton.params
     + hintStyle
   )
   + basicStyle.newAlphabeticButton(

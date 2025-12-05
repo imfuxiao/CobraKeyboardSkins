@@ -1,15 +1,15 @@
-.PHONY: all compile build clean
+.PHONY: all clean build
 
-all: build
+build:
+	@echo "Building the project..."
+	$(MAKE) -C default
+	$(MAKE) -C numeric
+	$(MAKE) -C sbxlm46
 
 clean:
-	rm -rf dark light *.hskin *.zip *.yaml build
+	@echo "Cleaning the project..."
+	$(MAKE) -C default clean
+	$(MAKE) -C numeric clean
+	$(MAKE) -C sbxlm46 clean
 
-compile: clean
-	mkdir -p dark light
-	jsonnet -S -m . jsonnet/main.jsonnet
-
-build: compile
-	rm -rf build && mkdir -p build/default
-	cp -r README.md demo.png config.yaml light dark jsonnet build/default/
-	cd build && zip -r default.cskin default/ -x "*.DS_Store" "*/.*" "*/Test*"
+all: build

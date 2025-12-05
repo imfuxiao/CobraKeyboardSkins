@@ -27,11 +27,11 @@ local fonts = import 'Fonts.libsonnet';
     textColor: colors.candidateForegroundColor,
     commentColor: colors.candidateForegroundColor,
     indexFontSize: fonts.candidateIndexFontSize,
-    #indexFontWeight: 'ultraLight',
+    //indexFontWeight: 'ultraLight',
     textFontSize: fonts.candidateTextFontSize,
-    #textFontWeight: 'regular',
+    //textFontWeight: 'regular',
     commentFontSize: fonts.candidateCommentFontSize,
-    #commentFontWeight: 'black',
+    //commentFontWeight: 'black',
   },
 
   horizontalCandidateStyle:
@@ -189,7 +189,7 @@ local fonts = import 'Fonts.libsonnet';
       params: {
         action: { character: 'a' },
         uppercasedStateAction: { character: 'A' },
-        # swipeUpAction: { shortcut: '#selectText' },
+        // swipeUpAction: { shortcut: '#selectText' },
         swipeUpAction: { shortcut: '#中英切换' },
       },
     },
@@ -206,7 +206,7 @@ local fonts = import 'Fonts.libsonnet';
       params: {
         action: { character: 'd' },
         uppercasedStateAction: { character: 'D' },
-        # swipeUpAction: { shortcut: '#deleteText' },
+        // swipeUpAction: { shortcut: '#deleteText' },
       },
     },
     fButton: {
@@ -385,7 +385,7 @@ local fonts = import 'Fonts.libsonnet';
       name: 'spaceButton',
       params: {
         action: 'space',
-        swipeUpAction: { shortcut: "#次选上屏"},
+        swipeUpAction: { shortcut: '#次选上屏' },
         systemImageName: 'space',
         notification: [
           'preeditChangedForSpaceButtonNotification',
@@ -523,7 +523,7 @@ local fonts = import 'Fonts.libsonnet';
     semicolonButton: {
       name: 'semicolonButton',
       params: {
-        action: { symbol: ';' },
+        action: { character: ';' },
       },
     },
 
@@ -651,7 +651,7 @@ local fonts = import 'Fonts.libsonnet';
     questionMarkButton: {
       name: 'questionMarkEnButton',
       params: {
-        action: { symbol: '?' },
+        action: { character: '?' },
       },
     },
     // 中文感叹号
@@ -665,14 +665,14 @@ local fonts = import 'Fonts.libsonnet';
     exclamationMarkButton: {
       name: 'exclamationMarkButton',
       params: {
-        action: { symbol: '!' },
+        action: { character: '!' },
       },
     },
     // ' 直撇号(单引号)
     apostropheButton: {
       name: 'apostropheButton',
       params: {
-        action: { symbol: "'" },
+        action: { character: "'" },
       },
     },
     // 中文左单引号(有方向性的单引号)
