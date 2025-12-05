@@ -97,16 +97,16 @@ local config = {
 
   // 数字键盘
   // ['light/' + numericPortraitFileName + '.yaml']: std.manifestYamlDoc(lightNumericPortraitFileContent, indent_array_in_object=false, quote_keys=false),
-  ['light/' + numericPortraitFileName + '.yaml']: std.toString(lightNumericPortraitFileContent),
-  ['dark/' + numericPortraitFileName + '.yaml']: std.toString(darkNumericPortraitFileContent),
-  ['light/' + numericLandscapeName + '.yaml']: std.toString(lightNumericLandscapeFileContent),
-  ['dark/' + numericLandscapeName + '.yaml']: std.toString(darkNumericLandscapeFileContent),
+  // ['light/' + numericPortraitFileName + '.yaml']: std.toString(lightNumericPortraitFileContent),
+  // ['dark/' + numericPortraitFileName + '.yaml']: std.toString(darkNumericPortraitFileContent),
+  // ['light/' + numericLandscapeName + '.yaml']: std.toString(lightNumericLandscapeFileContent),
+  // ['dark/' + numericLandscapeName + '.yaml']: std.toString(darkNumericLandscapeFileContent),
 
   // 符号键盘
-  ['light/' + symbolicPortraitFileName + '.yaml']: std.toString(lightSymbolicPortraitFileContent),
-  ['dark/' + symbolicPortraitFileName + '.yaml']: std.toString(darkSymbolicPortraitFileContent),
-  ['light/' + symbolicLandscapeName + '.yaml']: std.toString(lightSymbolicLandscapeFileContent),
-  ['dark/' + symbolicLandscapeName + '.yaml']: std.toString(darkSymbolicLandscapeFileContent),
+  // ['light/' + symbolicPortraitFileName + '.yaml']: std.toString(lightSymbolicPortraitFileContent),
+  // ['dark/' + symbolicPortraitFileName + '.yaml']: std.toString(darkSymbolicPortraitFileContent),
+  // ['light/' + symbolicLandscapeName + '.yaml']: std.toString(lightSymbolicLandscapeFileContent),
+  // ['dark/' + symbolicLandscapeName + '.yaml']: std.toString(darkSymbolicLandscapeFileContent),
 
   // iPad 拼音键盘
   ['light/' + iPadPinyinPortraitName + '.yaml']: std.toString(lightIpadPinyinPortraitContent),
@@ -115,8 +115,8 @@ local config = {
   ['dark/' + iPadPinyinLandscapeName + '.yaml']: std.toString(darkIpadPinyinLandscapeContent),
 
   // iPad 数字键盘
-  ['light/' + iPadNumericPortraitName + '.yaml']: std.toString(lightIpadNumericPortraitContent),
-  ['dark/' + iPadNumericPortraitName + '.yaml']: std.toString(darkIpadNumericPortraitContent),
-  ['light/' + iPadNumericLandscapeName + '.yaml']: std.toString(lightIpadNumericLandscapeContent),
-  ['dark/' + iPadNumericLandscapeName + '.yaml']: std.toString(darkIpadNumericLandscapeContent),
+  // ['light/' + iPadNumericPortraitName + '.yaml']: std.toString(lightIpadNumericPortraitContent),
+  // ['dark/' + iPadNumericPortraitName + '.yaml']: std.toString(darkIpadNumericPortraitContent),
+  // ['light/' + iPadNumericLandscapeName + '.yaml']: std.toString(lightIpadNumericLandscapeContent),
+  // ['dark/' + iPadNumericLandscapeName + '.yaml']: std.toString(darkIpadNumericLandscapeContent),
 }
