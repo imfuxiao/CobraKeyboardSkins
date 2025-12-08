@@ -99,7 +99,7 @@ local fonts = import 'Fonts.libsonnet';
     button: {
       backgroundInsets: {
         iPhone: {
-          portrait: { top: 6, left: 3, bottom: 6, right: 3 },
+          portrait: { top: 4, left: 3, bottom: 4, right: 3 },
           landscape: { top: 3, left: 3, bottom: 3, right: 3 },
         },
         ipad: {
