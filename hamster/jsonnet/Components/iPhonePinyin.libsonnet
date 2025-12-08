@@ -766,7 +766,7 @@ local newKeyLayout(isDark=false, isPortrait=true, addSemicolon=true) =
       foregroundStyle:
         createButtonForegroundStyle(isDark, params.keyboard.vButton)
         + createTopBadgeForegroundStyle(isDark, params.keyboard.ideographicCommaButton),
-    }
+    },
   ) + createSwipeUpHintStyle(isDark, params.keyboard.ideographicCommaButton)
 
   + basicStyle.newAlphabeticButton(
@@ -867,7 +867,8 @@ local newKeyLayout(isDark=false, isPortrait=true, addSemicolon=true) =
       hintStyle: hintStyle.hintStyle {
         swipeUpForegroundStyle: params.keyboard.periodButton.name + 'SwipeUpHintForegroundStyle',
       },
-    }
+    },
+    needHint = false,
   ) + createSwipeUpHintStyle(isDark, params.keyboard.periodButton)
 
   + basicStyle.newAlphabeticButton(
@@ -885,7 +886,8 @@ local newKeyLayout(isDark=false, isPortrait=true, addSemicolon=true) =
       size:
         { width: { percentage: 0.1 } },
     }
-    + params.keyboard.asciiModeButton.params
+    + params.keyboard.asciiModeButton.params,
+    needHint = false,
   )
   + { asciiModeIsTrueForegroundStyle: basicStyle.newAlphabeticButtonForegroundStyle(isDark, { assetImageName: 'englishState2' }) }
   + { asciiModeIsFalseForegroundStyle: basicStyle.newAlphabeticButtonForegroundStyle(isDark, { assetImageName: 'chineseState2' }) }
