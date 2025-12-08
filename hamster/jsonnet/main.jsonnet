@@ -4,13 +4,15 @@ local iPhoneNumeric = import 'Components/iPhoneNumeric.libsonnet';
 local iPhonePinyin = import 'Components/iPhonePinyin.libsonnet';
 local iPhoneSymbolic = import 'Components/iPhoneSymbolic.libsonnet';
 
-local pinyinPortraitFileName = 'pinyinPortrait';
-local lightPinyinPortraitFileContent = iPhonePinyin.new(isDark=false, isPortrait=true, isPinyinMode=true);
-local darkPinyinPortraitFileContent = iPhonePinyin.new(isDark=true, isPortrait=true, isPinyinMode=true);
+// 是否添加分号键
+local addSemicolon = false;
 
+local pinyinPortraitFileName = 'pinyinPortrait';
+local lightPinyinPortraitFileContent = iPhonePinyin.new(isDark=false, isPortrait=true, addSemicolon=addSemicolon);
+local darkPinyinPortraitFileContent = iPhonePinyin.new(isDark=true, isPortrait=true, addSemicolon=addSemicolon);
 local pinyinLandscapeFileName = 'pinyinLandscape';
-local lightPinyinLandscapeFileContent = iPhonePinyin.new(isDark=false, isPortrait=false, isPinyinMode=true);
-local darkPinyinLandscapeFileContent = iPhonePinyin.new(isDark=true, isPortrait=false, isPinyinMode=true);
+local lightPinyinLandscapeFileContent = iPhonePinyin.new(isDark=false, isPortrait=false, addSemicolon=addSemicolon);
+local darkPinyinLandscapeFileContent = iPhonePinyin.new(isDark=true, isPortrait=false, addSemicolon=addSemicolon);
 
 local numericPortraitFileName = 'numericPortrait';
 local lightNumericPortraitFileContent = iPhoneNumeric.new(isDark=false, isPortrait=true);

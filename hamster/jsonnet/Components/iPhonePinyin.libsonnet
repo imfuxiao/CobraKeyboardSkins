@@ -50,23 +50,23 @@ local createButtonForegroundStyle(isDark, params={}) = {
 };
 
 local createTopBadgeForegroundStyle(isDark, params={}) = {
-  [params.name + 'ForegroundStyle']:
+  [params.name + 'BadgeForegroundStyle']:
     basicStyle.newAlphabeticButtonSwipeForegroundStyle(isDark, params.params + topBadgeLabelUpParams),
 };
 
 local createLeftTopBadgeForegroundStyle(isDark, params={}) = {
-  [params.name + 'ForegroundStyle']:
+  [params.name + 'BadgeForegroundStyle']:
     basicStyle.newAlphabeticButtonSwipeForegroundStyle(isDark, params.params + leftBadgeLabelUpParams),
 };
 
 local createRightTopBadgeForegroundStyle(isDark, params={}) = {
-  [params.name + 'ForegroundStyle']:
+  [params.name + 'BadgeForegroundStyle']:
     basicStyle.newAlphabeticButtonSwipeForegroundStyle(isDark, params.params + rightBadgeLabelUpParams),
 };
 
 
 // 标准26键布局
-local alphabeticKeyboardLayout = {
+local alphabeticKeyboardLayout(addSemicolon = false) = {
   keyboardLayout: [
     {
       HStack: {
@@ -134,6 +134,13 @@ local alphabeticKeyboardLayout = {
           {
             Cell: params.keyboard.lButton.name,
           },
+          (
+            if addSemicolon == true then
+              {
+                Cell: params.keyboard.semicolonButton.name,
+              }
+            else {}
+          ),
         ],
       },
     },
@@ -195,13 +202,13 @@ local alphabeticKeyboardLayout = {
 };
 
 
-local newKeyLayout(isDark=false, isPortrait=true, isPinyinMode=true) =
+local newKeyLayout(isDark=false, isPortrait=true, addSemicolon=true) =
   local keyboardHeight = if isPortrait then params.keyboard.height.iPhone.portrait else params.keyboard.height.iPhone.landscape;
   {
     keyboardHeight: keyboardHeight,
     keyboardStyle: utils.newBackgroundStyle(style=basicStyle.keyboardBackgroundStyleName),
   }
-  + alphabeticKeyboardLayout
+  + alphabeticKeyboardLayout(addSemicolon)
 
   // First Row
   + basicStyle.newAlphabeticButton(
@@ -215,7 +222,7 @@ local newKeyLayout(isDark=false, isPortrait=true, isPinyinMode=true) =
     + {
       foregroundStyleName: [
         params.keyboard.qButton.name + 'ForegroundStyle',
-        params.keyboard.oneButton.name + 'ForegroundStyle',
+        params.keyboard.oneButton.name + 'BadgeForegroundStyle',
       ],
     }
     + {
@@ -236,7 +243,7 @@ local newKeyLayout(isDark=false, isPortrait=true, isPinyinMode=true) =
     + {
       foregroundStyleName: [
         params.keyboard.wButton.name + 'ForegroundStyle',
-        params.keyboard.twoButton.name + 'ForegroundStyle',
+        params.keyboard.twoButton.name + 'BadgeForegroundStyle',
       ],
     }
     + {
@@ -257,7 +264,7 @@ local newKeyLayout(isDark=false, isPortrait=true, isPinyinMode=true) =
     + {
       foregroundStyleName: [
         params.keyboard.eButton.name + 'ForegroundStyle',
-        params.keyboard.threeButton.name + 'ForegroundStyle',
+        params.keyboard.threeButton.name + 'BadgeForegroundStyle',
       ],
     }
     + {
@@ -278,7 +285,7 @@ local newKeyLayout(isDark=false, isPortrait=true, isPinyinMode=true) =
     + {
       foregroundStyleName: [
         params.keyboard.rButton.name + 'ForegroundStyle',
-        params.keyboard.fourButton.name + 'ForegroundStyle',
+        params.keyboard.fourButton.name + 'BadgeForegroundStyle',
       ],
     }
     + {
@@ -299,7 +306,7 @@ local newKeyLayout(isDark=false, isPortrait=true, isPinyinMode=true) =
     + {
       foregroundStyleName: [
         params.keyboard.tButton.name + 'ForegroundStyle',
-        params.keyboard.fiveButton.name + 'ForegroundStyle',
+        params.keyboard.fiveButton.name + 'BadgeForegroundStyle',
       ],
     }
     + {
@@ -320,7 +327,7 @@ local newKeyLayout(isDark=false, isPortrait=true, isPinyinMode=true) =
     + {
       foregroundStyleName: [
         params.keyboard.yButton.name + 'ForegroundStyle',
-        params.keyboard.sixButton.name + 'ForegroundStyle',
+        params.keyboard.sixButton.name + 'BadgeForegroundStyle',
       ],
     }
     + {
@@ -341,7 +348,7 @@ local newKeyLayout(isDark=false, isPortrait=true, isPinyinMode=true) =
     + {
       foregroundStyleName: [
         params.keyboard.uButton.name + 'ForegroundStyle',
-        params.keyboard.sevenButton.name + 'ForegroundStyle',
+        params.keyboard.sevenButton.name + 'BadgeForegroundStyle',
       ],
     }
     + {
@@ -362,7 +369,7 @@ local newKeyLayout(isDark=false, isPortrait=true, isPinyinMode=true) =
     + {
       foregroundStyleName: [
         params.keyboard.iButton.name + 'ForegroundStyle',
-        params.keyboard.eightButton.name + 'ForegroundStyle',
+        params.keyboard.eightButton.name + 'BadgeForegroundStyle',
       ],
     }
     + {
@@ -383,7 +390,7 @@ local newKeyLayout(isDark=false, isPortrait=true, isPinyinMode=true) =
     + {
       foregroundStyleName: [
         params.keyboard.oButton.name + 'ForegroundStyle',
-        params.keyboard.nineButton.name + 'ForegroundStyle',
+        params.keyboard.nineButton.name + 'BadgeForegroundStyle',
       ],
     }
     + {
@@ -404,7 +411,7 @@ local newKeyLayout(isDark=false, isPortrait=true, isPinyinMode=true) =
     + {
       foregroundStyleName: [
         params.keyboard.pButton.name + 'ForegroundStyle',
-        params.keyboard.zeroButton.name + 'ForegroundStyle',
+        params.keyboard.zeroButton.name + 'BadgeForegroundStyle',
       ],
     }
     + {
@@ -418,12 +425,17 @@ local newKeyLayout(isDark=false, isPortrait=true, isPinyinMode=true) =
   + basicStyle.newAlphabeticButton(
     params.keyboard.aButton.name,
     isDark,
-    {
-      size:
-        { width: '168.75/1125' },
-      bounds:
-        { width: '111/168.75', alignment: 'right' },
-    } + params.keyboard.aButton.params {
+    (
+      if addSemicolon == false then
+        {
+          size:
+            { width: '168.75/1125' },
+          bounds:
+            { width: '111/168.75', alignment: 'right' },
+        }
+      else {}
+    )
+    + params.keyboard.aButton.params {
       hintStyle: hintStyle.hintStyle {
         swipeUpForegroundStyle: params.keyboard.graveButton.name + 'SwipeUpHintForegroundStyle',
       },
@@ -431,7 +443,7 @@ local newKeyLayout(isDark=false, isPortrait=true, isPinyinMode=true) =
     + {
       foregroundStyleName: [
         params.keyboard.aButton.name + 'ForegroundStyle',
-        params.keyboard.graveButton.name + 'ForegroundStyle',
+        params.keyboard.graveButton.name + 'BadgeForegroundStyle',
       ],
     }
     + {
@@ -452,7 +464,7 @@ local newKeyLayout(isDark=false, isPortrait=true, isPinyinMode=true) =
     + {
       foregroundStyleName: [
         params.keyboard.sButton.name + 'ForegroundStyle',
-        params.keyboard.forwardSlashButton.name + 'ForegroundStyle',
+        params.keyboard.forwardSlashButton.name + 'BadgeForegroundStyle',
       ],
     }
     + {
@@ -474,7 +486,7 @@ local newKeyLayout(isDark=false, isPortrait=true, isPinyinMode=true) =
     + {
       foregroundStyleName: [
         params.keyboard.dButton.name + 'ForegroundStyle',
-        params.keyboard.colonButton.name + 'ForegroundStyle',
+        params.keyboard.colonButton.name + 'BadgeForegroundStyle',
       ],
     }
     + {
@@ -495,7 +507,7 @@ local newKeyLayout(isDark=false, isPortrait=true, isPinyinMode=true) =
     + {
       foregroundStyleName: [
         params.keyboard.fButton.name + 'ForegroundStyle',
-        params.keyboard.semicolonButton.name + 'ForegroundStyle',
+        params.keyboard.semicolonButton.name + 'BadgeForegroundStyle',
       ],
     }
     + {
@@ -516,7 +528,7 @@ local newKeyLayout(isDark=false, isPortrait=true, isPinyinMode=true) =
     + {
       foregroundStyleName: [
         params.keyboard.gButton.name + 'ForegroundStyle',
-        params.keyboard.leftParenthesisButton.name + 'ForegroundStyle',
+        params.keyboard.leftParenthesisButton.name + 'BadgeForegroundStyle',
       ],
     }
     + {
@@ -537,7 +549,7 @@ local newKeyLayout(isDark=false, isPortrait=true, isPinyinMode=true) =
     + {
       foregroundStyleName: [
         params.keyboard.hButton.name + 'ForegroundStyle',
-        params.keyboard.rightParenthesisButton.name + 'ForegroundStyle',
+        params.keyboard.rightParenthesisButton.name + 'BadgeForegroundStyle',
       ],
     }
     + {
@@ -558,7 +570,7 @@ local newKeyLayout(isDark=false, isPortrait=true, isPinyinMode=true) =
     + {
       foregroundStyleName: [
         params.keyboard.jButton.name + 'ForegroundStyle',
-        params.keyboard.tildeButton.name + 'ForegroundStyle',
+        params.keyboard.tildeButton.name + 'BadgeForegroundStyle',
       ],
     }
     + {
@@ -579,7 +591,7 @@ local newKeyLayout(isDark=false, isPortrait=true, isPinyinMode=true) =
     + {
       foregroundStyleName: [
         params.keyboard.kButton.name + 'ForegroundStyle',
-        params.keyboard.leftCurlyQuoteButton.name + 'ForegroundStyle',
+        params.keyboard.leftCurlyQuoteButton.name + 'BadgeForegroundStyle',
       ],
     }
     + {
@@ -592,12 +604,16 @@ local newKeyLayout(isDark=false, isPortrait=true, isPinyinMode=true) =
   + basicStyle.newAlphabeticButton(
     params.keyboard.lButton.name,
     isDark,
-    {
-      size:
-        { width: '168.75/1125' },
-      bounds:
-        { width: '111/168.75', alignment: 'left' },
-    }
+    (
+      if addSemicolon == false then
+        {
+          size:
+            { width: '168.75/1125' },
+          bounds:
+            { width: '111/168.75', alignment: 'left' },
+        }
+      else {}
+    )
     + params.keyboard.lButton.params {
       hintStyle: hintStyle.hintStyle {
         swipeUpForegroundStyle: params.keyboard.rightCurlyQuoteButton.name + 'SwipeUpHintForegroundStyle',
@@ -606,7 +622,7 @@ local newKeyLayout(isDark=false, isPortrait=true, isPinyinMode=true) =
     + {
       foregroundStyleName: [
         params.keyboard.lButton.name + 'ForegroundStyle',
-        params.keyboard.rightCurlyQuoteButton.name + 'ForegroundStyle',
+        params.keyboard.rightCurlyQuoteButton.name + 'BadgeForegroundStyle',
       ],
     }
     + {
@@ -615,6 +631,32 @@ local newKeyLayout(isDark=false, isPortrait=true, isPinyinMode=true) =
         + createTopBadgeForegroundStyle(isDark, params.keyboard.rightCurlyQuoteButton),
     }
   ) + createSwipeUpHintStyle(isDark, params.keyboard.rightCurlyQuoteButton)
+
+  + (
+    if addSemicolon == true then
+      basicStyle.newAlphabeticButton(
+        params.keyboard.semicolonButton.name,
+        isDark,
+        params.keyboard.semicolonButton.params {
+          hintStyle: hintStyle.hintStyle {
+            swipeUpForegroundStyle: params.keyboard.colonButton.name + 'SwipeUpHintForegroundStyle',
+          },
+        }
+        + {
+          foregroundStyleName: [
+            params.keyboard.semicolonButton.name + 'ForegroundStyle',
+            params.keyboard.colonButton.name + 'BadgeForegroundStyle',
+          ],
+        }
+        + {
+          foregroundStyle:
+            createButtonForegroundStyle(isDark, params.keyboard.semicolonButton)
+            + createTopBadgeForegroundStyle(isDark, params.keyboard.colonButton),
+        }
+      ) + createSwipeUpHintStyle(isDark, params.keyboard.colonButton)
+    else {}
+  )
+
 
   // Third Row
 
@@ -653,7 +695,7 @@ local newKeyLayout(isDark=false, isPortrait=true, isPinyinMode=true) =
     + {
       foregroundStyleName: [
         params.keyboard.zButton.name + 'ForegroundStyle',
-        params.keyboard.atButton.name + 'ForegroundStyle',
+        params.keyboard.atButton.name + 'BadgeForegroundStyle',
       ],
     }
     + {
@@ -674,7 +716,7 @@ local newKeyLayout(isDark=false, isPortrait=true, isPinyinMode=true) =
     + {
       foregroundStyleName: [
         params.keyboard.xButton.name + 'ForegroundStyle',
-        params.keyboard.periodButton.name + 'ForegroundStyle',
+        params.keyboard.periodButton.name + 'BadgeForegroundStyle',
       ],
     }
     + {
@@ -696,7 +738,7 @@ local newKeyLayout(isDark=false, isPortrait=true, isPinyinMode=true) =
     + {
       foregroundStyleName: [
         params.keyboard.cButton.name + 'ForegroundStyle',
-        params.keyboard.hashButton.name + 'ForegroundStyle',
+        params.keyboard.hashButton.name + 'BadgeForegroundStyle',
       ],
     }
     + {
@@ -717,7 +759,7 @@ local newKeyLayout(isDark=false, isPortrait=true, isPinyinMode=true) =
     + {
       foregroundStyleName: [
         params.keyboard.vButton.name + 'ForegroundStyle',
-        params.keyboard.ideographicCommaButton.name + 'ForegroundStyle',
+        params.keyboard.ideographicCommaButton.name + 'BadgeForegroundStyle',
       ],
     }
     + {
@@ -738,7 +780,7 @@ local newKeyLayout(isDark=false, isPortrait=true, isPinyinMode=true) =
     + {
       foregroundStyleName: [
         params.keyboard.bButton.name + 'ForegroundStyle',
-        params.keyboard.questionMarkButton.name + 'ForegroundStyle',
+        params.keyboard.questionMarkButton.name + 'BadgeForegroundStyle',
       ],
     }
     + {
@@ -759,7 +801,7 @@ local newKeyLayout(isDark=false, isPortrait=true, isPinyinMode=true) =
     + {
       foregroundStyleName: [
         params.keyboard.nButton.name + 'ForegroundStyle',
-        params.keyboard.exclamationMarkButton.name + 'ForegroundStyle',
+        params.keyboard.exclamationMarkButton.name + 'BadgeForegroundStyle',
       ],
     }
     + {
@@ -780,7 +822,7 @@ local newKeyLayout(isDark=false, isPortrait=true, isPinyinMode=true) =
     + {
       foregroundStyleName: [
         params.keyboard.mButton.name + 'ForegroundStyle',
-        params.keyboard.ellipsisButton.name + 'ForegroundStyle',
+        params.keyboard.ellipsisButton.name + 'BadgeForegroundStyle',
       ],
     }
     + {
@@ -860,7 +902,7 @@ local newKeyLayout(isDark=false, isPortrait=true, isPinyinMode=true) =
 ;
 
 {
-  new(isDark, isPortrait, isPinyinMode=true):
+  new(isDark, isPortrait, addSemicolon):
     local insets = if isPortrait then params.keyboard.button.backgroundInsets.iPhone.portrait else params.keyboard.button.backgroundInsets.iPhone.landscape;
 
     local extraParams = {
@@ -876,7 +918,7 @@ local newKeyLayout(isDark=false, isPortrait=true, isPinyinMode=true) =
     + basicStyle.newBlueButtonBackgroundStyle(isDark, extraParams)
     + basicStyle.newBlueButtonForegroundStyle(isDark, params.keyboard.enterButton.params)
     + basicStyle.newAlphabeticHintBackgroundStyle(isDark, { cornerRadius: 10 })
-    + newKeyLayout(isDark, isPortrait, isPinyinMode)
+    + newKeyLayout(isDark, isPortrait, addSemicolon)
     + basicStyle.newEnterButtonForegroundStyle(isDark, params.keyboard.enterButton.params)
     + basicStyle.newCommitCandidateForegroundStyle(isDark, { text: '选定' })
     // Notifications

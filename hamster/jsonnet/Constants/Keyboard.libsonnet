@@ -571,7 +571,7 @@ local fonts = import 'Fonts.libsonnet';
       name: 'semicolonButton',
       params: {
         action: { character: ';' },
-        // swipeUpAction: { character: ':' },
+        swipeUpAction: { character: ':' },
       },
     },
 
