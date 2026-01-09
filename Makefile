@@ -6,8 +6,9 @@ build:
 	$(MAKE) -C numeric
 	$(MAKE) -C sbxlm46
 	$(MAKE) -C hamster
+	$(MAKE) -C T9
 	rm -rf build && mkdir -p build/
-	cp -r default/build/*.cskin numeric/build/*.cskin sbxlm46/build/*.cskin hamster/build/*.cskin build/
+	cp -r default/build/*.cskin numeric/build/*.cskin sbxlm46/build/*.cskin hamster/build/*.cskin T9/build/*.cskin build/
 
 clean:
 	@echo "Cleaning the project..."
@@ -15,6 +16,7 @@ clean:
 	$(MAKE) -C numeric clean
 	$(MAKE) -C sbxlm46 clean
 	$(MAKE) -C hamster clean
+	$(MAKE) -C T9 clean
 	rm -rf build
 
 all: build
