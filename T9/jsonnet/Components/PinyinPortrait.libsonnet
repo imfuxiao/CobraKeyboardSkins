@@ -56,7 +56,7 @@ local alphabeticKeyboardLayout = {
         style: narrowVStackStyle.name,
         subviews: [
           {
-            Cell: params.keyboard.numericSymbolsCollection.name,
+            Cell: params.keyboard.t9SymbolsCollection.name,
           },
           {
             Cell: params.keyboard.symbolicButton.name,
@@ -166,9 +166,9 @@ local newKeyLayout(isDark=false, isPortrait=false) =
 
   + {
     // 集合视图定义
-    [params.keyboard.numericSymbolsCollection.name]: {
+    [params.keyboard.t9SymbolsCollection.name]: {
 
-    } + params.keyboard.numericSymbolsCollection.params,
+    } + params.keyboard.t9SymbolsCollection.params,
   }
 
   + basicStyle.newAlphabeticButton(

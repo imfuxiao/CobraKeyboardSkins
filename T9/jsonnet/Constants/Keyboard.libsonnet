@@ -328,71 +328,61 @@ local fonts = import 'Fonts.libsonnet';
     oneButton: {
       name: 'oneButton',
       params: {
-        action: { character: '1' },
-        swipeUpAction: { character: '!' },
+        action: { symbol: '1' },
       },
     },
     twoButton: {
       name: 'twoButton',
       params: {
-        action: { character: '2' },
-        swipeUpAction: { character: '@' },
+        action: { symbol: '2' },
       },
     },
     threeButton: {
       name: 'threeButton',
       params: {
-        action: { character: '3' },
-        swipeUpAction: { character: '#' },
+        action: { symbol: '3' },
       },
     },
     fourButton: {
       name: 'fourButton',
       params: {
-        action: { character: '4' },
-        swipeUpAction: { character: '$' },
+        action: { symbol: '4' },
       },
     },
     fiveButton: {
       name: 'fiveButton',
       params: {
-        action: { character: '5' },
-        swipeUpAction: { character: '%' },
+        action: { symbol: '5' },
       },
     },
     sixButton: {
       name: 'sixButton',
       params: {
-        action: { character: '6' },
-        swipeUpAction: { character: '^' },
+        action: { symbol: '6' },
       },
     },
     sevenButton: {
       name: 'sevenButton',
       params: {
-        action: { character: '7' },
-        swipeUpAction: { character: '&' },
+        action: { symbol: '7' },
       },
     },
     eightButton: {
       name: 'eightButton',
       params: {
-        action: { character: '8' },
-        swipeUpAction: { character: '*' },
+        action: { symbol: '8' },
       },
     },
     nineButton: {
       name: 'nineButton',
       params: {
-        action: { character: '9' },
-        swipeUpAction: { character: '(' },
+        action: { symbol: '9' },
       },
     },
     zeroButton: {
       name: 'zeroButton',
       params: {
-        action: { character: '0' },
-        swipeUpAction: { character: ')' },
+        action: { symbol: '0' },
       },
     },
 
@@ -1100,6 +1090,15 @@ local fonts = import 'Fonts.libsonnet';
     numericSymbolsCollection: {
       name: 'numericSymbolsCollection',
       params: {
+        type: 'numericSymbols',
+        insets: { top: 8, left: 4, bottom: 4, right: 4 },
+        backgroundStyle: 'systemButtonBackgroundStyle',
+      },
+    },
+
+    t9SymbolsCollection: {
+      name: 't9SymbolsCollection',
+      params: {
         type: 't9Symbols',
         insets: { top: 8, left: 4, bottom: 4, right: 4 },
         backgroundStyle: 'systemButtonBackgroundStyle',
@@ -1111,6 +1110,15 @@ local fonts = import 'Fonts.libsonnet';
       name: 'numericCategorySymbolCollection',
       params: {
         type: 'categorySymbols',
+        insets: { top: 4, left: 4, bottom: 4, right: 4 },
+        backgroundStyle: 'systemButtonBackgroundStyle',
+      },
+    },
+
+    t9CandidatesCollection: {
+      name: 't9CandidatesCollection',
+      params: {
+        type: 'verticalCandidates',
         insets: { top: 4, left: 4, bottom: 4, right: 4 },
         backgroundStyle: 'systemButtonBackgroundStyle',
       },

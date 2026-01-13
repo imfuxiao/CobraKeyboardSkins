@@ -6,6 +6,7 @@
 
   candidateStateButtonFontSize: 20,
 
+  t9ButtonLandscapeTextFontSize: 14,
   t9ButtonTextFontSize: 18,
   standardButtonTextFontSize: 22.5,
   standardButtonUppercasedTextFontSize: 22.5,
