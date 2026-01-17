@@ -17,7 +17,7 @@ local darkPortraitPinyinFileContent = portraitPinyin.new(isDark=true, isPortrait
 local landscapePinyin = import 'Components/PinyinLandscape.libsonnet';
 local landscapePinyinFileName = 'landscapePinyin';
 local lightLandscapePinyinFileContent = landscapePinyin.new(isDark=false, isPortrait=false);
-local darkLandscapePinyinFileContent = landscapePinyin.new(isDark=true, isPortrait=true);
+local darkLandscapePinyinFileContent = landscapePinyin.new(isDark=true, isPortrait=false);
 
 
 local portraitNumeric = import 'Components/NumericPortrait.libsonnet';
@@ -28,7 +28,7 @@ local darkPortraitNumericFileContent = portraitNumeric.new(isDark=true, isPortra
 local landscapeNumeric = import 'Components/NumericLandscape.libsonnet';
 local landscapeNumericFileName = 'landscapeNumeric';
 local lightLandscapeNumericFileContent = landscapeNumeric.new(isDark=false, isPortrait=false);
-local darkLandscapeNumericFileContent = landscapeNumeric.new(isDark=true, isPortrait=true);
+local darkLandscapeNumericFileContent = landscapeNumeric.new(isDark=true, isPortrait=false);
 
 local config = {
   pinyin: {

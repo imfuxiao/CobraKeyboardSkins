@@ -1,5 +1,5 @@
-local portraitNumeric = import 'Components/PortraitNumeric.libsonnet';
 local landscapeNumeric = import 'Components/LandscapeNumeric.libsonnet';
+local portraitNumeric = import 'Components/PortraitNumeric.libsonnet';
 
 local portraitNumericFileName = 'portraitNumeric';
 local lightPortraitNumericFileContent = portraitNumeric.new(isDark=false, isPortrait=true);
@@ -7,7 +7,7 @@ local darkPortraitNumericFileContent = portraitNumeric.new(isDark=true, isPortra
 
 local landscapeNumericFileName = 'landscapeNumeric';
 local lightLandscapeNumericFileContent = landscapeNumeric.new(isDark=false, isPortrait=false);
-local darkLandscapeNumericFileContent = landscapeNumeric.new(isDark=true, isPortrait=true);
+local darkLandscapeNumericFileContent = landscapeNumeric.new(isDark=true, isPortrait=false);
 
 
 local config = {
