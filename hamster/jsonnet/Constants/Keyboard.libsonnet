@@ -401,7 +401,8 @@ local fonts = import 'Fonts.libsonnet';
       name: 'spaceButton',
       params: {
         action: 'space',
-        swipeUpAction: { shortcut: '#中英切换' },
+        // swipeUpAction: { shortcut: '#中英切换' },
+        swipeUpAction: { shortcut: '#次选上屏' },
         systemImageName: 'space',
         notification: [
           'preeditChangedForSpaceButtonNotification',
