@@ -152,7 +152,7 @@ local fonts = import 'Fonts.libsonnet';
         action: { character: 't' },
         uppercasedStateAction: { character: 'T' },
         swipeUpAction: { character: '5' },
-        text: '甘',
+        text: '廿',
       },
     },
     yButton: {
