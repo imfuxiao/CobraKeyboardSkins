@@ -644,7 +644,7 @@ local newKeyLayout(isDark=false, isPortrait=true) =
     // Notifications
     + basicStyle.returnKeyboardTypeChangedNotification
     + basicStyle.preeditChangedForEnterButtonNotification
-    + basicStyle.preeditChangedForSpaceButtonNotification
+    // + basicStyle.preeditChangedForSpaceButtonNotification
     + basicStyle.asciiModeIsFalseChangedNotification
     + basicStyle.asciiModeIsTrueChangedNotification,
 }

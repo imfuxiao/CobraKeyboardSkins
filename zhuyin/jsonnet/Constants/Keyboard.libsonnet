@@ -924,6 +924,70 @@ local fonts = import 'Fonts.libsonnet';
       },
     },
 
+    // 符号数字键
+    symbolsNumber: {
+      oneButton: {
+        name: 'symbolOneButton',
+        params: {
+          action: { symbol: '1' },
+        },
+      },
+      twoButton: {
+        name: 'symbolTwoButton',
+        params: {
+          action: { symbol: '2' },
+        },
+      },
+      threeButton: {
+        name: 'symbolThreeButton',
+        params: {
+          action: { symbol: '3' },
+        },
+      },
+      fourButton: {
+        name: 'symbolFourButton',
+        params: {
+          action: { symbol: '4' },
+        },
+      },
+      fiveButton: {
+        name: 'symbolFiveButton',
+        params: {
+          action: { symbol: '5' },
+        },
+      },
+      sixButton: {
+        name: 'symbolSixButton',
+        params: {
+          action: { symbol: '6' },
+        },
+      },
+      sevenButton: {
+        name: 'symbolSevenButton',
+        params: {
+          action: { symbol: '7' },
+        },
+      },
+      eightButton: {
+        name: 'symbolEightButton',
+        params: {
+          action: { symbol: '8' },
+        },
+      },
+      nineButton: {
+        name: 'symbolNineButton',
+        params: {
+          action: { symbol: '9' },
+        },
+      },
+      zeroButton: {
+        name: 'symbolZeroButton',
+        params: {
+          action: { symbol: '0' },
+        },
+      },
+    },
+
     // 数字键
     oneButton: {
       name: 'oneButton',
@@ -1004,9 +1068,9 @@ local fonts = import 'Fonts.libsonnet';
         // swipeUpAction: { shortcut: '#中英切换' },
         swipeUpAction: { shortcut: '#次选上屏' },
         systemImageName: 'space',
-        notification: [
-          'preeditChangedForSpaceButtonNotification',
-        ],
+        // notification: [
+        //   'preeditChangedForSpaceButtonNotification',
+        // ],
       },
     },
 
@@ -1121,6 +1185,35 @@ local fonts = import 'Fonts.libsonnet';
       params: {
         action: 'nextKeyboard',
         systemImageName: 'globe',
+      },
+    },
+
+    // 数字键盘符号列表
+    numericSymbolsCollection: {
+      name: 'numericSymbolsCollection',
+      params: {
+        type: 'numericSymbols',
+        insets: { top: 8, left: 4, bottom: 4, right: 4 },
+        backgroundStyle: 'systemButtonBackgroundStyle',
+      },
+    },
+
+    // 数字键盘横向时全部部分视图
+    numericCategorySymbolCollection: {
+      name: 'numericCategorySymbolCollection',
+      params: {
+        type: 'categorySymbols',
+        insets: { top: 4, left: 4, bottom: 4, right: 4 },
+        backgroundStyle: 'systemButtonBackgroundStyle',
+      },
+    },
+
+    // 返回上一个使用的键盘
+    returnLastKeyboardButton: {
+      name: 'returnLastKeyboardButton',
+      params: {
+        text: '返回',
+        action: 'returnLastKeyboard',
       },
     },
 

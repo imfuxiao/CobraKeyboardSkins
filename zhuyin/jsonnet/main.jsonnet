@@ -27,6 +27,18 @@ local darkPinyinLandscapeFileContent = iPhonePinyin.new(isDark=true, isPortrait=
 // local lightIpadPinyinLandscapeContent = iPadPinyin.new(isDark=false, isPortrait=false);
 // local darkIpadPinyinLandscapeContent = iPadPinyin.new(isDark=true, isPortrait=false);
 
+local landscapeNumeric = import 'Components/LandscapeNumeric.libsonnet';
+local portraitNumeric = import 'Components/PortraitNumeric.libsonnet';
+
+local portraitNumericFileName = 'portraitNumeric';
+local lightPortraitNumericFileContent = portraitNumeric.new(isDark=false, isPortrait=true);
+local darkPortraitNumericFileContent = portraitNumeric.new(isDark=true, isPortrait=true);
+
+local landscapeNumericFileName = 'landscapeNumeric';
+local lightLandscapeNumericFileContent = landscapeNumeric.new(isDark=false, isPortrait=false);
+local darkLandscapeNumericFileContent = landscapeNumeric.new(isDark=true, isPortrait=false);
+
+
 local config = {
   name: '大千注音',
   pinyin: {
@@ -44,6 +56,12 @@ local config = {
     iPhone: {
       portrait: alphabeticPortraitFileName,
       landscape: alphabeticLandscapeFileName,
+    },
+  },
+  numeric: {
+    iPhone: {
+      portrait: portraitNumericFileName,
+      landscape: landscapeNumericFileName,
     },
   },
 };
@@ -71,4 +89,10 @@ local config = {
   ['dark/' + alphabeticPortraitFileName + '.yaml']: std.toString(alphabeticDarkPortraitFileContent),
   ['light/' + alphabeticLandscapeFileName + '.yaml']: std.toString(alphabeticLightLandscapeFileContent),
   ['dark/' + alphabeticLandscapeFileName + '.yaml']: std.toString(alphabeticDarkLandscapeFileContent),
+
+  // 数字键盘
+  ['light/' + portraitNumericFileName + '.yaml']: std.toString(lightPortraitNumericFileContent),
+  ['dark/' + portraitNumericFileName + '.yaml']: std.toString(darkPortraitNumericFileContent),
+  ['light/' + landscapeNumericFileName + '.yaml']: std.toString(lightLandscapeNumericFileContent),
+  ['dark/' + landscapeNumericFileName + '.yaml']: std.toString(darkLandscapeNumericFileContent),
 }
