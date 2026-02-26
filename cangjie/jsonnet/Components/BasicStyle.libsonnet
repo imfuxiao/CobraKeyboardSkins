@@ -272,6 +272,11 @@ local newAlphabeticButton(name, isDark=false, params={}, needHint=true) =
       }
     else
       {}
+  )
+  + (
+    if std.objectHas(params, 'notification') then
+      { notification: params.notification }
+    else {}
   );
 
 local newSystemButton(name, isDark=false, params={}) =

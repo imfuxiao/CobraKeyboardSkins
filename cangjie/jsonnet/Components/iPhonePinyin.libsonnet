@@ -73,6 +73,28 @@ local createRightTopBadgeForegroundStyle(isDark, params={}) = {
     basicStyle.newAlphabeticButtonSwipeForegroundStyle(isDark, params.params + rightBadgeLabelUpParams),
 };
 
+local asciiModeNotification(params={}) = {
+  notification: params.name + 'AcciiModeChangeNotification',
+};
+
+local createAsciiModeNotifcation(params={}) = {
+  [params.name + 'AcciiModeChangeNotification']: {
+    notificationType: 'rime',
+    rimeNotificationType: 'optionChanged',
+    rimeOptionName: 'ascii_mode',
+    rimeOptionValue: true,
+    foregroundStyle: params.forgroundStyle,
+    backgroundStyle: 'alphabeticButtonBackgroundStyle',
+    action: params.action,
+  } + (
+    if std.objectHas(params, 'bounds') then
+      {
+        bounds: params.bounds,
+      }
+    else {}
+  ),
+};
+
 
 // 标准26键布局
 local alphabeticKeyboardLayout(addSemicolon=false) = {
@@ -249,7 +271,19 @@ local newKeyLayout(isDark=false, isPortrait=true, addSemicolon=true) =
       uppercasedStateForegroundStyle:
         createButtonUppercasedForegroundStyle(isDark, params.keyboard.qButton { params: params.keyboard.qButton.params { text: 'Q' } }),
     }
-  ) + createSwipeUpHintStyle(isDark, params.keyboard.oneButton)
+    + asciiModeNotification(params.keyboard.qButton)
+    ,
+    needHint=false
+  )
+  + createSwipeUpHintStyle(isDark, params.keyboard.oneButton)
+  + createAsciiModeNotifcation({
+    name: params.keyboard.qButton.name,
+    forgroundStyle: [
+      params.keyboard.qButton.name + 'UppercaseForegroundStyle',
+      params.keyboard.oneButton.name + 'BadgeForegroundStyle',
+    ],
+    action: { symbol: 'q' },
+  })
 
   + basicStyle.newAlphabeticButton(
     params.keyboard.wButton.name,
@@ -280,7 +314,19 @@ local newKeyLayout(isDark=false, isPortrait=true, addSemicolon=true) =
       uppercasedStateForegroundStyle:
         createButtonUppercasedForegroundStyle(isDark, params.keyboard.wButton { params: params.keyboard.wButton.params { text: 'W' } }),
     }
-  ) + createSwipeUpHintStyle(isDark, params.keyboard.twoButton)
+    + asciiModeNotification(params.keyboard.wButton)
+    ,
+    needHint=false
+  )
+  + createSwipeUpHintStyle(isDark, params.keyboard.twoButton)
+  + createAsciiModeNotifcation({
+    name: params.keyboard.wButton.name,
+    forgroundStyle: [
+      params.keyboard.wButton.name + 'UppercaseForegroundStyle',
+      params.keyboard.twoButton.name + 'BadgeForegroundStyle',
+    ],
+    action: { symbol: 'w' },
+  })
 
   + basicStyle.newAlphabeticButton(
     params.keyboard.eButton.name,
@@ -311,7 +357,19 @@ local newKeyLayout(isDark=false, isPortrait=true, addSemicolon=true) =
       uppercasedStateForegroundStyle:
         createButtonUppercasedForegroundStyle(isDark, params.keyboard.eButton { params: params.keyboard.eButton.params { text: 'E' } }),
     }
-  ) + createSwipeUpHintStyle(isDark, params.keyboard.threeButton)
+    + asciiModeNotification(params.keyboard.eButton)
+    ,
+    needHint=false
+  )
+  + createSwipeUpHintStyle(isDark, params.keyboard.threeButton)
+  + createAsciiModeNotifcation({
+    name: params.keyboard.eButton.name,
+    forgroundStyle: [
+      params.keyboard.eButton.name + 'UppercaseForegroundStyle',
+      params.keyboard.threeButton.name + 'BadgeForegroundStyle',
+    ],
+    action: { symbol: 'e' },
+  })
 
   + basicStyle.newAlphabeticButton(
     params.keyboard.rButton.name,
@@ -342,7 +400,19 @@ local newKeyLayout(isDark=false, isPortrait=true, addSemicolon=true) =
       uppercasedStateForegroundStyle:
         createButtonUppercasedForegroundStyle(isDark, params.keyboard.rButton { params: params.keyboard.rButton.params { text: 'R' } }),
     }
-  ) + createSwipeUpHintStyle(isDark, params.keyboard.fourButton)
+    + asciiModeNotification(params.keyboard.rButton)
+    ,
+    needHint=false
+  )
+  + createSwipeUpHintStyle(isDark, params.keyboard.fourButton)
+  + createAsciiModeNotifcation({
+    name: params.keyboard.rButton.name,
+    forgroundStyle: [
+      params.keyboard.rButton.name + 'UppercaseForegroundStyle',
+      params.keyboard.fourButton.name + 'BadgeForegroundStyle',
+    ],
+    action: { symbol: 'r' },
+  })
 
   + basicStyle.newAlphabeticButton(
     params.keyboard.tButton.name,
@@ -373,7 +443,19 @@ local newKeyLayout(isDark=false, isPortrait=true, addSemicolon=true) =
       uppercasedStateForegroundStyle:
         createButtonUppercasedForegroundStyle(isDark, params.keyboard.tButton { params: params.keyboard.tButton.params { text: 'T' } }),
     }
-  ) + createSwipeUpHintStyle(isDark, params.keyboard.fiveButton)
+    + asciiModeNotification(params.keyboard.tButton)
+    ,
+    needHint=false
+  )
+  + createSwipeUpHintStyle(isDark, params.keyboard.fiveButton)
+  + createAsciiModeNotifcation({
+    name: params.keyboard.tButton.name,
+    forgroundStyle: [
+      params.keyboard.tButton.name + 'UppercaseForegroundStyle',
+      params.keyboard.fiveButton.name + 'BadgeForegroundStyle',
+    ],
+    action: { symbol: 't' },
+  })
 
   + basicStyle.newAlphabeticButton(
     params.keyboard.yButton.name,
@@ -404,7 +486,19 @@ local newKeyLayout(isDark=false, isPortrait=true, addSemicolon=true) =
       uppercasedStateForegroundStyle:
         createButtonUppercasedForegroundStyle(isDark, params.keyboard.yButton { params: params.keyboard.yButton.params { text: 'Y' } }),
     }
-  ) + createSwipeUpHintStyle(isDark, params.keyboard.sixButton)
+    + asciiModeNotification(params.keyboard.yButton)
+    ,
+    needHint=false
+  )
+  + createSwipeUpHintStyle(isDark, params.keyboard.sixButton)
+  + createAsciiModeNotifcation({
+    name: params.keyboard.yButton.name,
+    forgroundStyle: [
+      params.keyboard.yButton.name + 'UppercaseForegroundStyle',
+      params.keyboard.sixButton.name + 'BadgeForegroundStyle',
+    ],
+    action: { symbol: 'y' },
+  })
 
   + basicStyle.newAlphabeticButton(
     params.keyboard.uButton.name,
@@ -435,7 +529,19 @@ local newKeyLayout(isDark=false, isPortrait=true, addSemicolon=true) =
       uppercasedStateForegroundStyle:
         createButtonUppercasedForegroundStyle(isDark, params.keyboard.uButton { params: params.keyboard.uButton.params { text: 'U' } }),
     }
-  ) + createSwipeUpHintStyle(isDark, params.keyboard.sevenButton)
+    + asciiModeNotification(params.keyboard.uButton)
+    ,
+    needHint=false
+  )
+  + createSwipeUpHintStyle(isDark, params.keyboard.sevenButton)
+  + createAsciiModeNotifcation({
+    name: params.keyboard.uButton.name,
+    forgroundStyle: [
+      params.keyboard.uButton.name + 'UppercaseForegroundStyle',
+      params.keyboard.sevenButton.name + 'BadgeForegroundStyle',
+    ],
+    action: { symbol: 'u' },
+  })
 
   + basicStyle.newAlphabeticButton(
     params.keyboard.iButton.name,
@@ -466,7 +572,19 @@ local newKeyLayout(isDark=false, isPortrait=true, addSemicolon=true) =
       uppercasedStateForegroundStyle:
         createButtonUppercasedForegroundStyle(isDark, params.keyboard.iButton { params: params.keyboard.iButton.params { text: 'I' } }),
     }
-  ) + createSwipeUpHintStyle(isDark, params.keyboard.eightButton)
+    + asciiModeNotification(params.keyboard.iButton)
+    ,
+    needHint=false
+  )
+  + createSwipeUpHintStyle(isDark, params.keyboard.eightButton)
+  + createAsciiModeNotifcation({
+    name: params.keyboard.iButton.name,
+    forgroundStyle: [
+      params.keyboard.iButton.name + 'UppercaseForegroundStyle',
+      params.keyboard.eightButton.name + 'BadgeForegroundStyle',
+    ],
+    action: { symbol: 'i' },
+  })
 
   + basicStyle.newAlphabeticButton(
     params.keyboard.oButton.name,
@@ -497,7 +615,19 @@ local newKeyLayout(isDark=false, isPortrait=true, addSemicolon=true) =
       uppercasedStateForegroundStyle:
         createButtonUppercasedForegroundStyle(isDark, params.keyboard.oButton { params: params.keyboard.oButton.params { text: 'O' } }),
     }
-  ) + createSwipeUpHintStyle(isDark, params.keyboard.nineButton)
+    + asciiModeNotification(params.keyboard.oButton)
+    ,
+    needHint=false
+  )
+  + createSwipeUpHintStyle(isDark, params.keyboard.nineButton)
+  + createAsciiModeNotifcation({
+    name: params.keyboard.oButton.name,
+    forgroundStyle: [
+      params.keyboard.oButton.name + 'UppercaseForegroundStyle',
+      params.keyboard.nineButton.name + 'BadgeForegroundStyle',
+    ],
+    action: { symbol: 'o' },
+  })
 
   + basicStyle.newAlphabeticButton(
     params.keyboard.pButton.name,
@@ -528,7 +658,19 @@ local newKeyLayout(isDark=false, isPortrait=true, addSemicolon=true) =
       uppercasedStateForegroundStyle:
         createButtonUppercasedForegroundStyle(isDark, params.keyboard.pButton { params: params.keyboard.pButton.params { text: 'P' } }),
     }
-  ) + createSwipeUpHintStyle(isDark, params.keyboard.zeroButton)
+    + asciiModeNotification(params.keyboard.pButton)
+    ,
+    needHint=false
+  )
+  + createSwipeUpHintStyle(isDark, params.keyboard.zeroButton)
+  + createAsciiModeNotifcation({
+    name: params.keyboard.pButton.name,
+    forgroundStyle: [
+      params.keyboard.pButton.name + 'UppercaseForegroundStyle',
+      params.keyboard.zeroButton.name + 'BadgeForegroundStyle',
+    ],
+    action: { symbol: 'p' },
+  })
 
   // Second Row
   + basicStyle.newAlphabeticButton(
@@ -570,7 +712,20 @@ local newKeyLayout(isDark=false, isPortrait=true, addSemicolon=true) =
       uppercasedStateForegroundStyle:
         createButtonUppercasedForegroundStyle(isDark, params.keyboard.aButton { params: params.keyboard.aButton.params { text: 'A' } }),
     }
-  ) + createSwipeUpHintStyle(isDark, params.keyboard.graveButton)
+    + asciiModeNotification(params.keyboard.aButton)
+    ,
+    needHint=false
+  )
+  + createSwipeUpHintStyle(isDark, params.keyboard.graveButton)
+  + createAsciiModeNotifcation({
+    name: params.keyboard.aButton.name,
+    forgroundStyle: [
+      params.keyboard.aButton.name + 'UppercaseForegroundStyle',
+      params.keyboard.graveButton.name + 'BadgeForegroundStyle',
+    ],
+    action: { symbol: 'a' },
+    bounds: { width: '111/168.75', alignment: 'right' },
+  })
 
   + basicStyle.newAlphabeticButton(
     params.keyboard.sButton.name,
@@ -601,8 +756,19 @@ local newKeyLayout(isDark=false, isPortrait=true, addSemicolon=true) =
       uppercasedStateForegroundStyle:
         createButtonUppercasedForegroundStyle(isDark, params.keyboard.sButton { params: params.keyboard.sButton.params { text: 'S' } }),
     }
+    + asciiModeNotification(params.keyboard.sButton)
+    ,
+    needHint=false
   )
   + createSwipeUpHintStyle(isDark, params.keyboard.forwardSlashButton)
+  + createAsciiModeNotifcation({
+    name: params.keyboard.sButton.name,
+    forgroundStyle: [
+      params.keyboard.sButton.name + 'UppercaseForegroundStyle',
+      params.keyboard.forwardSlashButton.name + 'BadgeForegroundStyle',
+    ],
+    action: { symbol: 's' },
+  })
 
   + basicStyle.newAlphabeticButton(
     params.keyboard.dButton.name,
@@ -633,7 +799,19 @@ local newKeyLayout(isDark=false, isPortrait=true, addSemicolon=true) =
       uppercasedStateForegroundStyle:
         createButtonUppercasedForegroundStyle(isDark, params.keyboard.dButton { params: params.keyboard.dButton.params { text: 'D' } }),
     }
-  ) + createSwipeUpHintStyle(isDark, params.keyboard.colonButton)
+    + asciiModeNotification(params.keyboard.dButton)
+    ,
+    needHint=false
+  )
+  + createSwipeUpHintStyle(isDark, params.keyboard.colonButton)
+  + createAsciiModeNotifcation({
+    name: params.keyboard.dButton.name,
+    forgroundStyle: [
+      params.keyboard.dButton.name + 'UppercaseForegroundStyle',
+      params.keyboard.colonButton.name + 'BadgeForegroundStyle',
+    ],
+    action: { symbol: 'd' },
+  })
 
   + basicStyle.newAlphabeticButton(
     params.keyboard.fButton.name,
@@ -664,7 +842,19 @@ local newKeyLayout(isDark=false, isPortrait=true, addSemicolon=true) =
       uppercasedStateForegroundStyle:
         createButtonUppercasedForegroundStyle(isDark, params.keyboard.fButton { params: params.keyboard.fButton.params { text: 'F' } }),
     }
-  ) + createSwipeUpHintStyle(isDark, params.keyboard.semicolonButton)
+    + asciiModeNotification(params.keyboard.fButton)
+    ,
+    needHint=false
+  )
+  + createSwipeUpHintStyle(isDark, params.keyboard.semicolonButton)
+  + createAsciiModeNotifcation({
+    name: params.keyboard.fButton.name,
+    forgroundStyle: [
+      params.keyboard.fButton.name + 'UppercaseForegroundStyle',
+      params.keyboard.semicolonButton.name + 'BadgeForegroundStyle',
+    ],
+    action: { symbol: 'f' },
+  })
 
   + basicStyle.newAlphabeticButton(
     params.keyboard.gButton.name,
@@ -695,7 +885,19 @@ local newKeyLayout(isDark=false, isPortrait=true, addSemicolon=true) =
       uppercasedStateForegroundStyle:
         createButtonUppercasedForegroundStyle(isDark, params.keyboard.gButton { params: params.keyboard.gButton.params { text: 'G' } }),
     }
-  ) + createSwipeUpHintStyle(isDark, params.keyboard.leftParenthesisButton)
+    + asciiModeNotification(params.keyboard.gButton)
+    ,
+    needHint=false
+  )
+  + createSwipeUpHintStyle(isDark, params.keyboard.leftParenthesisButton)
+  + createAsciiModeNotifcation({
+    name: params.keyboard.gButton.name,
+    forgroundStyle: [
+      params.keyboard.gButton.name + 'UppercaseForegroundStyle',
+      params.keyboard.leftParenthesisButton.name + 'BadgeForegroundStyle',
+    ],
+    action: { symbol: 'g' },
+  })
 
   + basicStyle.newAlphabeticButton(
     params.keyboard.hButton.name,
@@ -726,7 +928,19 @@ local newKeyLayout(isDark=false, isPortrait=true, addSemicolon=true) =
       uppercasedStateForegroundStyle:
         createButtonUppercasedForegroundStyle(isDark, params.keyboard.hButton { params: params.keyboard.hButton.params { text: 'H' } }),
     }
-  ) + createSwipeUpHintStyle(isDark, params.keyboard.rightParenthesisButton)
+    + asciiModeNotification(params.keyboard.hButton)
+    ,
+    needHint=false
+  )
+  + createSwipeUpHintStyle(isDark, params.keyboard.rightParenthesisButton)
+  + createAsciiModeNotifcation({
+    name: params.keyboard.hButton.name,
+    forgroundStyle: [
+      params.keyboard.hButton.name + 'UppercaseForegroundStyle',
+      params.keyboard.rightParenthesisButton.name + 'BadgeForegroundStyle',
+    ],
+    action: { symbol: 'h' },
+  })
 
   + basicStyle.newAlphabeticButton(
     params.keyboard.jButton.name,
@@ -757,7 +971,19 @@ local newKeyLayout(isDark=false, isPortrait=true, addSemicolon=true) =
       uppercasedStateForegroundStyle:
         createButtonUppercasedForegroundStyle(isDark, params.keyboard.jButton { params: params.keyboard.jButton.params { text: 'J' } }),
     }
-  ) + createSwipeUpHintStyle(isDark, params.keyboard.tildeButton)
+    + asciiModeNotification(params.keyboard.jButton)
+    ,
+    needHint=false
+  )
+  + createSwipeUpHintStyle(isDark, params.keyboard.tildeButton)
+  + createAsciiModeNotifcation({
+    name: params.keyboard.jButton.name,
+    forgroundStyle: [
+      params.keyboard.jButton.name + 'UppercaseForegroundStyle',
+      params.keyboard.tildeButton.name + 'BadgeForegroundStyle',
+    ],
+    action: { symbol: 'j' },
+  })
 
   + basicStyle.newAlphabeticButton(
     params.keyboard.kButton.name,
@@ -788,7 +1014,19 @@ local newKeyLayout(isDark=false, isPortrait=true, addSemicolon=true) =
       uppercasedStateForegroundStyle:
         createButtonUppercasedForegroundStyle(isDark, params.keyboard.kButton { params: params.keyboard.kButton.params { text: 'K' } }),
     }
-  ) + createSwipeUpHintStyle(isDark, params.keyboard.leftCurlyQuoteButton)
+    + asciiModeNotification(params.keyboard.kButton)
+    ,
+    needHint=false
+  )
+  + createSwipeUpHintStyle(isDark, params.keyboard.leftCurlyQuoteButton)
+  + createAsciiModeNotifcation({
+    name: params.keyboard.kButton.name,
+    forgroundStyle: [
+      params.keyboard.kButton.name + 'UppercaseForegroundStyle',
+      params.keyboard.leftCurlyQuoteButton.name + 'BadgeForegroundStyle',
+    ],
+    action: { symbol: 'k' },
+  })
 
   + basicStyle.newAlphabeticButton(
     params.keyboard.lButton.name,
@@ -829,7 +1067,20 @@ local newKeyLayout(isDark=false, isPortrait=true, addSemicolon=true) =
       uppercasedStateForegroundStyle:
         createButtonUppercasedForegroundStyle(isDark, params.keyboard.lButton { params: params.keyboard.lButton.params { text: 'L' } }),
     }
-  ) + createSwipeUpHintStyle(isDark, params.keyboard.rightCurlyQuoteButton)
+    + asciiModeNotification(params.keyboard.lButton)
+    ,
+    needHint=false
+  )
+  + createSwipeUpHintStyle(isDark, params.keyboard.rightCurlyQuoteButton)
+  + createAsciiModeNotifcation({
+    name: params.keyboard.lButton.name,
+    forgroundStyle: [
+      params.keyboard.lButton.name + 'UppercaseForegroundStyle',
+      params.keyboard.rightCurlyQuoteButton.name + 'BadgeForegroundStyle',
+    ],
+    action: { symbol: 'l' },
+    bounds: { width: '111/168.75', alignment: 'left' },
+  })
 
   + (
     if addSemicolon == true then
@@ -912,7 +1163,19 @@ local newKeyLayout(isDark=false, isPortrait=true, addSemicolon=true) =
       uppercasedStateForegroundStyle:
         createButtonUppercasedForegroundStyle(isDark, params.keyboard.zButton { params: params.keyboard.zButton.params { text: 'Z' } }),
     }
-  ) + createSwipeUpHintStyle(isDark, params.keyboard.atButton)
+    + asciiModeNotification(params.keyboard.zButton)
+    ,
+    needHint=false
+  )
+  + createSwipeUpHintStyle(isDark, params.keyboard.atButton)
+  + createAsciiModeNotifcation({
+    name: params.keyboard.zButton.name,
+    forgroundStyle: [
+      params.keyboard.zButton.name + 'UppercaseForegroundStyle',
+      params.keyboard.atButton.name + 'BadgeForegroundStyle',
+    ],
+    action: { symbol: 'z' },
+  })
 
   + basicStyle.newAlphabeticButton(
     params.keyboard.xButton.name,
@@ -943,7 +1206,19 @@ local newKeyLayout(isDark=false, isPortrait=true, addSemicolon=true) =
       uppercasedStateForegroundStyle:
         createButtonUppercasedForegroundStyle(isDark, params.keyboard.xButton { params: params.keyboard.xButton.params { text: 'X' } }),
     }
-  ) + createSwipeUpHintStyle(isDark, params.keyboard.periodButton)
+    + asciiModeNotification(params.keyboard.xButton)
+    ,
+    needHint=false
+  )
+  + createSwipeUpHintStyle(isDark, params.keyboard.periodButton)
+  + createAsciiModeNotifcation({
+    name: params.keyboard.xButton.name,
+    forgroundStyle: [
+      params.keyboard.xButton.name + 'UppercaseForegroundStyle',
+      params.keyboard.periodButton.name + 'BadgeForegroundStyle',
+    ],
+    action: { symbol: 'x' },
+  })
 
 
   + basicStyle.newAlphabeticButton(
@@ -975,7 +1250,19 @@ local newKeyLayout(isDark=false, isPortrait=true, addSemicolon=true) =
       uppercasedStateForegroundStyle:
         createButtonUppercasedForegroundStyle(isDark, params.keyboard.cButton { params: params.keyboard.cButton.params { text: 'C' } }),
     }
-  ) + createSwipeUpHintStyle(isDark, params.keyboard.hashButton)
+    + asciiModeNotification(params.keyboard.cButton)
+    ,
+    needHint=false
+  )
+  + createSwipeUpHintStyle(isDark, params.keyboard.hashButton)
+  + createAsciiModeNotifcation({
+    name: params.keyboard.cButton.name,
+    forgroundStyle: [
+      params.keyboard.cButton.name + 'UppercaseForegroundStyle',
+      params.keyboard.hashButton.name + 'BadgeForegroundStyle',
+    ],
+    action: { symbol: 'c' },
+  })
 
   + basicStyle.newAlphabeticButton(
     params.keyboard.vButton.name,
@@ -1006,7 +1293,19 @@ local newKeyLayout(isDark=false, isPortrait=true, addSemicolon=true) =
       uppercasedStateForegroundStyle:
         createButtonUppercasedForegroundStyle(isDark, params.keyboard.vButton { params: params.keyboard.vButton.params { text: 'V' } }),
     }
-  ) + createSwipeUpHintStyle(isDark, params.keyboard.ideographicCommaButton)
+    + asciiModeNotification(params.keyboard.vButton)
+    ,
+    needHint=false
+  )
+  + createSwipeUpHintStyle(isDark, params.keyboard.ideographicCommaButton)
+  + createAsciiModeNotifcation({
+    name: params.keyboard.vButton.name,
+    forgroundStyle: [
+      params.keyboard.vButton.name + 'UppercaseForegroundStyle',
+      params.keyboard.ideographicCommaButton.name + 'BadgeForegroundStyle',
+    ],
+    action: { symbol: 'v' },
+  })
 
   + basicStyle.newAlphabeticButton(
     params.keyboard.bButton.name,
@@ -1037,7 +1336,19 @@ local newKeyLayout(isDark=false, isPortrait=true, addSemicolon=true) =
       uppercasedStateForegroundStyle:
         createButtonUppercasedForegroundStyle(isDark, params.keyboard.bButton { params: params.keyboard.bButton.params { text: 'B' } }),
     }
-  ) + createSwipeUpHintStyle(isDark, params.keyboard.questionMarkButton)
+    + asciiModeNotification(params.keyboard.bButton)
+    ,
+    needHint=false
+  )
+  + createSwipeUpHintStyle(isDark, params.keyboard.questionMarkButton)
+  + createAsciiModeNotifcation({
+    name: params.keyboard.bButton.name,
+    forgroundStyle: [
+      params.keyboard.bButton.name + 'UppercaseForegroundStyle',
+      params.keyboard.questionMarkButton.name + 'BadgeForegroundStyle',
+    ],
+    action: { symbol: 'b' },
+  })
 
   + basicStyle.newAlphabeticButton(
     params.keyboard.nButton.name,
@@ -1068,7 +1379,19 @@ local newKeyLayout(isDark=false, isPortrait=true, addSemicolon=true) =
       uppercasedStateForegroundStyle:
         createButtonUppercasedForegroundStyle(isDark, params.keyboard.nButton { params: params.keyboard.nButton.params { text: 'N' } }),
     }
-  ) + createSwipeUpHintStyle(isDark, params.keyboard.exclamationMarkButton)
+    + asciiModeNotification(params.keyboard.nButton)
+    ,
+    needHint=false
+  )
+  + createSwipeUpHintStyle(isDark, params.keyboard.exclamationMarkButton)
+  + createAsciiModeNotifcation({
+    name: params.keyboard.nButton.name,
+    forgroundStyle: [
+      params.keyboard.nButton.name + 'UppercaseForegroundStyle',
+      params.keyboard.exclamationMarkButton.name + 'BadgeForegroundStyle',
+    ],
+    action: { symbol: 'n' },
+  })
 
   + basicStyle.newAlphabeticButton(
     params.keyboard.mButton.name,
@@ -1099,7 +1422,19 @@ local newKeyLayout(isDark=false, isPortrait=true, addSemicolon=true) =
       uppercasedStateForegroundStyle:
         createButtonUppercasedForegroundStyle(isDark, params.keyboard.mButton { params: params.keyboard.mButton.params { text: 'M' } }),
     }
-  ) + createSwipeUpHintStyle(isDark, params.keyboard.ellipsisButton)
+    + asciiModeNotification(params.keyboard.mButton)
+    ,
+    needHint=false
+  )
+  + createSwipeUpHintStyle(isDark, params.keyboard.ellipsisButton)
+  + createAsciiModeNotifcation({
+    name: params.keyboard.mButton.name,
+    forgroundStyle: [
+      params.keyboard.mButton.name + 'UppercaseForegroundStyle',
+      params.keyboard.ellipsisButton.name + 'BadgeForegroundStyle',
+    ],
+    action: { symbol: 'm' },
+  })
 
   + basicStyle.newSystemButton(
     params.keyboard.backspaceButton.name,
