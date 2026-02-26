@@ -8,6 +8,7 @@ build:
 	$(MAKE) -C hamster
 	$(MAKE) -C T9
 	$(MAKE) -C cangjie
+	$(MAKE) -C zhuyin
 	rm -rf build && mkdir -p build/
 	cp -r default/build/*.cskin \
 	numeric/build/*.cskin \
@@ -15,6 +16,7 @@ build:
 	hamster/build/*.cskin \
 	T9/build/*.cskin \
 	cangjie/build/*.cskin \
+	zhuyin/build/*.cskin \
 	build/
 
 clean:
@@ -25,6 +27,7 @@ clean:
 	$(MAKE) -C hamster clean
 	$(MAKE) -C T9 clean
 	$(MAKE) -C cangjie clean
+	$(MAKE) -C zhuyin clean
 	rm -rf build
 
 all: build
