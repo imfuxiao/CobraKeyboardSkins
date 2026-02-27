@@ -41,7 +41,8 @@ local newGeometryStyle(params={}, isDark=false) =
   local colors = extractColors(params, [
     'normalColor',
     'highlightColor',
-    'borderColor',
+    'normalBorderColor',
+    'highlightBorderColor',
     'normalLowerEdgeColor',
     'highlightLowerEdgeColor',
     'normalShadowColor',

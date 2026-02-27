@@ -35,7 +35,7 @@ local testGeometryStyle = utils.newGeometryStyle('test', {
   colorGradientType: 'radial',
   cornerRadius: 6,
   borderSize: 3,
-  borderColor: '#f5d7a1',
+  normalBorderColor: '#f5d7a1',
   normalLowerEdgeColor: '#f5d7a1',
   highlightLowerEdgeColor: '#552E5A',
   normalShadowColor: '#e60b09',

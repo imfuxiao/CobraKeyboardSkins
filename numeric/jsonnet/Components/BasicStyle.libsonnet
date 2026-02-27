@@ -88,7 +88,7 @@ local alphabeticHintBackgroundStyleName = 'alphabeticHintBackgroundStyle';
 local newAlphabeticHintBackgroundStyle(isDark=false, params={}) = {
   [alphabeticHintBackgroundStyleName]: utils.newGeometryStyle({
     normalColor: colors.standardCalloutBackgroundColor,
-    borderColor: colors.standardCalloutBorderColor,
+    normalBorderColor: colors.standardCalloutBorderColor,
     borderSize: 0.5,
   } + params, isDark),
 };
