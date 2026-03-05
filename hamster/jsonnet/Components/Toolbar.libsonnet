@@ -3,6 +3,24 @@ local keyboardParams = import '../Constants/Keyboard.libsonnet';
 local basicStyle = import 'BasicStyle.libsonnet';
 local utils = import 'Utils.libsonnet';
 
+local toolbarLayout = [
+  {
+    HStack: {
+      subviews: [
+        {
+          Cell: keyboardParams.keyboard.toolbarKeyboardMenuButton.name,
+        },
+        {
+          Cell: 'spacer',
+        },
+        {
+          Cell: keyboardParams.keyboard.toolbarKeyboardDismissButton.name,
+        },
+      ],
+    },
+  },
+];
+
 
 local newCandidateStyle(param={}, isDark=false) =
   utils.extractProperties(
@@ -202,7 +220,7 @@ local newToolbar(isDark=false, params={}) =
   {
     toolbarHeight: keyboardParams.toolbar.height,
     toolbarStyle: utils.newBackgroundStyle(style=toolbarBackgroundStyleName),
-    toolbarLayout: {},
+    toolbarLayout: toolbarLayout,
     horizontalCandidatesStyle:
       utils.extractProperties(keyboardParams.horizontalCandidateStyle + params, ['insets'])
       {
@@ -230,7 +248,9 @@ local newToolbar(isDark=false, params={}) =
   + newVerticalCandidatePageUpButtonStyle(isDark)
   + newVerticalCandidatePageDownButtonStyle(isDark)
   + newVerticalCandidateReturnButtonStyle(isDark)
-  + newVerticalCandidateBackspaceButtonStyle(isDark);
+  + newVerticalCandidateBackspaceButtonStyle(isDark)
+  + basicStyle.newToolbarKeyboardMenuButtonStyle(isDark)
+  + basicStyle.newToolbarDismissKeyboardButtonStyle(isDark);
 
 // 导出
 {

@@ -26,6 +26,38 @@ local getKeyboardActionText(params={}, key='action', isUppercase=false) =
       {}
   );
 
+local toolbarKeyboardMenuButtonForegroundStyleName = keyboardParams.keyboard.toolbarKeyboardMenuButton.name + 'ForegroundStyle';
+local newToolbarKeyboardMenuButtonStyle(isDark=false, params={}) = {
+  [keyboardParams.keyboard.toolbarKeyboardMenuButton.name]: {
+    size: {
+      width: '1/8',
+    },
+    foregroundStyle: toolbarKeyboardMenuButtonForegroundStyleName,
+    action: keyboardParams.keyboard.toolbarKeyboardMenuButton.params.action,
+  },
+  [toolbarKeyboardMenuButtonForegroundStyleName]: utils.newSystemImageStyle({
+    normalColor: colors.labelColor.secondary,
+    highlightColor: colors.labelColor.secondary,
+    fontSize: fonts.standardButtonImageFontSize,
+  } + keyboardParams.keyboard.toolbarKeyboardMenuButton.params + params, isDark),
+};
+
+local toolbarDismissKeyboardButtonForegroundStyleName = keyboardParams.keyboard.toolbarKeyboardDismissButton.name + 'ForegroundStyle';
+local newToolbarDismissKeyboardButtonStyle(isDark=false, params={}) = {
+  [keyboardParams.keyboard.toolbarKeyboardDismissButton.name]: {
+    size: {
+      width: '1/8',
+    },
+    foregroundStyle: toolbarDismissKeyboardButtonForegroundStyleName,
+    action: keyboardParams.keyboard.toolbarKeyboardDismissButton.params.action,
+  },
+  [toolbarDismissKeyboardButtonForegroundStyleName]: utils.newSystemImageStyle({
+    normalColor: colors.labelColor.secondary,
+    highlightColor: colors.labelColor.secondary,
+    fontSize: fonts.standardButtonImageFontSize,
+  } + keyboardParams.keyboard.toolbarKeyboardDismissButton.params + params, isDark),
+};
+
 // 通用键盘背景样式
 local keyboardBackgroundStyleName = 'keyboardBackgroundStyle';
 local newKeyboardBackgroundStyle(isDark=false, params={}) = {
@@ -413,6 +445,9 @@ local newCommitCandidateForegroundStyle(isDark=false, params={}) = {
   enterButtonForegroundStyle: enterButtonForegroundStyle,
   newEnterButtonForegroundStyle: newEnterButtonForegroundStyle,
   newCommitCandidateForegroundStyle: newCommitCandidateForegroundStyle,
+
+  newToolbarKeyboardMenuButtonStyle: newToolbarKeyboardMenuButtonStyle,
+  newToolbarDismissKeyboardButtonStyle: newToolbarDismissKeyboardButtonStyle,
 
   // notification
   returnKeyboardTypeChangedNotification: returnKeyboardTypeChangedNotification,

@@ -1050,5 +1050,24 @@ local fonts = import 'Fonts.libsonnet';
         action: { character: '」' },
       },
     },
+
+    toolbarKeyboardMenuButton: {
+      name: 'toolbarKeyboardMenuButton',
+      params: {
+        action: {
+          shortcut: '#keyboardMenu',
+        },
+        // systemImageName: 'house.circle',
+        systemImageName: 'command',
+      },
+    },
+
+    toolbarKeyboardDismissButton: {
+      name: 'toolbarKeyboardDismissButton',
+      params: {
+        action: 'dismissKeyboard',
+        systemImageName: 'chevron.down',
+      },
+    },
   },
 }
