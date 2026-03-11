@@ -115,6 +115,22 @@ local fonts = import 'Fonts.libsonnet';
       params: {
         action: { character: 'q' },
         uppercasedStateAction: { character: 'Q' },
+        // backgroundNormalColor: {
+        //   light: '#fff1bc',
+        //   dark: '#FFFFFF',
+        // },
+        // backgroundHighlightColor: {
+        //   light: '#699c78',
+        //   dark: '#FFFFFF',
+        // },
+        // foregroundNormalColor: {
+        //   light: '#DD105E',
+        //   dark: '#FFFFFF',
+        // },
+        // foregroundHighlightColor: {
+        //   light: '#BDBDD7',
+        //   dark: '#FFFFFF',
+        // },
       },
     },
     wButton: {

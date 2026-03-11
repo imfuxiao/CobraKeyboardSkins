@@ -19,6 +19,47 @@
 
   如想对按键上下划动进行调整，可在此文件中添加或修改对应按键的 `swipeUpAction` 或 `swipeDownAction` 属性。
 
+## 如何为单个按键设置颜色
+
+在 `jsonnet/Constants/Keyboard.libsonnet` 中找到对应按键的定义，在 `params` 属性中添加或修改 `color` 相关属性。
+
+- backgroundNormalColor： 背景颜色（正常状态）
+- backgroundHighlightColor： 背景颜色（高亮状态）
+- foregroundNormalColor： 前景颜色（正常状态）
+- foregroundHighlightColor： 前景颜色（高亮状态）
+
+注意：每种颜色需要分别设置 light 和 dark 两个模式的值，以适配不同的系统主题。例如：
+
+```jsonnet
+{
+  // ...
+  qButton: {
+    name: 'qButton',
+    params: {
+      action: { character: 'q' },
+      uppercasedStateAction: { character: 'Q' },
+      backgroundNormalColor: {
+        light: '#fff1bc',
+        dark: '#FFFFFF',
+      },
+      backgroundHighlightColor: {
+        light: '#699c78',
+        dark: '#FFFFFF',
+      },
+      foregroundNormalColor: {
+        light: '#DD105E',
+        dark: '#FFFFFF',
+      },
+      foregroundHighlightColor: {
+        light: '#BDBDD7',
+        dark: '#FFFFFF',
+      },
+    },
+  },
+  // ...
+}
+```
+
 ## 手机端编译
 
 长按皮肤，选择「运行 main.jsonnet」

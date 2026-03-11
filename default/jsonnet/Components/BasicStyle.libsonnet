@@ -37,8 +37,18 @@ local alphabeticButtonBackgroundStyleName = 'alphabeticButtonBackgroundStyle';
 local newAlphabeticButtonBackgroundStyle(isDark=false, params={}) = {
   [alphabeticButtonBackgroundStyleName]: utils.newGeometryStyle({
     insets: keyboardParams.keyboard.button.backgroundInsets.iPhone.portrait,
-    normalColor: colors.standardButtonBackgroundColor,
-    highlightColor: colors.standardButtonHighlightedBackgroundColor,
+    normalColor: (
+      if std.objectHas(params, 'backgroundNormalColor') then
+        params.backgroundNormalColor
+      else
+        colors.standardButtonBackgroundColor
+    ),
+    highlightColor: (
+      if std.objectHas(params, 'backgroundHighlightColor') then
+        params.backgroundHighlightColor
+      else
+        colors.standardButtonHighlightedBackgroundColor
+    ),
     cornerRadius: buttonCornerRadius,
     normalLowerEdgeColor: colors.lowerEdgeOfButtonNormalColor,
     highlightLowerEdgeColor: colors.lowerEdgeOfButtonHighlightColor,
@@ -49,14 +59,34 @@ local newAlphabeticButtonBackgroundStyle(isDark=false, params={}) = {
 local newAlphabeticButtonForegroundStyle(isDark=false, params={}) =
   if std.objectHas(params, 'systemImageName') then
     utils.newSystemImageStyle({
-      normalColor: colors.standardButtonForegroundColor,
-      highlightColor: colors.standardButtonHighlightedForegroundColor,
+      normalColor: (
+        if std.objectHas(params, 'foregroundNormalColor') then
+          params.foregroundNormalColor
+        else
+          colors.standardButtonForegroundColor
+      ),
+      highlightColor: (
+        if std.objectHas(params, 'foregroundHighlightColor') then
+          params.foregroundHighlightColor
+        else
+          colors.standardButtonHighlightedForegroundColor
+      ),
       fontSize: fonts.standardButtonImageFontSize,
     } + params, isDark)
   else
     utils.newTextStyle({
-      normalColor: colors.standardButtonForegroundColor,
-      highlightColor: colors.standardButtonHighlightedForegroundColor,
+      normalColor: (
+        if std.objectHas(params, 'foregroundNormalColor') then
+          params.foregroundNormalColor
+        else
+          colors.standardButtonForegroundColor
+      ),
+      highlightColor: (
+        if std.objectHas(params, 'foregroundHighlightColor') then
+          params.foregroundHighlightColor
+        else
+          colors.standardButtonHighlightedForegroundColor
+      ),
       fontSize: fonts.standardButtonTextFontSize,
     } + params, isDark) + getKeyboardActionText(params);
 
@@ -189,7 +219,7 @@ local newImageSystemButtonForegroundStyle(isDark=false, params={}) =
 
 local newAlphabeticButton(name, isDark=false, params={}, needHint=true) =
   {
-    [name]: utils.newBackgroundStyle(style=alphabeticButtonBackgroundStyleName)
+    [name]: utils.newBackgroundStyle(style=name + 'BackgroundStyle')
             + (
               if std.objectHas(params, 'foregroundStyleName') then
                 { foregroundStyle: params.foregroundStyleName }
@@ -226,6 +256,32 @@ local newAlphabeticButton(name, isDark=false, params={}, needHint=true) =
                 'notification',
               ]
             ),
+  }
+  + {
+    [name + 'BackgroundStyle']:
+      (
+        if std.objectHas(params, 'backgroundStyle') then
+          params.backgroundStyle
+        else
+          utils.newGeometryStyle({
+            insets: keyboardParams.keyboard.button.backgroundInsets.iPhone.portrait,
+            normalColor: (
+              if std.objectHas(params, 'backgroundNormalColor') then
+                params.backgroundNormalColor
+              else
+                colors.standardButtonBackgroundColor
+            ),
+            highlightColor: (
+              if std.objectHas(params, 'backgroundHighlightColor') then
+                params.backgroundHighlightColor
+              else
+                colors.standardButtonHighlightedBackgroundColor
+            ),
+            cornerRadius: buttonCornerRadius,
+            normalLowerEdgeColor: colors.lowerEdgeOfButtonNormalColor,
+            highlightLowerEdgeColor: colors.lowerEdgeOfButtonHighlightColor,
+          } + params, isDark)
+      ),
   }
   + (
     if std.objectHas(params, 'foregroundStyle') then
