@@ -628,7 +628,8 @@ local fonts = import 'Fonts.libsonnet';
     periodButton: {
       name: 'periodButton',
       params: {
-        action: { character: '.' },
+        action: { symbol: '.' },
+        preeditStateAction: { character: '.' },
         swipeUpAction: { character: ',' },
       },
     },
