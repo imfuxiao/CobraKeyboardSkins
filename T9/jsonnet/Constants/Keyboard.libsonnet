@@ -737,6 +737,7 @@ local fonts = import 'Fonts.libsonnet';
       name: 'commaButton',
       params: {
         action: { symbol: ',' },
+        swipeUpAction: { symbol: '.' },
       },
     },
     chinesePeriodButton: {
