@@ -461,6 +461,9 @@ local fonts = import 'Fonts.libsonnet';
       name: 'enterButton',
       params: {
         action: 'enter',
+        swipeUpAction: {
+          symbol: "\r\n"
+        },
         text: '$returnKeyType',
         notification: [
           'returnKeyTypeChangedNotification',
