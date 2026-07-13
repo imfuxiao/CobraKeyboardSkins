@@ -66,7 +66,7 @@ local createRightTopBadgeForegroundStyle(isDark, params={}) = {
 
 
 // 标准26键布局
-local alphabeticKeyboardLayout(addSemicolon = false) = {
+local alphabeticKeyboardLayout(addSemicolon=false) = {
   keyboardLayout: [
     {
       HStack: {
@@ -868,7 +868,7 @@ local newKeyLayout(isDark=false, isPortrait=true, addSemicolon=true) =
         swipeUpForegroundStyle: params.keyboard.periodButton.name + 'SwipeUpHintForegroundStyle',
       },
     },
-    needHint = false,
+    needHint=false,
   ) + createSwipeUpHintStyle(isDark, params.keyboard.periodButton)
 
   + basicStyle.newAlphabeticButton(
@@ -887,10 +887,11 @@ local newKeyLayout(isDark=false, isPortrait=true, addSemicolon=true) =
         { width: { percentage: 0.1 } },
     }
     + params.keyboard.asciiModeButton.params,
-    needHint = false,
+    needHint=false,
   )
   + { asciiModeIsTrueForegroundStyle: basicStyle.newAlphabeticButtonForegroundStyle(isDark, { assetImageName: 'englishState2' }) }
   + { asciiModeIsFalseForegroundStyle: basicStyle.newAlphabeticButtonForegroundStyle(isDark, { assetImageName: 'chineseState2' }) }
+  + { secondrayCandidatePreeditChangedForegroundStyle: basicStyle.newAlphabeticButtonForegroundStyle(isDark, { text: '次', fontSize: 16 }) }
 
 
   + basicStyle.newSystemButton(
@@ -928,5 +929,6 @@ local newKeyLayout(isDark=false, isPortrait=true, addSemicolon=true) =
     + basicStyle.preeditChangedForEnterButtonNotification
     + basicStyle.preeditChangedForSpaceButtonNotification
     + basicStyle.asciiModeIsFalseChangedNotification
-    + basicStyle.asciiModeIsTrueChangedNotification,
+    + basicStyle.asciiModeIsTrueChangedNotification
+    + basicStyle.secondrayCandidatePreeditChangedNotification,
 }

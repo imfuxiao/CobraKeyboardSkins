@@ -280,7 +280,7 @@ local fonts = import 'Fonts.libsonnet';
       params: {
         action: { character: 'x' },
         uppercasedStateAction: { character: 'X' },
-        swipeUpAction: { character: '.' },
+        swipeUpAction: { character: "'" },
       },
     },
     cButton: {
@@ -456,10 +456,12 @@ local fonts = import 'Fonts.libsonnet';
       name: 'asciiModeButton',
       params: {
         action: { shortcut: '#中英切换' },
+        preeditStateAction: { shortcut: '#次选上屏' },
         assetImageName: 'chineseState2',
         notification: [
           'asciiModeIsFalseChangedNotification',
           'asciiModeIsTrueChangedNotification',
+          'secondrayCandidatePreeditChangedNotification',
         ],
       },
     },
@@ -477,7 +479,7 @@ local fonts = import 'Fonts.libsonnet';
       params: {
         action: 'enter',
         swipeUpAction: {
-          symbol: "\r\n"
+          symbol: '\r\n',
         },
         text: '$returnKeyType',
         notification: [
