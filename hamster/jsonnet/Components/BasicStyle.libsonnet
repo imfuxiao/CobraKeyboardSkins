@@ -396,6 +396,14 @@ local secondrayCandidatePreeditChangedNotification = {
   },
 };
 
+local shiftSecondrayCandidatePreeditChangedNotification = {
+  shiftSecondrayCandidatePreeditChangedNotification: {
+    notificationType: 'preeditChanged',
+    backgroundStyle: 'systemButtonBackgroundStyle',
+    foregroundStyle: 'shiftSecondrayCandidatePreeditChangedForegroundStyle',
+  },
+};
+
 
 local commitCandidateForegroundStyleName = 'commitCandidateForegroundStyle';
 local preeditChangedForSpaceButtonNotification = {
@@ -464,4 +472,5 @@ local newCommitCandidateForegroundStyle(isDark=false, params={}) = {
   asciiModeIsTrueChangedNotification: asciiModeIsTrueChangedNotification,
   asciiModeIsFalseChangedNotification: asciiModeIsFalseChangedNotification,
   secondrayCandidatePreeditChangedNotification: secondrayCandidatePreeditChangedNotification,
+  shiftSecondrayCandidatePreeditChangedNotification: shiftSecondrayCandidatePreeditChangedNotification,
 }

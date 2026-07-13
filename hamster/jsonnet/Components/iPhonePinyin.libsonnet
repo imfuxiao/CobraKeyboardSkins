@@ -683,6 +683,7 @@ local newKeyLayout(isDark=false, isPortrait=true, addSemicolon=true) =
     [params.keyboard.shiftButton.name + 'CapsLockedForegroundStyle']:
       basicStyle.newImageSystemButtonForegroundStyle(isDark, params.keyboard.shiftButton.capsLockedParams),
   }
+  + { shiftSecondrayCandidatePreeditChangedForegroundStyle: basicStyle.newTextSystemButtonForegroundStyle(isDark, { text: 'Esc', fontSize: 16 }) }
 
   + basicStyle.newAlphabeticButton(
     params.keyboard.zButton.name,
@@ -930,5 +931,6 @@ local newKeyLayout(isDark=false, isPortrait=true, addSemicolon=true) =
     + basicStyle.preeditChangedForSpaceButtonNotification
     + basicStyle.asciiModeIsFalseChangedNotification
     + basicStyle.asciiModeIsTrueChangedNotification
-    + basicStyle.secondrayCandidatePreeditChangedNotification,
+    + basicStyle.secondrayCandidatePreeditChangedNotification
+    + basicStyle.shiftSecondrayCandidatePreeditChangedNotification,
 }

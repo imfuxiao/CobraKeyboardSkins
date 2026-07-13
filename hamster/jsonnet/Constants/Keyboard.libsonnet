@@ -433,6 +433,7 @@ local fonts = import 'Fonts.libsonnet';
       params: {
         systemImageName: 'shift',
         action: 'shift',
+        preeditStateAction: { shortcut: '#重输' },
         swipeUpAction: { sendKeys: 'Tab' },
         swipeDownAction: { sendKeys: 'Tab' },
         swipeUpStyle: {
@@ -443,6 +444,9 @@ local fonts = import 'Fonts.libsonnet';
             hintFontSize: fonts.hintTextChineseFontSize,
           },
         },
+        notification: [
+          'shiftSecondrayCandidatePreeditChangedNotification',
+        ],
       },
       uppercasedParams: {
         systemImageName: 'shift.fill',
