@@ -13,7 +13,8 @@ local textStyleName = 'preeditText';
     preeditHeight: Metrics.preedit.height,
     preeditStyle: {
       insets: insets,
-      backgroundStyle: Theme.keyboardBackgroundName,
+      // 键盘最上方这一条整体用渐隐色，把 iOS 26 那段圆角高度让给系统背景。
+      backgroundStyle: Theme.preeditBackgroundName,
       foregroundStyle: textStyleName,
     },
     // 预编辑区的前景节点不渲染成图层，引擎只从中读 fontSize / fontWeight / textColor，

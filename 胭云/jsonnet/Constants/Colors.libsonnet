@@ -37,6 +37,8 @@ local P = import 'Palette.libsonnet';
   // 键盘底板。想让皮肤透出系统键盘背景（iOS 26 起系统自带圆角背景），
   // 把它改成 { light: '#FFFFFF03', dark: '#00000003' } 即可，其余不用动。
   keyboardBackground: P.canvas,
+  // 工具栏区与预编辑区用的「渐隐色」不在这里单列：它就是上面这个底板色配一档
+  // 极低的透明度，由 Components/Theme.libsonnet 派生，改了底板色它自动跟着变。
   preeditText: P.inkCarmine,
   divider: P.divider,  // 分割线 / 面板里的分隔线
 

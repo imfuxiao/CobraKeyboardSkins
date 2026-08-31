@@ -65,7 +65,7 @@ local panelBackspaceName = 'candidatesBackspaceButton';
   // insets: 候选区内边距，iPad 用它把候选字收到屏幕中间
   new(insets={}):: {
                      toolbarHeight: Metrics.toolbar.height,
-                     toolbarStyle: { backgroundStyle: Theme.keyboardBackgroundName },
+                     toolbarStyle: { backgroundStyle: Theme.toolbarBackgroundName },
                      [spacerName]: {},
                      toolbarLayout: [
                        { HStack: { subviews: [
@@ -78,7 +78,8 @@ local panelBackspaceName = 'candidatesBackspaceButton';
                      // ===== 横排候选栏 =====
                      horizontalCandidatesStyle: {
                        insets: Metrics.candidate.horizontalInsets + insets,
-                       backgroundStyle: Theme.keyboardBackgroundName,
+                       // 横排候选栏与工具栏同一块地方，底板必须完全一致
+                       backgroundStyle: Theme.toolbarBackgroundName,
                      },
                      horizontalCandidatesLayout: [
                        { HStack: { subviews: [
@@ -95,7 +96,8 @@ local panelBackspaceName = 'candidatesBackspaceButton';
                      // ===== 纵排候选栏（展开态）=====
                      verticalCandidatesStyle: {
                        insets: insets,
-                       backgroundStyle: Theme.keyboardBackgroundName,
+                       // 展开后盖住工具栏区 + 按键区，底板要把这两块的渐变一起接上
+                       backgroundStyle: Theme.candidatePanelBackgroundName,
                      },
                      verticalCandidatesLayout: [
                        { HStack: { subviews: [{ Cell: verticalListName }] } },

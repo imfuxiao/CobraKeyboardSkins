@@ -133,7 +133,7 @@ local keyboardLayout = [
       // iPad 屏宽富余，预编辑区与候选栏两侧留白，视线不用扫过整个屏幕
       Preedit.new(Metrics.iPadSideInsets),
       Toolbar.new(Metrics.iPadSideInsets),
-      Theme.shared(insets),
+      Theme.shared(insets, Metrics.keyboardHeight.iPad[orientation]),
       {
         keyboardHeight: Metrics.keyboardHeight.iPad[orientation],
         keyboardStyle: { backgroundStyle: Theme.keyboardBackgroundName },

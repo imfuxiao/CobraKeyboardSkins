@@ -138,7 +138,7 @@ local keyboardLayout(addSemicolon) = [
     Style.merge([
       Preedit.new(),
       Toolbar.new(),
-      Theme.shared(insets),
+      Theme.shared(insets, Metrics.keyboardHeight.iPhone[orientation]),
       {
         keyboardHeight: Metrics.keyboardHeight.iPhone[orientation],
         keyboardStyle: { backgroundStyle: Theme.keyboardBackgroundName },

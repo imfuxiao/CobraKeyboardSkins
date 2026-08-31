@@ -133,7 +133,7 @@ local wideLayout = [
     Style.merge([
       Preedit.new(),
       Toolbar.new(),
-      Theme.shared(insets),
+      Theme.shared(insets, Metrics.keyboardHeight[device][orientation]),
       {
         keyboardHeight: Metrics.keyboardHeight[device][orientation],
         keyboardStyle: { backgroundStyle: Theme.keyboardBackgroundName },
