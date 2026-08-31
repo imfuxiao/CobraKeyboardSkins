@@ -85,6 +85,7 @@ local hintFragment(name, hint) =
 //   uppercasedLabel   可选，大写态替换主标签
 //   capsLockedLabel   可选，大写锁定态替换主标签
 //   hint              可选，{ label: 外观, swipeUp: 外观 } 短按气泡
+//   animation         可选，覆盖默认的按下缩放动画；传 [] 表示该键不要动画
 //   backgroundStyle   可选，覆盖角色默认背景（回车键的条件样式用）
 //   foregroundStyle   可选，覆盖自动拼装的前景列表（回车键的条件样式用）
 //   其余 passthroughKeys 里的 Key 原样写进按键节点
@@ -105,6 +106,9 @@ local new(name, opts) =
       foregroundStyle:
         if std.objectHas(opts, 'foregroundStyle') then opts.foregroundStyle
         else layers,
+      // 全皮肤统一的按下缩放反馈。opts 里写了 animation 会被 passthrough 覆盖掉，
+      // 想让某个键不带动画就传 animation: []。
+      animation: [Theme.pressAnimationName],
     } + passthrough(opts) + (
       if std.objectHas(opts, 'uppercasedLabel') then
         { uppercasedStateForegroundStyle: name + 'LabelUppercased' } else {}

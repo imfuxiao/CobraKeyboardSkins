@@ -10,6 +10,19 @@ local Style = import 'Style.libsonnet';
 local backgroundName(role) = role + 'KeyBackground';
 local keyboardBackgroundName = 'keyboardBackground';
 local hintBackgroundName = 'hintBackground';
+local pressAnimationName = 'keyPressScale';
+
+// ===== 按压反馈 =====
+// 按下时整键缩小并保持，抬起再弹回，时长单位为毫秒。
+// isAutoReverse 为 false 时按下与抬起分别触发：手指按住期间键帽一直是缩小的，
+// 与系统键盘的手感一致；设为 true 会变成「缩一下就自己弹回」的一次性脉冲。
+local pressAnimation = {
+  animationType: 'scale',
+  isAutoReverse: false,
+  scale: 0.92,
+  pressDuration: 40,
+  releaseDuration: 90,
+};
 
 local role(name) =
   assert std.objectHas(Colors.roles, name) : '未定义的按键角色: ' + name;
@@ -31,6 +44,7 @@ local backgroundStyle(name) =
   backgroundName: backgroundName,
   keyboardBackgroundName: keyboardBackgroundName,
   hintBackgroundName: hintBackgroundName,
+  pressAnimationName: pressAnimationName,
 
   // 分割线色，符号面板一类的集合视图会用到
   dividerColor: Colors.divider,
@@ -56,6 +70,7 @@ local backgroundStyle(name) =
       borderSize: Metrics.hint.borderSize,
       cornerRadius: Metrics.hint.cornerRadius,
     }),
+    [pressAnimationName]: pressAnimation,
   } + {
     // 每个角色一份按键背景，共 8 份，全部由 Colors.roles 表驱动
     [backgroundName(name)]: backgroundStyle(name)(insets)

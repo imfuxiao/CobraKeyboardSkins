@@ -199,6 +199,8 @@ local letterRows = [
 - **随状态换装**：回车键跟着系统 `returnKeyType` 在珊瑚 / 深胭脂之间切换并改文案；
   中英切换键跟着 RIME 的 `ascii_mode` 换图标；有预编辑文本时空格显示「选定」、Shift 显示「Esc」。
 - **短按气泡**：字母键弹出大写字母，右上角带上划符号提示。
+- **按下缩放**：所有按键按下时整键缩到 92%（40ms）并保持，抬起用 90ms 弹回。
+  参数在 `Components/Theme.libsonnet` 的 `pressAnimation`；某一颗键不要动画就给它传 `animation: []`。
 
 ### 两处与色板的取舍
 
