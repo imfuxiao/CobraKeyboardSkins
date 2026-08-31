@@ -5,6 +5,8 @@
 布局、宽度、配色、键面文字全部取自皮肤本身，
 所以改了 jsonnet 重新编译后跑一遍本脚本，预览图就跟着更新，不会对不上。
 
+出图分两步：先按皮肤画出键盘，再贴到带皮肤名和作者名的背景板上（见「预览板」一节）。
+
     cd Skins/胭云 && make compile && python3 scripts/gen_demo.py
 
 依赖：Pillow（pip3 install Pillow）
@@ -16,7 +18,7 @@ import json
 import sys
 from pathlib import Path
 
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
 SKIN_DIR = Path(__file__).resolve().parent.parent
 SOURCE = SKIN_DIR / "light" / "pinyinPortrait.yaml"
@@ -205,12 +207,69 @@ def draw_keyboard(skin: dict) -> Image.Image:
     return img
 
 
+# ===== 预览板 =====
+# 键盘截图本身是长条形，直接当 demo.png 用，在应用里会被裁掉一部分。
+# 统一贴到 996x770 的背景板上（与其它皮肤的 demo 同比例），顶部标皮肤名和作者。
+BOARD_SIZE = (996, 770)
+BOARD_SCALE = 2          # 板子也 2 倍渲染，最后缩回，文字边缘更干净
+BOARD_BACKGROUND = "#F0DFD6"
+TITLE = "胭云"
+TITLE_COLOR = "#B5677C"
+AUTHOR = "作者：morse"
+AUTHOR_COLOR = "#A98A8E"
+SHADOW = (150, 95, 105, 70)
+KEYBOARD_WIDTH = 764     # 键盘预览贴在板上的宽度，高度按原图比例算
+KEYBOARD_TOP = 172
+KEYBOARD_RADIUS = 22
+
+
+def board_font(size: int, bold: bool = False) -> ImageFont.FreeTypeFont:
+    path = Path(CJK_FONTS[0])
+    if path.exists():
+        try:
+            return ImageFont.truetype(str(path), size, index=2 if bold else 0)
+        except OSError:
+            pass
+    return load_font(size)
+
+
+def compose_board(keyboard: Image.Image) -> Image.Image:
+    w, h = (v * BOARD_SCALE for v in BOARD_SIZE)
+    board = Image.new("RGB", (w, h), BOARD_BACKGROUND)
+    draw = ImageDraw.Draw(board)
+
+    left = (BOARD_SIZE[0] - KEYBOARD_WIDTH) // 2 * BOARD_SCALE
+    draw.text((left, 44 * BOARD_SCALE), TITLE, font=board_font(50 * BOARD_SCALE, True), fill=TITLE_COLOR)
+    draw.text((left + 2, 118 * BOARD_SCALE), AUTHOR, font=board_font(26 * BOARD_SCALE), fill=AUTHOR_COLOR)
+
+    kw = KEYBOARD_WIDTH * BOARD_SCALE
+    kh = round(kw * keyboard.height / keyboard.width)
+    keyboard = keyboard.resize((kw, kh), Image.LANCZOS)
+    mask = Image.new("L", (kw, kh), 0)
+    ImageDraw.Draw(mask).rounded_rectangle((0, 0, kw - 1, kh - 1), KEYBOARD_RADIUS * BOARD_SCALE, fill=255)
+
+    # 柔和投影，让键盘从背景色上浮起来
+    pad = 30 * BOARD_SCALE
+    shadow = Image.new("RGBA", (kw + pad * 2, kh + pad * 2), (0, 0, 0, 0))
+    ImageDraw.Draw(shadow).rounded_rectangle(
+        (pad, pad + 6 * BOARD_SCALE, pad + kw, pad + kh + 6 * BOARD_SCALE),
+        KEYBOARD_RADIUS * BOARD_SCALE,
+        fill=SHADOW,
+    )
+    shadow = shadow.filter(ImageFilter.GaussianBlur(14 * BOARD_SCALE))
+    top = KEYBOARD_TOP * BOARD_SCALE
+    board.paste(shadow, (left - pad, top - pad), shadow)
+    board.paste(keyboard, (left, top), mask)
+    return board.resize(BOARD_SIZE, Image.LANCZOS)
+
+
 def main() -> int:
     if not SOURCE.exists():
         print(f"找不到 {SOURCE}，请先执行 make compile", file=sys.stderr)
         return 1
     # 产物是 JSON（JSON 是 YAML 的子集），直接用 json 读，不必依赖 PyYAML
-    draw_keyboard(json.loads(SOURCE.read_text(encoding="utf-8"))).save(OUTPUT)
+    keyboard = draw_keyboard(json.loads(SOURCE.read_text(encoding="utf-8")))
+    compose_board(keyboard).save(OUTPUT)
     print(f"已生成 {OUTPUT.relative_to(SKIN_DIR)}")
     return 0
 
