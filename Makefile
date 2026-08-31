@@ -10,6 +10,7 @@ build:
 	$(MAKE) -C cangjie
 	$(MAKE) -C zhuyin
 	$(MAKE) -C 胭云
+	$(MAKE) -C 莫吉托
 	rm -rf build && mkdir -p build/
 	cp -r default/build/*.cskin \
 	numeric/build/*.cskin \
@@ -19,6 +20,7 @@ build:
 	cangjie/build/*.cskin \
 	zhuyin/build/*.cskin \
 	胭云/build/*.cskin \
+	莫吉托/build/*.cskin \
 	build/
 
 clean:
@@ -31,6 +33,7 @@ clean:
 	$(MAKE) -C cangjie clean
 	$(MAKE) -C zhuyin clean
 	$(MAKE) -C 胭云 clean
+	$(MAKE) -C 莫吉托 clean
 	rm -rf build
 
 all: build
