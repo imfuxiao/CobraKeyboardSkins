@@ -110,20 +110,27 @@ local textLabel(text) = { text: text, fontSize: Fonts.keyText };
     label: { assetImageName: 'chineseState2' },
     action: { shortcut: '#中英切换' },
     preeditStateAction: { shortcut: '#次选上屏' },
+    // 前景直接按 RIME 的 ascii_mode 当场判定：切走再切回键盘时按键会重新创建，
+    // 此时不会补发 optionChanged 通知，只有条件样式能还原出正确的中/英图标。
+    foregroundStyle: [
+      {
+        styleName: name + 'EnglishLabel',
+        conditionKey: 'rime$ascii_mode',
+        conditionValue: true,
+      },
+      {
+        styleName: name + 'ChineseLabel',
+        conditionKey: 'rime$ascii_mode',
+        conditionValue: false,
+      },
+    ],
+    // 只订阅 English 一条：中文态由它把 dynamicStyleName 清空、回落到上面的条件样式即可。
+    // 中英两条都订阅会互相覆盖（后到的一条把先到的结果抹成 nil），状态因此不稳定。
     notification: [
-      name + 'ChineseNotification',
       name + 'EnglishNotification',
       name + 'PreeditNotification',
     ],
   } + opts) + {
-    [name + 'ChineseNotification']: {
-      notificationType: 'rime',
-      rimeNotificationType: 'optionChanged',
-      rimeOptionName: 'ascii_mode',
-      rimeOptionValue: false,
-      backgroundStyle: Theme.backgroundName(role),
-      foregroundStyle: name + 'ChineseLabel',
-    },
     [name + 'EnglishNotification']: {
       notificationType: 'rime',
       rimeNotificationType: 'optionChanged',
