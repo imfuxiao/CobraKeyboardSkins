@@ -13,6 +13,7 @@ build:
 	$(MAKE) -C 莫吉托
 	$(MAKE) -C 彩虹
 	$(MAKE) -C Gboard
+	$(MAKE) -C Noctua
 	rm -rf build && mkdir -p build/
 	cp -r default/build/*.cskin \
 	numeric/build/*.cskin \
@@ -25,6 +26,7 @@ build:
 	莫吉托/build/*.cskin \
 	彩虹/build/*.cskin \
 	Gboard/build/*.cskin \
+	Noctua/build/*.cskin \
 	build/
 
 clean:
@@ -40,6 +42,7 @@ clean:
 	$(MAKE) -C 莫吉托 clean
 	$(MAKE) -C 彩虹 clean
 	$(MAKE) -C Gboard clean
+	$(MAKE) -C Noctua clean
 	rm -rf build
 
 all: build
