@@ -1,121 +1,70 @@
-local iPhoneNumeric = import 'Components/iPhoneNumeric.libsonnet';
-local iPhonePinyin = import 'Components/iPhonePinyin.libsonnet';
-local iPhoneSymbolic = import 'Components/iPhoneSymbolic.libsonnet';
-local iPadPinyin = import 'Components/iPadPinyin.libsonnet';
-local iPadNumeric = import 'Components/iPadNumeric.libsonnet';
+// 「极简」皮肤入口 —— 只负责声明「要出哪些文件」，具体内容全在 Keyboards/ 下。
+//
+// 编译：make compile（或在手机上长按皮肤选择「运行 main.jsonnet」）
+local Style = import 'Components/Style.libsonnet';
+local iPadNumeric = import 'Keyboards/iPadNumeric.libsonnet';
+local iPadPinyin = import 'Keyboards/iPadPinyin.libsonnet';
+local iPhoneNumeric = import 'Keyboards/iPhoneNumeric.libsonnet';
+local iPhonePinyin = import 'Keyboards/iPhonePinyin.libsonnet';
+local iPhoneSymbolic = import 'Keyboards/iPhoneSymbolic.libsonnet';
 
-local pinyinPortraitFileName = 'pinyinPortrait';
-local lightPinyinPortraitFileContent = iPhonePinyin.new(isDark=false, isPortrait=true);
-local darkPinyinPortraitFileContent = iPhonePinyin.new(isDark=true, isPortrait=true);
+// ===== 产物矩阵：文件名 -> 键盘定义 =====
+// 每份定义都会生成 light/ 与 dark/ 两个文件，两者的差别只在色值上，
+// 由 Style.resolve 在最后一步一次性解开（见 Components/Style.libsonnet）。
+local keyboards = {
+  pinyinPortrait: iPhonePinyin.new(isPortrait=true),
+  pinyinLandscape: iPhonePinyin.new(isPortrait=false),
+  numericPortrait: iPhoneNumeric.new(isPortrait=true),
+  numericLandscape: iPhoneNumeric.new(isPortrait=false),
+  symbolicPortrait: iPhoneSymbolic.new(isPortrait=true),
+  symbolicLandscape: iPhoneSymbolic.new(isPortrait=false),
 
-local pinyinLandscapeFileName = 'pinyinLandscape';
-local lightPinyinLandscapeFileContent = iPhonePinyin.new(isDark=false, isPortrait=false);
-local darkPinyinLandscapeFileContent = iPhonePinyin.new(isDark=true, isPortrait=false);
+  iPadPinyinPortrait: iPadPinyin.new(isPortrait=true),
+  iPadPinyinLandscape: iPadPinyin.new(isPortrait=false),
+  iPadNumericPortrait: iPadNumeric.new(isPortrait=true),
+  iPadNumericLandscape: iPadNumeric.new(isPortrait=false),
+};
 
-local numericPortraitFileName = 'numericPortrait';
-local lightNumericPortraitFileContent = iPhoneNumeric.new(isDark=false, isPortrait=true);
-local darkNumericPortraitFileContent = iPhoneNumeric.new(isDark=true, isPortrait=true);
-
-local numericLandscapeName = 'numericLandscape';
-local lightNumericLandscapeFileContent = iPhoneNumeric.new(isDark=false, isPortrait=false);
-local darkNumericLandscapeFileContent = iPhoneNumeric.new(isDark=true, isPortrait=false);
-
-local symbolicPortraitFileName = 'symbolicPortrait';
-local lightSymbolicPortraitFileContent = iPhoneSymbolic.new(isDark=false, isPortrait=true);
-local darkSymbolicPortraitFileContent = iPhoneSymbolic.new(isDark=true, isPortrait=true);
-
-local symbolicLandscapeName = 'symbolicLandscape';
-local lightSymbolicLandscapeFileContent = iPhoneSymbolic.new(isDark=false, isPortrait=false);
-local darkSymbolicLandscapeFileContent = iPhoneSymbolic.new(isDark=true, isPortrait=false);
-
-local iPadPinyinPortraitName = 'iPadPinyinPortrait';
-local lightIpadPinyinPortraitContent = iPadPinyin.new(isDark=false, isPortrait=true);
-local darkIpadPinyinPortraitContent = iPadPinyin.new(isDark=true, isPortrait=true);
-
-local iPadPinyinLandscapeName = 'iPadPinyinLandscape';
-local lightIpadPinyinLandscapeContent = iPadPinyin.new(isDark=false, isPortrait=false);
-local darkIpadPinyinLandscapeContent = iPadPinyin.new(isDark=true, isPortrait=false);
-
-local iPadNumericPortraitName = 'iPadNumericPortrait';
-local lightIpadNumericPortraitContent = iPadNumeric.new(isDark=false, isPortrait=true);
-local darkIpadNumericPortraitContent = iPadNumeric.new(isDark=true, isPortrait=true);
-
-local iPadNumericLandscapeName = 'iPadNumericLandscape';
-local lightIpadNumericLandscapeContent = iPadNumeric.new(isDark=false, isPortrait=false);
-local darkIpadNumericLandscapeContent = iPadNumeric.new(isDark=true, isPortrait=false);
-
+// 哪种键盘、哪种设备与方向读哪个文件。
+// 缺声明的场景键盘会显示为空白，不会回退，所以每种键盘的四个场景都要给全。
+//
+// iPad 上没有单独的符号页：iPad 的数字页一页就放下了 iPhone 上两页的内容，
+// 所以 symbolic 在 iPad 上直接指回拼音页（按 `123` 走数字页，不存在第二页）。
 local config = {
   pinyin: {
-    iPhone: {
-      portrait: pinyinPortraitFileName,
-      landscape: pinyinLandscapeFileName,
-    },
+    iPhone: { portrait: 'pinyinPortrait', landscape: 'pinyinLandscape' },
     iPad: {
-      portrait: iPadPinyinPortraitName,
-      landscape: iPadPinyinLandscapeName,
-      floating: pinyinPortraitFileName,
+      portrait: 'iPadPinyinPortrait',
+      landscape: 'iPadPinyinLandscape',
+      // iPad 浮动键盘的宽度接近 iPhone 竖屏，直接复用那一份
+      floating: 'pinyinPortrait',
     },
   },
   numeric: {
-    iPhone: {
-      portrait: numericPortraitFileName,
-      landscape: numericLandscapeName,
-    },
+    iPhone: { portrait: 'numericPortrait', landscape: 'numericLandscape' },
     iPad: {
-      portrait: iPadNumericPortraitName,
-      landscape: iPadNumericLandscapeName,
-      floating: numericPortraitFileName,
+      portrait: 'iPadNumericPortrait',
+      landscape: 'iPadNumericLandscape',
+      floating: 'numericPortrait',
     },
   },
-
-  // 符号键盘
   symbolic: {
-    iPhone: {
-      portrait: symbolicPortraitFileName,
-      landscape: symbolicLandscapeName,
-    },
+    iPhone: { portrait: 'symbolicPortrait', landscape: 'symbolicLandscape' },
     iPad: {
-      portrait: iPadPinyinPortraitName,
-      landscape: iPadPinyinLandscapeName,
-      floating: symbolicPortraitFileName,
+      portrait: 'iPadPinyinPortrait',
+      landscape: 'iPadPinyinLandscape',
+      floating: 'symbolicPortrait',
     },
   },
 };
 
 {
   'config.yaml': std.manifestYamlDoc(config, indent_array_in_object=true, quote_keys=false),
-
-  // 拼音键盘
-  // TODO: 这里用 std.toString 代替 std.manifestYamlDoc 是为了避免 jsonnet 在处理非常大的内容时耗时太严重
-  // 在 PC 上调试的时候可以使用，方便排查问题
-  // ['light/' + pinyinPortraitFileName + '.yaml']: std.manifestYamlDoc(lightPinyinPortraitFileContent, indent_array_in_object=false, quote_keys=false),
-  ['light/' + pinyinPortraitFileName + '.yaml']: std.toString(lightPinyinPortraitFileContent),
-  ['dark/' + pinyinPortraitFileName + '.yaml']: std.toString(darkPinyinPortraitFileContent),
-  ['light/' + pinyinLandscapeFileName + '.yaml']: std.toString(lightPinyinLandscapeFileContent),
-  ['dark/' + pinyinLandscapeFileName + '.yaml']: std.toString(darkPinyinLandscapeFileContent),
-
-  // 数字键盘
-  // ['light/' + numericPortraitFileName + '.yaml']: std.manifestYamlDoc(lightNumericPortraitFileContent, indent_array_in_object=false, quote_keys=false),
-  ['light/' + numericPortraitFileName + '.yaml']: std.toString(lightNumericPortraitFileContent),
-  ['dark/' + numericPortraitFileName + '.yaml']: std.toString(darkNumericPortraitFileContent),
-  ['light/' + numericLandscapeName + '.yaml']: std.toString(lightNumericLandscapeFileContent),
-  ['dark/' + numericLandscapeName + '.yaml']: std.toString(darkNumericLandscapeFileContent),
-
-  // 符号键盘
-  ['light/' + symbolicPortraitFileName + '.yaml']: std.toString(lightSymbolicPortraitFileContent),
-  ['dark/' + symbolicPortraitFileName + '.yaml']: std.toString(darkSymbolicPortraitFileContent),
-  ['light/' + symbolicLandscapeName + '.yaml']: std.toString(lightSymbolicLandscapeFileContent),
-  ['dark/' + symbolicLandscapeName + '.yaml']: std.toString(darkSymbolicLandscapeFileContent),
-
-  // iPad 拼音键盘
-  ['light/' + iPadPinyinPortraitName + '.yaml']: std.toString(lightIpadPinyinPortraitContent),
-  ['dark/' + iPadPinyinPortraitName + '.yaml']: std.toString(darkIpadPinyinPortraitContent),
-  ['light/' + iPadPinyinLandscapeName + '.yaml']: std.toString(lightIpadPinyinLandscapeContent),
-  ['dark/' + iPadPinyinLandscapeName + '.yaml']: std.toString(darkIpadPinyinLandscapeContent),
-
-  // iPad 数字键盘
-  ['light/' + iPadNumericPortraitName + '.yaml']: std.toString(lightIpadNumericPortraitContent),
-  ['dark/' + iPadNumericPortraitName + '.yaml']: std.toString(darkIpadNumericPortraitContent),
-  ['light/' + iPadNumericLandscapeName + '.yaml']: std.toString(lightIpadNumericLandscapeContent),
-  ['dark/' + iPadNumericLandscapeName + '.yaml']: std.toString(darkIpadNumericLandscapeContent),
+}
++ {
+  // JSON 是 YAML 的子集，这里用 std.toString 而不是 std.manifestYamlDoc：
+  // 后者在这个体量下慢到影响手机上的实时编译，产物对引擎完全等价。
+  [scheme + '/' + name + '.yaml']: std.toString(Style.prune(Style.resolve(keyboards[name], scheme == 'dark')))
+  for name in std.objectFields(keyboards)
+  for scheme in ['light', 'dark']
 }
