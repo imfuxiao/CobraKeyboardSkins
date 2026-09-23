@@ -15,10 +15,14 @@ local FunctionKeys = import '../Components/FunctionKeys.libsonnet';
 local Keys = import '../Components/Keys.libsonnet';
 local Layout = import '../Components/Layout.libsonnet';
 local Preedit = import '../Components/Preedit.libsonnet';
+local Split = import '../Components/Split.libsonnet';
 local Style = import '../Components/Style.libsonnet';
 local Theme = import '../Components/Theme.libsonnet';
 local Toolbar = import '../Components/Toolbar.libsonnet';
 local Metrics = import '../Constants/Metrics.libsonnet';
+local Button = import '../Components/Button.libsonnet';
+
+local sw = Split.iPhoneWidths;
 
 local rowCount = 4;
 
@@ -159,17 +163,64 @@ local keyboardLayout = [
   Layout.row([numericName, commaName, spaceName, asciiModeName, enterName]),
 ];
 
+// ===== 横屏分体版面 =====
+// 三行字母按「偶数个左右对半分、奇数个复制中间那颗字母」分左右两半（与 default /
+// hamster 的 iPhonePinyin 同一套手法），每行两端各加一颗留白键、中间加一颗中缝键，
+// 平时 0 宽，Split 态才撑开。第四行（numeric/逗号/空格/中英切换/enter）另起一份，
+// 宽度表见 Components/Split.libsonnet 的 iPhoneWidths 注释。
+local padTopLeftName = 'splitPadTopLeftButton';
+local padTopRightName = 'splitPadTopRightButton';
+local gapTopName = 'splitGapTopButton';
+local padHomeLeftName = 'splitPadHomeLeftButton';
+local padHomeRightName = 'splitPadHomeRightButton';
+local gapHomeName = 'splitGapHomeButton';
+local padBottomLeftName = 'splitPadBottomLeftButton';
+local padBottomRightName = 'splitPadBottomRightButton';
+local gapBottomName = 'splitGapBottomButton';
+local padSpaceLeftName = 'splitPadSpaceLeftButton';
+local padSpaceRightName = 'splitPadSpaceRightButton';
+local gapSpaceName = 'splitGapSpaceButton';
+local repeatedName(c) = c + 'SplitButton';
+local spaceRightName = 'spaceRightButton';
+
+local landscapeKeyboardLayout = [
+  Layout.row(
+    [padTopLeftName] + [Keys.keyName(entry[0]) for entry in letterRows[0][0:5]]
+    + [gapTopName] + [Keys.keyName(entry[0]) for entry in letterRows[0][5:10]] + [padTopRightName]
+  ),
+  Layout.row(
+    [padHomeLeftName] + [Keys.keyName(entry[0]) for entry in letterRows[1][0:5]]
+    + [gapHomeName, repeatedName(letterRows[1][4][0])]
+    + [Keys.keyName(entry[0]) for entry in letterRows[1][5:9]] + [padHomeRightName]
+  ),
+  Layout.row(
+    [padBottomLeftName, shiftName] + [Keys.keyName(entry[0]) for entry in letterRows[2][0:4]]
+    + [gapBottomName, repeatedName(letterRows[2][3][0])]
+    + [Keys.keyName(entry[0]) for entry in letterRows[2][4:7]] + [backspaceName, padBottomRightName]
+  ),
+  Layout.row([
+    padSpaceLeftName, numericName, commaName, spaceName, gapSpaceName, spaceRightName,
+    asciiModeName, enterName, padSpaceRightName,
+  ]),
+];
+
 {
-  // isPortrait  竖屏 / 横屏。两者只影响键盘高度与按键间距，布局完全相同。
+  // isPortrait  竖屏 / 横屏。两者只影响键盘高度与按键间距，布局结构（除 Split 外）完全相同。
+  // 横屏支持分体（Split）：Shift 键上划进分体，分体态下再上划一次合回来——iPhone 没有
+  // Tab，借给 Shift，因为 Shift 分体后还要用，不能被顶掉（见 Components/Split.libsonnet）。
+  // 竖屏不适配：屏幕太窄，分成两半没有使用价值，产物与引入分体前逐字节相同。
   new(isPortrait=true)::
     local orientation = if isPortrait then 'portrait' else 'landscape';
     local insets = Metrics.keyInsets.iPhone[orientation];
     local keysHeight = Metrics.height('iPhone', orientation, rowCount);
+    local isSplitCapable = !isPortrait;
+    local splitOnly(extra) = if isSplitCapable then extra else {};
 
     Style.merge([
       Preedit.new(),
-      Toolbar.new(),
+      Toolbar.new(supportsSplit=isSplitCapable),
       Theme.shared(insets, keysHeight),
+      splitOnly(Split.shared),
       {
         keyboardHeight: keysHeight,
         keyboardStyle: {
@@ -177,7 +228,7 @@ local keyboardLayout = [
           // 按键区整体的左右边距，与键间距是两回事，见 Metrics.keyboardAreaInsets
           insets: Metrics.keyboardAreaInsets.iPhone[orientation],
         },
-        keyboardLayout: keyboardLayout,
+        keyboardLayout: if isSplitCapable then landscapeKeyboardLayout else keyboardLayout,
       },
       Style.merge([
         Keys.letterKey(
@@ -186,16 +237,59 @@ local keyboardLayout = [
           letterCenter(r, c),
           !std.member(lowerFirstLetters, letterRows[r][c][0]),
           letterExtras(letterRows[r][c][0])
+          + (
+            if letterRows[r][c][0] == 'a' then splitOnly(Split.widthAnchored(sw.side, sw.sideVisibleFraction, 'right'))
+            else if letterRows[r][c][0] == 'l' then splitOnly(Split.widthAnchored(sw.side, sw.sideVisibleFraction, 'left'))
+            else splitOnly(Split.width(sw.unit))
+          )
         )
         for r in std.range(0, std.length(letterRows) - 1)
         for c in std.range(0, std.length(letterRows[r]) - 1)
       ]),
-      commaKey,
-      FunctionKeys.shift(shiftName, Keys.widths.rowThreeLeft),
-      FunctionKeys.backspace(backspaceName, Keys.widths.rowThreeRight),
-      FunctionKeys.numeric(numericName, widths.numeric),
-      FunctionKeys.space(spaceName),
-      FunctionKeys.asciiMode(asciiModeName, widths.asciiMode),
-      FunctionKeys.enter(enterName, widths.enter),
-    ]),
+      // 逗号键在 new() 外面构造，拿不到 splitOnly，分体宽度在这里补上；
+      // 漏了它第四行会多出 32.5，挤到末尾的回车溢出屏幕。
+      commaKey + splitOnly({ [commaName]+: Split.width(sw.smallKey) }),
+      FunctionKeys.shift(
+        shiftName,
+        Keys.widths.rowThreeLeft
+        + splitOnly(Split.widthAnchored(sw.side, sw.sideVisibleFraction, 'left') + Split.enterSplitGesture)
+      ),
+      FunctionKeys.backspace(
+        backspaceName,
+        Keys.widths.rowThreeRight + splitOnly(Split.widthAnchored(sw.side, sw.sideVisibleFraction, 'right'))
+      ),
+      FunctionKeys.numeric(numericName, widths.numeric + splitOnly(Split.width(sw.keyboardType))),
+      FunctionKeys.space(spaceName, splitOnly(Split.width(sw.space))),
+      FunctionKeys.asciiMode(asciiModeName, widths.asciiMode + splitOnly(Split.width(sw.smallKey))),
+      FunctionKeys.enter(enterName, widths.enter + splitOnly(Split.width(sw.keyboardType))),
+    ] + (
+      if !isSplitCapable then [] else [
+        // ===== 只在横屏出现的新键：两端留白、中缝、右半空格、重复字母 =====
+        Split.spacer(padTopLeftName, sw.margin),
+        Split.spacer(padTopRightName, sw.margin),
+        Split.spacer(gapTopName, sw.gap),
+        Split.spacer(padHomeLeftName, sw.margin),
+        Split.spacer(padHomeRightName, sw.margin),
+        Split.spacer(gapHomeName, sw.bottomGap),
+        Split.spacer(padBottomLeftName, sw.margin),
+        Split.spacer(padBottomRightName, sw.margin),
+        Split.spacer(gapBottomName, sw.bottomGap),
+        Split.spacer(padSpaceLeftName, sw.margin),
+        Split.spacer(padSpaceRightName, sw.margin),
+        Split.spacer(gapSpaceName, sw.gap),
+        Button.new(repeatedName(letterRows[1][4][0]), {
+          role: 'letter',
+          label: { text: letterRows[1][4][0] },
+          action: { character: letterRows[1][4][0] },
+          size: { width: 0 },
+        } + Split.width(sw.unit)),
+        Button.new(repeatedName(letterRows[2][3][0]), {
+          role: 'letter',
+          label: { text: letterRows[2][3][0] },
+          action: { character: letterRows[2][3][0] },
+          size: { width: 0 },
+        } + Split.width(sw.unit)),
+        FunctionKeys.space(spaceRightName, { size: { width: 0 } } + Split.width(sw.space)),
+      ]
+    )),
 }

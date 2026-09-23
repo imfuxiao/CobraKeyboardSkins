@@ -41,10 +41,15 @@
 
   // 按键区整体的左右边距，与键间距是两回事：
   // 最外侧的键离屏幕边要比键与键之间稍宽一点，键盘才不显得顶着屏幕。
+  //
+  // iPhone 横屏是 0：横屏支持分体，分体版面两侧已经有一条 8/1125 的留白键
+  // （Components/Split.libsonnet），宽度表照 default 手算、以「按键区贴满整行」为前提。
+  // keyboardStyle 挂在根节点上，split 覆盖块够不着，没法只在分体态去掉这 2pt，
+  // 所以横屏干脆与 default 一样不留，合并态最外侧的键因此外移 2pt。
   keyboardAreaInsets: {
     iPhone: {
       portrait: { left: 2, right: 2 },
-      landscape: { left: 2, right: 2 },
+      landscape: { left: 0, right: 0 },
     },
     iPad: {
       portrait: { left: 4, right: 4 },

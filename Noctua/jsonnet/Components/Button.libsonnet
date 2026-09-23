@@ -35,6 +35,9 @@ local passthroughKeys = [
   'swipeDownAction',
   'notification',
   'animation',
+  // Split（分体键盘）覆盖块，见 docs/键盘Split状态.md。漏掉这一项会导致所有
+  // opts.split 被这里静默丢弃——Split 完全不生效，但也不报错，很难查。
+  'split',
 ];
 
 local passthrough(opts) = {

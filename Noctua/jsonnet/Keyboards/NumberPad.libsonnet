@@ -20,11 +20,14 @@ local FunctionKeys = import '../Components/FunctionKeys.libsonnet';
 local Keys = import '../Components/Keys.libsonnet';
 local Layout = import '../Components/Layout.libsonnet';
 local Preedit = import '../Components/Preedit.libsonnet';
+local Split = import '../Components/Split.libsonnet';
 local Style = import '../Components/Style.libsonnet';
 local Theme = import '../Components/Theme.libsonnet';
 local Toolbar = import '../Components/Toolbar.libsonnet';
 local Fonts = import '../Constants/Fonts.libsonnet';
 local Metrics = import '../Constants/Metrics.libsonnet';
+
+local npw = Split.numberPadWidths;
 
 local rowCount = 4;
 
@@ -63,6 +66,19 @@ local leftColumnName = 'numberPadLeftColumn';
 local centerColumnName = 'numberPadCenterColumn';
 local rightColumnName = 'numberPadRightColumn';
 
+// ===== 分体：保守方案 =====
+// 九宫格拆开没有实际意义（数字键的排布不是靠左右手分工的），所以不改内部排布，
+// 只在上块三列两侧、下块一行两端各让出一圈分体态才撑开的窄边——功能上仍然响应
+// Split 开关，但视觉变化很轻，这是刻意的设计取舍。窄边挤占的宽度从两侧「窄列」
+// （上块）与「返回 / 回车」（下块）上扣，其余键不动，具体账见 Components/Split.libsonnet
+// 的 numberPadWidths 注释。
+local marginLeftColumnName = 'numberPadMarginLeftColumn';
+local marginRightColumnName = 'numberPadMarginRightColumn';
+local marginLeftButtonName = 'numberPadMarginLeftButton';
+local marginRightButtonName = 'numberPadMarginRightButton';
+local bottomMarginLeftName = 'numberPadBottomMarginLeftButton';
+local bottomMarginRightName = 'numberPadBottomMarginRightButton';
+
 local symbolStripName = 'numberPadSymbolStrip';
 local percentId = 'percent';
 local percentName = Keys.keyName(percentId);
@@ -99,22 +115,24 @@ local padSpaceKey = Button.new(spaceName, {
 });
 
 local keyboardLayout = [
-  // ===== 上块：左符号条 + 中九宫格 + 右功能列 =====
+  // ===== 上块：左边距 + 左符号条 + 中九宫格 + 右功能列 + 右边距 =====
   Layout.rowOf(
     [
+      Layout.column([marginLeftButtonName], marginLeftColumnName),
       Layout.column([symbolStripName], leftColumnName),
       Layout.columnOf(
         [Layout.row([Keys.keyName(digitId(digit)) for digit in row]) for row in digitRows],
         centerColumnName
       ),
       Layout.column([percentName, spaceName, backspaceName], rightColumnName),
+      Layout.column([marginRightButtonName], marginRightColumnName),
     ],
     upperRegionName
   ),
 
-  // ===== 下块：整屏一行 =====
+  // ===== 下块：左边距 + 整屏一行 + 右边距 =====
   Layout.row(
-    [returnName, commaName, symbolicName, zeroName, equalName, periodName, enterName],
+    [bottomMarginLeftName, returnName, commaName, symbolicName, zeroName, equalName, periodName, enterName, bottomMarginRightName],
     bottomRowName
   ),
 ];
@@ -125,11 +143,17 @@ local keyboardLayout = [
     local insets = Metrics.keyInsets[device][orientation];
     local keysHeight = Metrics.height(device, orientation, rowCount);
     local sideInsets = if device == 'iPad' then Metrics.iPadSideInsets else {};
+    local isSplitCapable = device == 'iPad' || !isPortrait;
+    local splitOnly(extra) = if isSplitCapable then extra else {};
 
     Style.merge([
       Preedit.new(),
-      Toolbar.new(sideInsets),
+      Toolbar.new(sideInsets, supportsSplit=isSplitCapable),
       Theme.shared(insets, keysHeight),
+      // keyboardLayout 不分支（唯一一份，portrait/landscape/iPad 共用），两侧边距键
+      // 因此始终在布局树上，样式定义也必须始终存在——不能只在 isSplitCapable 时才定义，
+      // 否则不支持分体的场景（iPhone 竖屏）会引用到不存在的样式。
+      Split.shared,
       {
         keyboardHeight: keysHeight,
         keyboardStyle: {
@@ -143,9 +167,12 @@ local keyboardLayout = [
         // 其余三种键盘的行高完全一致，来回切换时键不会跳。
         [upperRegionName]: { size: { height: '3/4' } },
         [bottomRowName]: { size: { height: '1/4' } },
-        [leftColumnName]: upperColumns.narrow,
+        // 两侧窄列在分体态收窄 14→12，给新增的边距列让出宽度（账见 Split.libsonnet）
+        [leftColumnName]: upperColumns.narrow + splitOnly(Split.width(npw.upperNarrow)),
         [centerColumnName]: upperColumns.wide,
-        [rightColumnName]: upperColumns.narrow,
+        [rightColumnName]: upperColumns.narrow + splitOnly(Split.width(npw.upperNarrow)),
+        [marginLeftColumnName]: { size: { width: 0 } } + splitOnly(Split.width(npw.upperMargin)),
+        [marginRightColumnName]: { size: { width: 0 } } + splitOnly(Split.width(npw.upperMargin)),
       },
       symbolStrip,
       // 九宫格里的九颗数字：键面大，不带角标——这一页要的就是干净
@@ -156,9 +183,12 @@ local keyboardLayout = [
       ]),
       Keys.punctuationKey(percentId, '%'),
       padSpaceKey,
-      FunctionKeys.backspace(backspaceName),
+      // 分体开关就近挂在这颗角落键上：上下两块都在，分体后两侧都够得着
+      FunctionKeys.backspace(backspaceName, splitOnly(Split.enterSplitGesture)),
 
-      FunctionKeys.returnPrimaryKeyboard(returnName, bottomWidths.side),
+      FunctionKeys.returnPrimaryKeyboard(
+        returnName, bottomWidths.side + splitOnly(Split.width(npw.bottomSide))
+      ),
       Keys.punctuationKey(commaId, ',', null, bottomWidths.punct),
       // !?# 切到**引擎自带的**分类符号键盘（内置 symbolic）：本皮肤没有声明 symbolic，
       // 引擎就会挂上 SymbolicView，它自带「返回」与锁定按钮，不需要皮肤配任何东西。
@@ -169,6 +199,16 @@ local keyboardLayout = [
       Keys.charKey(digitId('0'), '0', fontSize=Fonts.numericKeyLabel, opts=bottomWidths.zero),
       Keys.charKey(equalId, '=', fontSize=Fonts.numericKeyLabel, opts=bottomWidths.equal),
       Keys.punctuationKey(periodId, '.', null, bottomWidths.punct),
-      FunctionKeys.enter(enterName, bottomWidths.side),
+      FunctionKeys.enter(
+        enterName, bottomWidths.side + splitOnly(Split.width(npw.bottomSide))
+      ),
+      // 两侧边距键：始终存在（平时 0 宽，真实样式节点、无 action），分体态才撑开；
+      // 不支持分体的场景（iPhone 竖屏）split 覆盖块干脆不写，逐像素不变，
+      // 见 docs/键盘Split状态.md 2.1（不能直接用 Split.spacer：那个帮手固定带 split 块，
+      // 这里要按 isSplitCapable 决定要不要这个块）。
+      { [marginLeftButtonName]: { backgroundStyle: Split.blankBackgroundName, size: { width: 0 } } + splitOnly(Split.width(npw.upperMargin)) },
+      { [marginRightButtonName]: { backgroundStyle: Split.blankBackgroundName, size: { width: 0 } } + splitOnly(Split.width(npw.upperMargin)) },
+      { [bottomMarginLeftName]: { backgroundStyle: Split.blankBackgroundName, size: { width: 0 } } + splitOnly(Split.width(npw.bottomMargin)) },
+      { [bottomMarginRightName]: { backgroundStyle: Split.blankBackgroundName, size: { width: 0 } } + splitOnly(Split.width(npw.bottomMargin)) },
     ]),
 }
