@@ -8,11 +8,14 @@ local Button = import '../Components/Button.libsonnet';
 local FunctionKeys = import '../Components/FunctionKeys.libsonnet';
 local Layout = import '../Components/Layout.libsonnet';
 local Preedit = import '../Components/Preedit.libsonnet';
+local Split = import '../Components/Split.libsonnet';
 local Style = import '../Components/Style.libsonnet';
 local Theme = import '../Components/Theme.libsonnet';
 local Toolbar = import '../Components/Toolbar.libsonnet';
 local Fonts = import '../Constants/Fonts.libsonnet';
 local Metrics = import '../Constants/Metrics.libsonnet';
+
+local numericWidths = Split.numericWidths;
 
 // ===== 表一：九宫格数字与它们的上划符号 =====
 // 三列，每列自上而下。第四行不是数字，单独排。
@@ -115,36 +118,62 @@ local numericColumns = [
 // 单栏：整屏就是九宫格
 local compactLayout = numericColumns;
 
+// ===== 分体（Split）两侧的窄边 =====
+// 九宫格数字键盘分体没有天然的「左右两半」意义（参见 Components/Split.libsonnet 的
+// 说明），只在双栏（wideLayout）两端各加一颗平时 0 宽、分体态才撑开的留白列，
+// 内部九宫格与分类符号面板的排布完全不变。双栏只在 symbolPanel=true 时使用，
+// 而这恰好是 Split 可用的全部场景（iPhone 横屏 + iPad 全部方向）。
+local marginLeftName = 'splitMarginLeftButton';
+local marginRightName = 'splitMarginRightButton';
+local marginColumnStyleName = 'splitMarginColumn';
+
 // 双栏：左半九宫格，右半分类符号面板，中间留一条空隙
-local wideLayout = [
-  { VStack: { style: halfColumnStyleName, subviews: numericColumns } },
-  Layout.column([gapCellName], gapColumnStyleName),
-  { VStack: { style: halfColumnStyleName, subviews: [{ Cell: categoryPanelName }] } },
-];
+local wideLayout(isSplitCapable) =
+  (if isSplitCapable then [Layout.column([marginLeftName], marginColumnStyleName)] else [])
+  + [
+    { VStack: { style: halfColumnStyleName, subviews: numericColumns } },
+    Layout.column([gapCellName], gapColumnStyleName),
+    { VStack: { style: halfColumnStyleName, subviews: [{ Cell: categoryPanelName }] } },
+  ]
+  + (if isSplitCapable then [Layout.column([marginRightName], marginColumnStyleName)] else []);
 
 {
   // device       'iPhone' / 'iPad'，决定键盘高度与按键间距
   // isPortrait   竖屏 / 横屏
   // symbolPanel  是否在右侧挂一块分类符号面板（屏幕够宽时才开）
+  //
+  // Split 只在双栏（symbolPanel=true）时接入：iPhone 竖屏本来就是单栏 compactLayout，
+  // 不受影响；iPhone 横屏与 iPad 全部方向本来就是双栏，正好是 Split 可用的全部场景。
   new(device='iPhone', isPortrait=true, symbolPanel=false)::
     local orientation = if isPortrait then 'portrait' else 'landscape';
     local insets = Metrics.keyInsets[device][orientation];
+    local isSplitCapable = device == 'iPad' || (device == 'iPhone' && !isPortrait);
 
     Style.merge([
       Preedit.new(),
-      Toolbar.new(),
+      Toolbar.new(supportsSplit=symbolPanel && isSplitCapable),
       Theme.shared(insets, Metrics.keyboardHeight[device][orientation]),
+      if symbolPanel && isSplitCapable then Split.shared else {},
       {
         keyboardHeight: Metrics.keyboardHeight[device][orientation],
         keyboardStyle: { backgroundStyle: Theme.keyboardBackgroundName },
-        keyboardLayout: if symbolPanel then wideLayout else compactLayout,
+        keyboardLayout: if symbolPanel then wideLayout(isSplitCapable) else compactLayout,
         [narrowColumnStyleName]: columnWidths.narrow,
         [wideColumnStyleName]: columnWidths.wide,
       } + (
         if symbolPanel then {
-          [halfColumnStyleName]: columnWidths.half,
+          [halfColumnStyleName]: columnWidths.half
+                                  + (if isSplitCapable then Split.width(numericWidths.halfSplit) else {}),
           [gapColumnStyleName]: columnWidths.gap,
           [gapCellName]: {},
+        } else {}
+      ) + (
+        if symbolPanel && isSplitCapable then {
+          // 列容器（VStack）的宽度来自它 style 指向的样式节点的 size，不是 Cell 自己的
+          // size——所以 split 覆盖块要写在 marginColumnStyleName 上，两侧共用一份。
+          [marginColumnStyleName]: { size: { width: 0 }, split: { size: { width: numericWidths.margin } } },
+          [marginLeftName]: { backgroundStyle: Split.blankBackgroundName },
+          [marginRightName]: { backgroundStyle: Split.blankBackgroundName },
         } else {}
       ),
       symbolList,

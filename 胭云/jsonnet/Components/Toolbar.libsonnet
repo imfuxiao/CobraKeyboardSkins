@@ -47,10 +47,31 @@ local candidateCellStyle(insets) = {
   commentFontSize: Fonts.candidateComment,
 };
 
+// split 状态切换键：没有单张固定图，图标跟着 $keyboardSplitState 的条件样式换。
+// 只给「支持 Split 布局」的键盘用（见 new() 的 supportsSplit 参数）。
+local splitToggleButton(name, action, size={}) = {
+  [name]: {
+    action: action,
+    foregroundStyle: [
+      { conditionKey: '$keyboardSplitState', conditionValue: true, styleName: name + 'OnIcon' },
+      { conditionKey: '$keyboardSplitState', conditionValue: false, styleName: name + 'OffIcon' },
+    ],
+  } + (if size == {} then {} else { size: size }),
+  [name + 'OnIcon']: Style.systemImage(iconTint {
+    systemImageName: 'rectangle.portrait.arrowtriangle.2.inward',
+    fontSize: Fonts.toolbarIcon,
+  }),
+  [name + 'OffIcon']: Style.systemImage(iconTint {
+    systemImageName: 'rectangle.portrait.arrowtriangle.2.outward',
+    fontSize: Fonts.toolbarIcon,
+  }),
+};
+
 // 工具栏中间的留白：一个既无背景也无前景的空按键，只用来吃掉剩余宽度
 local spacerName = 'toolbarSpacer';
 
 local menuButtonName = 'toolbarMenuButton';
+local splitToggleButtonName = 'toolbarSplitToggleButton';
 local dismissButtonName = 'toolbarDismissButton';
 local expandButtonName = 'candidatesExpandButton';
 local horizontalListName = 'horizontalCandidates';
@@ -63,16 +84,18 @@ local panelBackspaceName = 'candidatesBackspaceButton';
 
 {
   // insets: 候选区内边距，iPad 用它把候选字收到屏幕中间
-  new(insets={}):: {
+  // supportsSplit: 这份键盘布局是否有 Split（分体）版面。为 true 时在系统菜单键右侧
+  // 加一颗 split 状态切换键；不支持的键盘（如 iPhone 竖屏）不加这颗键。
+  new(insets={}, supportsSplit=false):: {
                      toolbarHeight: Metrics.toolbar.height,
                      toolbarStyle: { backgroundStyle: Theme.toolbarBackgroundName },
                      [spacerName]: {},
                      toolbarLayout: [
-                       { HStack: { subviews: [
-                         { Cell: menuButtonName },
-                         { Cell: spacerName },
-                         { Cell: dismissButtonName },
-                       ] } },
+                       { HStack: { subviews:
+                         [{ Cell: menuButtonName }]
+                         + (if supportsSplit then [{ Cell: splitToggleButtonName }] else [])
+                         + [{ Cell: spacerName }, { Cell: dismissButtonName }]
+                       } },
                      ],
 
                      // ===== 横排候选栏 =====
@@ -121,8 +144,19 @@ local panelBackspaceName = 'candidatesBackspaceButton';
                        size: { height: Metrics.candidate.verticalBottomRowHeight },
                      },
                    }
-                   + iconButton(menuButtonName, 'command', { shortcut: '#keyboardMenu' }, { width: '1/8' })
-                   + iconButton(dismissButtonName, 'chevron.down', 'dismissKeyboard', { width: '1/8' })
+                   // 菜单键 / split 切换键 / 收起键改成固定宽度（44pt），紧挨着排开；中间那颗
+                   // 没有 size 的 toolbarSpacer 吃掉剩余空间，把它们分别顶到左右两端。固定宽度
+                   // 而不是按比例分（原先的 1/8）是为了让 split 切换键紧贴在菜单键右边，
+                   // 不被工具栏越宽（如 iPad）就拉得越远。
+                   + iconButton(menuButtonName, 'command', { shortcut: '#keyboardMenu' }, { width: 44 })
+                   + iconButton(dismissButtonName, 'chevron.down', 'dismissKeyboard', { width: 44 })
+                   // 整份定义（按键 + 两张图）都按 supportsSplit 门控，不单靠 Style.prune 兜底：
+                   // splitToggleButton 自己的 foregroundStyle 里写着 OnIcon/OffIcon 这两个名字，
+                   // 即使按键本身没被 toolbarLayout 引用、会被 prune 删掉，这两张图的名字依然
+                   // 「出现过」，单靠 prune 会把它们孤儿式地留在产物里（校验器报「从未被引用」）。
+                   + (if supportsSplit then
+                        splitToggleButton(splitToggleButtonName, { shortcut: '#toggleSplitState' }, { width: 44 })
+                      else {})
                    + iconButton(expandButtonName,
                                 'chevron.forward',
                                 { shortcut: '#candidatesBarStateToggle' },
