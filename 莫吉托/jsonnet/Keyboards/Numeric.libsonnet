@@ -26,11 +26,20 @@ local zeroKey = ['0', ')'];
 local digitNames = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
 
 // ===== 表二：列宽（分母 100，一行加起来正好 100）=====
+//
+// Split（分体键盘）：双栏布局（symbolPanel=true，即 iPhone 横屏 + iPad 全部方向，
+// 与「支持 Split」的场景完全重合）本来就已经是「数字区 + 符号面板」左右两半夹一条
+// 中缝，分体态只需要把中缝撑宽、两个半区相应收窄即可：45+10+45=100（合并）→
+// 40+20+40=100（分体）。这条中缝（gapCellName）合并态就已经是个看得见、摸不着的
+// 实体空按键（不是「平时零宽分体态撑开」那种占位键），所以不需要
+// Components/Split.libsonnet 的 spacer() 机制，直接在这两个样式节点上加 split
+// 覆盖块即可；单栏布局（symbolPanel=false，只有 iPhone 竖屏用到）不引用这两个
+// 样式名，不受影响。
 local columnWidths = {
   narrow: { size: { width: '17/100' } },  // 最左的符号列与最右的功能列
   wide: { size: { width: '22/100' } },  // 中间三列数字
-  half: { size: { width: '45/100' } },  // 双栏时的左右两半
-  gap: { size: { width: '10/100' } },  // 双栏中间的空隙
+  half: { size: { width: '45/100' }, split: { size: { width: '40/100' } } },  // 双栏时的左右两半
+  gap: { size: { width: '10/100' }, split: { size: { width: '20/100' } } },  // 双栏中间的空隙
 };
 
 local keyName(digit) = digitNames[std.parseInt(digit)] + 'Button';
@@ -132,7 +141,9 @@ local wideLayout = [
 
     Style.merge([
       Preedit.new(),
-      Toolbar.new(),
+      // symbolPanel 恰好与「这份布局是否支持 Split」重合（单栏只有 iPhone 竖屏用得到，
+      // 双栏才有左右两半可分），所以直接拿它当 supportsSplit 用，不必另算一遍。
+      Toolbar.new(supportsSplit=symbolPanel),
       Theme.shared(insets, Metrics.keyboardHeight[device][orientation]),
       {
         keyboardHeight: Metrics.keyboardHeight[device][orientation],
