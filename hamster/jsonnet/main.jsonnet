@@ -1,123 +1,57 @@
-local iPadNumeric = import 'Components/iPadNumeric.libsonnet';
-local iPadPinyin = import 'Components/iPadPinyin.libsonnet';
-local iPhoneNumeric = import 'Components/iPhoneNumeric.libsonnet';
-local iPhonePinyin = import 'Components/iPhonePinyin.libsonnet';
-local iPhoneSymbolic = import 'Components/iPhoneSymbolic.libsonnet';
+// hamster 皮肤入口——只负责声明「要出哪些文件」，具体内容在 Keyboards/ 下。
+// 结构对齐 default / Noctua：Constants 放纯数据，Components 放构造函数，
+// Keyboards 组装成具体键盘，这里只是产物矩阵。
+//
+// 编译：make compile（或在手机上长按皮肤选择「运行 main.jsonnet」）
+local Style = import 'Components/Style.libsonnet';
+local iPadPinyin = import 'Keyboards/iPadPinyin.libsonnet';
+local iPhonePinyin = import 'Keyboards/iPhonePinyin.libsonnet';
 
-// 是否添加分号键
+// 是否添加分号键（打开后横屏第二行会多一颗键，与 Split 的分体宽度表不匹配，
+// 见 Keyboards/iPhonePinyin.libsonnet 文件头注释）
 local addSemicolon = false;
 
-local pinyinPortraitFileName = 'pinyinPortrait';
-local lightPinyinPortraitFileContent = iPhonePinyin.new(isDark=false, isPortrait=true, addSemicolon=addSemicolon);
-local darkPinyinPortraitFileContent = iPhonePinyin.new(isDark=true, isPortrait=true, addSemicolon=addSemicolon);
-local pinyinLandscapeFileName = 'pinyinLandscape';
-local lightPinyinLandscapeFileContent = iPhonePinyin.new(isDark=false, isPortrait=false, addSemicolon=addSemicolon);
-local darkPinyinLandscapeFileContent = iPhonePinyin.new(isDark=true, isPortrait=false, addSemicolon=addSemicolon);
+// ===== 产物矩阵：文件名 -> 键盘定义 =====
+// 目前只出拼音键盘（numeric/symbolic 尚未启用，config.yaml 里对应项保持注释）。
+local keyboards = {
+  pinyinPortrait: iPhonePinyin.new(isDark=false, isPortrait=true, addSemicolon=addSemicolon),
+  pinyinLandscape: iPhonePinyin.new(isDark=false, isPortrait=false, addSemicolon=addSemicolon),
 
-local numericPortraitFileName = 'numericPortrait';
-local lightNumericPortraitFileContent = iPhoneNumeric.new(isDark=false, isPortrait=true);
-local darkNumericPortraitFileContent = iPhoneNumeric.new(isDark=true, isPortrait=true);
+  iPadPinyinPortrait: iPadPinyin.new(isDark=false, isPortrait=true),
+  iPadPinyinLandscape: iPadPinyin.new(isDark=false, isPortrait=false),
+};
 
-local numericLandscapeName = 'numericLandscape';
-local lightNumericLandscapeFileContent = iPhoneNumeric.new(isDark=false, isPortrait=false);
-local darkNumericLandscapeFileContent = iPhoneNumeric.new(isDark=true, isPortrait=false);
+// hamster 的构造函数用 isDark 参数模型（不是 default 那种 {light,dark} 树 + resolve），
+// 所以这里对每个键盘各生成一次 isDark=false / isDark=true 两份，而不是调用 Style.resolve。
+local darkKeyboards = {
+  pinyinPortrait: iPhonePinyin.new(isDark=true, isPortrait=true, addSemicolon=addSemicolon),
+  pinyinLandscape: iPhonePinyin.new(isDark=true, isPortrait=false, addSemicolon=addSemicolon),
 
-local symbolicPortraitFileName = 'symbolicPortrait';
-local lightSymbolicPortraitFileContent = iPhoneSymbolic.new(isDark=false, isPortrait=true);
-local darkSymbolicPortraitFileContent = iPhoneSymbolic.new(isDark=true, isPortrait=true);
-
-local symbolicLandscapeName = 'symbolicLandscape';
-local lightSymbolicLandscapeFileContent = iPhoneSymbolic.new(isDark=false, isPortrait=false);
-local darkSymbolicLandscapeFileContent = iPhoneSymbolic.new(isDark=true, isPortrait=false);
-
-local iPadPinyinPortraitName = 'iPadPinyinPortrait';
-local lightIpadPinyinPortraitContent = iPadPinyin.new(isDark=false, isPortrait=true);
-local darkIpadPinyinPortraitContent = iPadPinyin.new(isDark=true, isPortrait=true);
-
-local iPadPinyinLandscapeName = 'iPadPinyinLandscape';
-local lightIpadPinyinLandscapeContent = iPadPinyin.new(isDark=false, isPortrait=false);
-local darkIpadPinyinLandscapeContent = iPadPinyin.new(isDark=true, isPortrait=false);
-
-local iPadNumericPortraitName = 'iPadNumericPortrait';
-local lightIpadNumericPortraitContent = iPadNumeric.new(isDark=false, isPortrait=true);
-local darkIpadNumericPortraitContent = iPadNumeric.new(isDark=true, isPortrait=true);
-
-local iPadNumericLandscapeName = 'iPadNumericLandscape';
-local lightIpadNumericLandscapeContent = iPadNumeric.new(isDark=false, isPortrait=false);
-local darkIpadNumericLandscapeContent = iPadNumeric.new(isDark=true, isPortrait=false);
+  iPadPinyinPortrait: iPadPinyin.new(isDark=true, isPortrait=true),
+  iPadPinyinLandscape: iPadPinyin.new(isDark=true, isPortrait=false),
+};
 
 local config = {
   pinyin: {
-    iPhone: {
-      portrait: pinyinPortraitFileName,
-      landscape: pinyinLandscapeFileName,
-    },
+    iPhone: { portrait: 'pinyinPortrait', landscape: 'pinyinLandscape' },
     iPad: {
-      portrait: iPadPinyinPortraitName,
-      landscape: iPadPinyinLandscapeName,
-      floating: pinyinPortraitFileName,
+      portrait: 'iPadPinyinPortrait',
+      landscape: 'iPadPinyinLandscape',
+      floating: 'pinyinPortrait',
     },
   },
-  // numeric: {
-  //   iPhone: {
-  //     portrait: numericPortraitFileName,
-  //     landscape: numericLandscapeName,
-  //   },
-  //   iPad: {
-  //     portrait: iPadNumericPortraitName,
-  //     landscape: iPadNumericLandscapeName,
-  //     floating: numericPortraitFileName,
-  //   },
-  // },
-
-  // 符号键盘
-  // symbolic: {
-  //   iPhone: {
-  //     portrait: symbolicPortraitFileName,
-  //     landscape: symbolicLandscapeName,
-  //   },
-  //   iPad: {
-  //     portrait: iPadPinyinPortraitName,
-  //     landscape: iPadPinyinLandscapeName,
-  //     floating: symbolicPortraitFileName,
-  //   },
-  // },
+  // numeric / symbolic 尚未启用，缺声明时该场景使用内置键盘。
 };
 
 {
   'config.yaml': std.manifestYamlDoc(config, indent_array_in_object=true, quote_keys=false),
-
-  // 拼音键盘
-  // TODO: 这里用 std.toString 代替 std.manifestYamlDoc 是为了避免 jsonnet 在处理非常大的内容时耗时太严重
-  // 在 PC 上调试的时候可以使用，方便排查问题
-  // ['light/' + pinyinPortraitFileName + '.yaml']: std.manifestYamlDoc(lightPinyinPortraitFileContent, indent_array_in_object=false, quote_keys=false),
-  ['light/' + pinyinPortraitFileName + '.yaml']: std.toString(lightPinyinPortraitFileContent),
-  ['dark/' + pinyinPortraitFileName + '.yaml']: std.toString(darkPinyinPortraitFileContent),
-  ['light/' + pinyinLandscapeFileName + '.yaml']: std.toString(lightPinyinLandscapeFileContent),
-  ['dark/' + pinyinLandscapeFileName + '.yaml']: std.toString(darkPinyinLandscapeFileContent),
-
-  // 数字键盘
-  // ['light/' + numericPortraitFileName + '.yaml']: std.manifestYamlDoc(lightNumericPortraitFileContent, indent_array_in_object=false, quote_keys=false),
-  // ['light/' + numericPortraitFileName + '.yaml']: std.toString(lightNumericPortraitFileContent),
-  // ['dark/' + numericPortraitFileName + '.yaml']: std.toString(darkNumericPortraitFileContent),
-  // ['light/' + numericLandscapeName + '.yaml']: std.toString(lightNumericLandscapeFileContent),
-  // ['dark/' + numericLandscapeName + '.yaml']: std.toString(darkNumericLandscapeFileContent),
-
-  // 符号键盘
-  // ['light/' + symbolicPortraitFileName + '.yaml']: std.toString(lightSymbolicPortraitFileContent),
-  // ['dark/' + symbolicPortraitFileName + '.yaml']: std.toString(darkSymbolicPortraitFileContent),
-  // ['light/' + symbolicLandscapeName + '.yaml']: std.toString(lightSymbolicLandscapeFileContent),
-  // ['dark/' + symbolicLandscapeName + '.yaml']: std.toString(darkSymbolicLandscapeFileContent),
-
-  // iPad 拼音键盘
-  ['light/' + iPadPinyinPortraitName + '.yaml']: std.toString(lightIpadPinyinPortraitContent),
-  ['dark/' + iPadPinyinPortraitName + '.yaml']: std.toString(darkIpadPinyinPortraitContent),
-  ['light/' + iPadPinyinLandscapeName + '.yaml']: std.toString(lightIpadPinyinLandscapeContent),
-  ['dark/' + iPadPinyinLandscapeName + '.yaml']: std.toString(darkIpadPinyinLandscapeContent),
-
-  // iPad 数字键盘
-  // ['light/' + iPadNumericPortraitName + '.yaml']: std.toString(lightIpadNumericPortraitContent),
-  // ['dark/' + iPadNumericPortraitName + '.yaml']: std.toString(darkIpadNumericPortraitContent),
-  // ['light/' + iPadNumericLandscapeName + '.yaml']: std.toString(lightIpadNumericLandscapeContent),
-  // ['dark/' + iPadNumericLandscapeName + '.yaml']: std.toString(darkIpadNumericLandscapeContent),
+}
++ {
+  // JSON 是 YAML 的子集，用 std.toString 而不是 std.manifestYamlDoc 避免在这个体量下
+  // 编译过慢（原代码里的既有取舍，继续沿用）。
+  ['light/' + name + '.yaml']: std.toString(Style.prune(keyboards[name]))
+  for name in std.objectFields(keyboards)
+} + {
+  ['dark/' + name + '.yaml']: std.toString(Style.prune(darkKeyboards[name]))
+  for name in std.objectFields(darkKeyboards)
 }

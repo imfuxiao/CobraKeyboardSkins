@@ -1,258 +1,160 @@
+// 工具栏区：非输入态显示 toolbarLayout，输入态被候选栏整片盖住。
+// 候选栏横排是默认形态，点右端的箭头展开成纵排；纵排展开后会盖住工具栏 + 按键区，
+// 所以它自带一行翻页 / 收起 / 删除的按钮。
+//
+// 版式照 Skins/default 的工具栏：左端菜单键（支持分体的版面紧跟一颗 split 切换键），
+// 右端收起键，中间一颗没有 size 的 toolbarSpacer 吃掉剩余宽度。
 local colors = import '../Constants/Colors.libsonnet';
-local keyboardParams = import '../Constants/Keyboard.libsonnet';
-local basicStyle = import 'BasicStyle.libsonnet';
+local fonts = import '../Constants/Fonts.libsonnet';
+local Metrics = import '../Constants/Metrics.libsonnet';
+local Style = import 'Style.libsonnet';
+local Theme = import 'Theme.libsonnet';
 local utils = import 'Utils.libsonnet';
 
-local toolbarLayout = [
-  {
-    HStack: {
-      subviews: [
-        {
-          Cell: keyboardParams.keyboard.toolbarKeyboardMenuButton.name,
-        },
-        {
-          Cell: 'spacer',
-        },
-        {
-          Cell: keyboardParams.keyboard.toolbarKeyboardDismissButton.name,
-        },
-      ],
-    },
-  },
+local candidateColorKeys = [
+  'highlightBackgroundColor',
+  'preferredBackgroundColor',
+  'preferredIndexColor',
+  'preferredTextColor',
+  'preferredCommentColor',
+  'indexColor',
+  'textColor',
+  'commentColor',
 ];
 
+// 候选字的配色与字号。横排纵排共用一份，纵排另加一点内边距。
+local candidateStyle(isDark) =
+  utils.extractColors({
+    highlightBackgroundColor: colors.candidateHighlightColor,
+    preferredBackgroundColor: colors.candidateHighlightColor,
+    preferredIndexColor: colors.candidateForegroundColor,
+    preferredTextColor: colors.candidateForegroundColor,
+    preferredCommentColor: colors.candidateForegroundColor,
+    indexColor: colors.candidateForegroundColor,
+    textColor: colors.candidateForegroundColor,
+    commentColor: colors.candidateForegroundColor,
+  }, candidateColorKeys, isDark)
+  + {
+    indexFontSize: fonts.candidateIndexFontSize,
+    textFontSize: fonts.candidateTextFontSize,
+    commentFontSize: fonts.candidateCommentFontSize,
+  };
 
-local newCandidateStyle(param={}, isDark=false) =
-  utils.extractProperties(
-    param,
-    [
-      'insets',
-      'indexFontSize',
-      'indexFontWeight',
-      'textFontSize',
-      'textFontWeight',
-      'commentFontSize',
-      'commentFontWeight',
-    ]
-  )
-  + utils.extractColors(
-    param,
-    [
-      'backgroundColor',
-      'separatorColor',
-      'highlightBackgroundColor',
-      'preferredBackgroundColor',
-      'preferredIndexColor',
-      'preferredTextColor',
-      'preferredCommentColor',
-      'indexColor',
-      'textColor',
-      'commentColor',
+local iconStyle(isDark, systemImageName) = utils.newSystemImageStyle({
+  systemImageName: systemImageName,
+  normalColor: colors.toolbarButtonForegroundColor,
+  highlightColor: colors.toolbarButtonHighlightedForegroundColor,
+  fontSize: fonts.candidateStateButtonFontSize,
+}, isDark);
+
+// 工具栏上的图标按钮（菜单、收起、展开候选、翻页……）共用一套外观。
+// background 为 null 时不带底色，直接浮在工具栏上。
+local iconButton(isDark, name, systemImageName, action, background=null, size={}) = {
+  [name]: {
+    action: action,
+    foregroundStyle: name + 'ForegroundStyle',
+    [if background != null then 'backgroundStyle']: background,
+  } + (if size == {} then {} else { size: size }),
+  [name + 'ForegroundStyle']: iconStyle(isDark, systemImageName),
+};
+
+// split 状态切换键：没有单张固定图，图标跟着 $keyboardSplitState 的条件样式换。
+// 只给「支持 Split 布局」的键盘用（new() 的 supportsSplit），按钮连同两张图标一起
+// 按 supportsSplit 生成，不支持的键盘里这三个节点根本不出现。
+local splitToggleButton(isDark, name, action, size={}) = {
+  [name]: {
+    action: action,
+    foregroundStyle: [
+      Style.when('$keyboardSplitState', true, name + 'OnIcon'),
+      Style.when('$keyboardSplitState', false, name + 'OffIcon'),
     ],
-    isDark
-  );
-
-local toolbarBackgroundStyleName = basicStyle.keyboardBackgroundStyleName;
-local horizontalCandidateBackgroundStyleName = basicStyle.keyboardBackgroundStyleName;
-local verticalCandidateBackgroundStyleName = basicStyle.keyboardBackgroundStyleName;
-
-// MARK: - 横排候选字
-
-local horizontalCandidatesCollectionViewName = 'horizontalCandidates';
-local expandButtonName = 'expandButton';
-local horizontalCandidatesLayout = [
-  {
-    HStack: {
-      subviews: [
-        {
-          Cell: horizontalCandidatesCollectionViewName,
-        },
-        {
-          Cell: expandButtonName,
-        },
-      ],
-    },
-  },
-];
-
-local newHorizontalCandidatesCollectionView(isDark=false) = {
-  [horizontalCandidatesCollectionViewName]: {
-    type: 'horizontalCandidates',
-    candidateStyle: 'horizontalCandidateStyle',
-  },
-  horizontalCandidateStyle: newCandidateStyle(keyboardParams.candidateStyle, isDark),
+  } + (if size == {} then {} else { size: size }),
+  [name + 'OnIcon']: iconStyle(isDark, 'rectangle.portrait.arrowtriangle.2.inward'),
+  [name + 'OffIcon']: iconStyle(isDark, 'rectangle.portrait.arrowtriangle.2.outward'),
 };
 
-local newExpandButton(isDark) = {
-  [expandButtonName]:
-    {
-      size: { width: 44 },
-      action: { shortcut: '#candidatesBarStateToggle' },
-    }
-    + utils.newForegroundStyle(style=expandButtonName + 'ForegroundStyle'),
-  [expandButtonName + 'ForegroundStyle']:
-    utils.newSystemImageStyle(keyboardParams.horizontalCandidateStyle.expandButton, isDark),
-};
+local menuButtonName = 'toolbarMenuButton';
+local splitToggleButtonName = 'toolbarSplitToggleButton';
+local spacerName = 'toolbarSpacer';
+local dismissButtonName = 'toolbarDismissButton';
 
+local horizontalName = 'horizontalCandidates';
+local expandName = 'expandButton';
+local verticalName = 'verticalCandidates';
+local lastRowName = 'verticalLastRowStyle';
+local pageUpName = 'verticalPageUpButtonStyle';
+local pageDownName = 'verticalPageDownButtonStyle';
+local returnName = 'verticalReturnButtonStyle';
+local backspaceName = 'verticalBackspaceButtonStyle';
 
-// MARK: - 纵排候选字
+// 菜单键 / split 切换键 / 收起键都是固定宽度，紧挨着排开。
+// 不按比例分（如 1/8）：横屏和 iPad 的工具栏很宽，按比例的话每颗键都会被拉到上百 pt，
+// split 切换键离菜单键越拉越远；固定宽度则两颗键始终贴在左端、收起键贴在右端，
+// 分体态下正好各自落在左右两半键盘的上方。
+local toolbarButtonSize = { width: 44 };
 
-local verticalCandidateCollectionViewName = 'verticalCandidates';
-local verticalLastRowStyleName = 'verticalLastRowStyle';
-local verticalCandidatePageUpButtonStyleName = 'verticalPageUpButtonStyle';
-local verticalCandidatePageDownButtonStyleName = 'verticalPageDownButtonStyle';
-local verticalCandidateReturnButtonStyleName = 'verticalReturnButtonStyle';
-local verticalCandidateBackspaceButtonStyleName = 'verticalBackspaceButtonStyle';
-
-local verticalCandidatesLayout = [
+// insets: 候选区内边距（iPad 传 Metrics.iPadSideInsets 把候选字收到屏幕中间）。
+// supportsSplit: 这份键盘布局是否有 Split（分体）版面。为 true 时在菜单键右侧
+// 加一颗 split 状态切换键；不支持的键盘（iPhone 竖屏）不加这颗键。
+local newToolbar(isDark=false, insets={}, supportsSplit=false) = Style.merge([
   {
-    HStack: {
-      subviews: [
-        {
-          Cell: verticalCandidateCollectionViewName,
-        },
-      ],
-    },
-  },
-  {
-    HStack: {
-      style: verticalLastRowStyleName,
-      subviews: [
-        {
-          Cell: verticalCandidatePageUpButtonStyleName,
-        },
-        {
-          Cell: verticalCandidatePageDownButtonStyleName,
-        },
-        {
-          Cell: verticalCandidateReturnButtonStyleName,
-        },
-        {
-          Cell: verticalCandidateBackspaceButtonStyleName,
-        },
-      ],
-    },
-  },
-];
+    toolbarHeight: Metrics.toolbar.height,
+    toolbarStyle: utils.newBackgroundStyle(style=Theme.keyboardBackgroundName),
+    toolbarLayout: [
+      { HStack: { subviews:
+        [{ Cell: menuButtonName }]
+        + (if supportsSplit then [{ Cell: splitToggleButtonName }] else [])
+        + [{ Cell: spacerName }, { Cell: dismissButtonName }]
+      } },
+    ],
+    [spacerName]: {},
 
+    horizontalCandidatesStyle: {
+      insets: Metrics.candidate.horizontalInsets + insets,
+      backgroundStyle: Theme.keyboardBackgroundName,
+    },
+    horizontalCandidatesLayout: [
+      { HStack: { subviews: [{ Cell: horizontalName }, { Cell: expandName }] } },
+    ],
+    [horizontalName]: { type: 'horizontalCandidates', candidateStyle: 'horizontalCandidateStyle' },
+    horizontalCandidateStyle: candidateStyle(isDark),
 
-local newVerticalCandidateCollectionStyle(isDark) = {
-  [verticalCandidateCollectionViewName]:
-    {
+    verticalCandidatesStyle: {
+      [if insets != {} then 'insets']: insets,
+      backgroundStyle: Theme.keyboardBackgroundName,
+    },
+    verticalCandidatesLayout: [
+      { HStack: { subviews: [{ Cell: verticalName }] } },
+      { HStack: { style: lastRowName, subviews: [{ Cell: pageUpName }, { Cell: pageDownName }, { Cell: returnName }, { Cell: backspaceName }] } },
+    ],
+    [verticalName]: {
       type: 'verticalCandidates',
-      insets: keyboardParams.verticalCandidateStyle.candidateCollectionStyle.insets,
-      maxRows: keyboardParams.verticalCandidateStyle.candidateCollectionStyle.maxRows,
-      maxColumns: keyboardParams.verticalCandidateStyle.candidateCollectionStyle.maxColumns,
+      insets: Metrics.candidate.verticalInsets,
+      maxRows: Metrics.candidate.verticalMaxRows,
+      maxColumns: Metrics.candidate.verticalMaxColumns,
       candidateStyle: 'verticalCandidateStyle',
-    } +
-    utils.extractColors(
-      keyboardParams.verticalCandidateStyle.candidateCollectionStyle,
-      [
-        'separatorColor',
-      ],
-      isDark
-    ),
-  verticalCandidateStyle: newCandidateStyle(keyboardParams.candidateStyle { insets: { left: 6, right: 6, top: 4, bottom: 4 } }, isDark),
-};
+    } + utils.setColor('separatorColor', colors.candidateSeparatorColor, isDark),
+    verticalCandidateStyle: candidateStyle(isDark) { insets: Metrics.candidate.cellInsets },
+    [lastRowName]: { size: { height: Metrics.candidate.verticalBottomRowHeight } },
 
-local verticalLastRowStyle = {
-  [verticalLastRowStyleName]:
-    {
-      size: { height: keyboardParams.verticalCandidateStyle.bottomRowHeight },
-    },
-};
+    // TODO: 长按候选字弹出的菜单，暂未配置
+    candidateContextMenu: [],
+  },
+  // 左端开键盘菜单的键。用九宫格图标而不是 ⌘：菜单里是一格一格的功能入口，
+  // 方块阵列一眼就读得出，⌘ 在 iOS 上另有含义。
+  iconButton(isDark, menuButtonName, 'square.grid.2x2.fill', { shortcut: '#keyboardMenu' }, size=toolbarButtonSize),
+  iconButton(isDark, dismissButtonName, 'chevron.down', 'dismissKeyboard', size=toolbarButtonSize),
+  (if supportsSplit then
+     splitToggleButton(isDark, splitToggleButtonName, { shortcut: '#toggleSplitState' }, toolbarButtonSize)
+   else {}),
+  // 展开按钮不带底色，直接浮在候选栏右端
+  iconButton(isDark, expandName, 'chevron.forward', { shortcut: '#candidatesBarStateToggle' }, size={ width: 44 }),
+  iconButton(isDark, pageUpName, 'chevron.up', { shortcut: '#verticalCandidatesPageUp' }, Theme.systemButtonBackgroundName),
+  iconButton(isDark, pageDownName, 'chevron.down', { shortcut: '#verticalCandidatesPageDown' }, Theme.systemButtonBackgroundName),
+  iconButton(isDark, returnName, 'return', { shortcut: '#candidatesBarStateToggle' }, Theme.systemButtonBackgroundName),
+  iconButton(isDark, backspaceName, 'delete.left', 'backspace', Theme.systemButtonBackgroundName),
+]);
 
-local newVerticalCandidatePageUpButtonStyle(isDark) = {
-  [verticalCandidatePageUpButtonStyleName]:
-    utils.newBackgroundStyle(style=basicStyle.systemButtonBackgroundStyleName)
-    + utils.newForegroundStyle(style=verticalCandidatePageUpButtonStyleName + 'ForegroundStyle')
-    + {
-      action: keyboardParams.verticalCandidateStyle.pageUpButton.action,
-    },
-  [verticalCandidatePageUpButtonStyleName + 'ForegroundStyle']:
-    utils.newSystemImageStyle(keyboardParams.verticalCandidateStyle.pageUpButton, isDark),
-};
-
-local newVerticalCandidatePageDownButtonStyle(isDark) = {
-  [verticalCandidatePageDownButtonStyleName]:
-    utils.newBackgroundStyle(style=basicStyle.systemButtonBackgroundStyleName)
-    + utils.newForegroundStyle(style=verticalCandidatePageDownButtonStyleName + 'ForegroundStyle')
-    + {
-      action: keyboardParams.verticalCandidateStyle.pageDownButton.action,
-    },
-  [verticalCandidatePageDownButtonStyleName + 'ForegroundStyle']:
-    utils.newSystemImageStyle(keyboardParams.verticalCandidateStyle.pageDownButton, isDark),
-};
-
-
-local newVerticalCandidateReturnButtonStyle(isDark) = {
-  [verticalCandidateReturnButtonStyleName]:
-    utils.newBackgroundStyle(style=basicStyle.systemButtonBackgroundStyleName)
-    + utils.newForegroundStyle(style=verticalCandidateReturnButtonStyleName + 'ForegroundStyle')
-    + {
-      action: keyboardParams.verticalCandidateStyle.returnButton.action,
-    },
-  [verticalCandidateReturnButtonStyleName + 'ForegroundStyle']:
-    utils.newSystemImageStyle(keyboardParams.verticalCandidateStyle.returnButton, isDark),
-};
-
-local newVerticalCandidateBackspaceButtonStyle(isDark) = {
-  [verticalCandidateBackspaceButtonStyleName]:
-    utils.newBackgroundStyle(style=basicStyle.systemButtonBackgroundStyleName)
-    + utils.newForegroundStyle(style=verticalCandidateBackspaceButtonStyleName + 'ForegroundStyle')
-    + {
-      action: 'backspace',
-    },
-  [verticalCandidateBackspaceButtonStyleName + 'ForegroundStyle']:
-    utils.newSystemImageStyle(
-      {
-        systemImageName: 'delete.left',
-        normalColor: colors.toolbarButtonForegroundColor,
-        highlightColor: colors.toolbarButtonHighlightedForegroundColor,
-        fontSize: keyboardParams.verticalCandidateStyle.pageUpButton.fontSize,
-      },
-      isDark
-    ),
-};
-
-
-local newToolbar(isDark=false, params={}) =
-  {
-    toolbarHeight: keyboardParams.toolbar.height,
-    toolbarStyle: utils.newBackgroundStyle(style=toolbarBackgroundStyleName),
-    toolbarLayout: toolbarLayout,
-    horizontalCandidatesStyle:
-      utils.extractProperties(keyboardParams.horizontalCandidateStyle + params, ['insets'])
-      {
-        backgroundStyle: horizontalCandidateBackgroundStyleName,
-      },
-    horizontalCandidatesLayout: horizontalCandidatesLayout,
-    verticalCandidatesStyle:
-      utils.extractProperties(keyboardParams.verticalCandidateStyle + params, ['insets'])
-      {
-        backgroundStyle: verticalCandidateBackgroundStyleName,
-      },
-    verticalCandidatesLayout: verticalCandidatesLayout,
-    candidateContextMenu: [
-      // TODO: 长按候选字菜单
-      // {
-      //   name: '空格',
-      //   action: 'space',
-      // },
-    ],
-  }
-  + newHorizontalCandidatesCollectionView(isDark)
-  + newExpandButton(isDark)
-  + newVerticalCandidateCollectionStyle(isDark)
-  + verticalLastRowStyle
-  + newVerticalCandidatePageUpButtonStyle(isDark)
-  + newVerticalCandidatePageDownButtonStyle(isDark)
-  + newVerticalCandidateReturnButtonStyle(isDark)
-  + newVerticalCandidateBackspaceButtonStyle(isDark)
-  + basicStyle.newToolbarKeyboardMenuButtonStyle(isDark)
-  + basicStyle.newToolbarDismissKeyboardButtonStyle(isDark);
-
-// 导出
 {
   new: newToolbar,
 }

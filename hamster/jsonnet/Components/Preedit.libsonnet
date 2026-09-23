@@ -1,22 +1,22 @@
 local colors = import '../Constants/Colors.libsonnet';
-local keyboardParams = import '../Constants/Keyboard.libsonnet';
-local basicStyle = import 'BasicStyle.libsonnet';
+local Metrics = import '../Constants/Metrics.libsonnet';
+local Button = import 'Button.libsonnet';
+local Theme = import 'Theme.libsonnet';
 local utils = import 'Utils.libsonnet';
 
-local preeditBackgroundStyleName = basicStyle.keyboardBackgroundStyleName;
 local preeditForegroundStyleName = 'preeditForegroundStyle';
 
+// params: 直接合并进 preeditStyle 的额外字段（例如 iPad 传 { insets: Metrics.iPadSideInsets }
+// 整体替换掉下面的默认 insets）。
 local newPreedit(isDark=false, params={}) = {
-  preeditHeight: keyboardParams.preedit.height,
-  preeditStyle: {
-             insets: keyboardParams.preedit.insets,
-           }
-           + utils.newBackgroundStyle(style=preeditBackgroundStyleName)
-           + utils.newForegroundStyle(style=preeditForegroundStyleName)
-           + params,
+  preeditHeight: Metrics.preedit.height,
+  preeditStyle: { insets: Metrics.preedit.insets }
+                + utils.newBackgroundStyle(style=Theme.keyboardBackgroundName)
+                + utils.newForegroundStyle(style=preeditForegroundStyleName)
+                + params,
   [preeditForegroundStyleName]: utils.newTextStyle({
     normalColor: colors.preeditForegroundColor,
-    fontSize: keyboardParams.preedit.fontSize,
+    fontSize: Metrics.preedit.fontSize,
   }, isDark),
 };
 

@@ -14,6 +14,7 @@
   systemButtonImageFontSize: 20,
 
   hintTextFontSize: 26,
+  hintGridTextFontSize: 20,  // 长按符号网格的格子比按键窄，字也跟着小一档
 
   candidateIndexFontSize: 12,
   candidateTextFontSize: 16,
