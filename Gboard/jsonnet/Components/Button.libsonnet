@@ -35,6 +35,9 @@ local passthroughKeys = [
   'swipeDownAction',
   'notification',
   'animation',
+  // 分体（Split）覆盖块：docs/键盘Split状态.md。不在这张表里就会被
+  // passthrough() 静默丢掉，split 覆盖等于白写。
+  'split',
 ];
 
 local passthrough(opts) = {

@@ -27,6 +27,27 @@ local iconButton(name, systemImageName, action, size={}) = {
   }),
 };
 
+// split 状态切换键：没有单张固定图，图标跟着 $keyboardSplitState 的条件样式换。
+// 只给「支持 Split 布局」的键盘用（见 new() 的 supportsSplit 参数），不支持的键盘
+// 不引用这颗键，Style.prune 会把它连同下面两张图一起从产物里删掉。
+local splitToggleButton(name, action, size={}) = {
+  [name]: {
+    action: action,
+    foregroundStyle: [
+      Style.when('$keyboardSplitState', true, name + 'OnIcon'),
+      Style.when('$keyboardSplitState', false, name + 'OffIcon'),
+    ],
+  } + (if size == {} then {} else { size: size }),
+  [name + 'OnIcon']: Style.systemImage(iconTint {
+    systemImageName: 'rectangle.portrait.arrowtriangle.2.inward',
+    fontSize: Fonts.toolbarIcon,
+  }),
+  [name + 'OffIcon']: Style.systemImage(iconTint {
+    systemImageName: 'rectangle.portrait.arrowtriangle.2.outward',
+    fontSize: Fonts.toolbarIcon,
+  }),
+};
+
 // 纵排候选栏底部那一行的功能键：有底色，走灰键那一档
 local panelButton(name, role, systemImageName, action) = Button.new(name, {
   role: role,
@@ -56,6 +77,7 @@ local spacerName = 'toolbarSpacer';
 
 local menuButtonName = 'toolbarMenuButton';
 local dismissButtonName = 'toolbarDismissButton';
+local splitToggleButtonName = 'toolbarSplitToggleButton';
 local expandButtonName = 'candidatesExpandButton';
 local horizontalListName = 'horizontalCandidates';
 local verticalListName = 'verticalCandidates';
@@ -67,16 +89,18 @@ local panelBackspaceName = 'candidatesBackspaceButton';
 
 {
   // insets: 候选区内边距，iPad 用它把候选字收到屏幕中间
-  new(insets={}):: {
+  // supportsSplit: 这份键盘布局是否有 Split（分体）版面。为 true 时在系统菜单键右侧
+  // 加一颗 split 状态切换键；不支持的键盘（如 iPhone 竖屏）不加这颗键。
+  new(insets={}, supportsSplit=false):: {
                      toolbarHeight: Metrics.toolbar.height,
                      toolbarStyle: { backgroundStyle: Theme.toolbarBackgroundName },
                      [spacerName]: {},
                      toolbarLayout: [
-                       { HStack: { subviews: [
-                         { Cell: menuButtonName },
-                         { Cell: spacerName },
-                         { Cell: dismissButtonName },
-                       ] } },
+                       { HStack: { subviews:
+                         [{ Cell: menuButtonName }]
+                         + (if supportsSplit then [{ Cell: splitToggleButtonName }] else [])
+                         + [{ Cell: spacerName }, { Cell: dismissButtonName }]
+                       } },
                      ],
 
                      // ===== 横排候选栏 =====
@@ -129,8 +153,20 @@ local panelBackspaceName = 'candidatesBackspaceButton';
                    }
                    // 左侧那颗开键盘菜单的键。用九宫格图标而不是 ⌘：
                    // 菜单里是一格一格的功能入口，方块阵列一眼就读得出，⌘ 在 iOS 上另有含义。
-                   + iconButton(menuButtonName, 'square.grid.2x2.fill', { shortcut: '#keyboardMenu' }, { width: '1/8' })
-                   + iconButton(dismissButtonName, 'chevron.down', 'dismissKeyboard', { width: '1/8' })
+                   // 菜单 / split 切换 / 收起三颗键固定 44pt 宽、紧挨着排开；中间那颗没有
+                   // size 的 spacer 吃掉剩余空间，把它们分别顶到左右两端。固定宽度而不是
+                   // 按比例分（如 1/8）是为了让 split 切换键始终贴着菜单键，不被工具栏越宽
+                   // （iPad）越拉越远。
+                   + iconButton(menuButtonName, 'square.grid.2x2.fill', { shortcut: '#keyboardMenu' }, { width: 44 })
+                   + iconButton(dismissButtonName, 'chevron.down', 'dismissKeyboard', { width: 44 })
+                   // 不支持 Split 时干脆不产出这颗键的样式节点：Style.prune 只按「字符串是否在
+                   // 整棵树里出现过」判断去留，若这里始终写出节点，它内部引用的两张图标名字
+                   // 本身就会被 collectStrings 收进「已引用」集合，导致图标即使在按钮本身被
+                   // 裁掉之后仍然残留在产物里（prune 不做传递性可达性分析）。条件生成从源头
+                   // 避免这个问题。
+                   + (if supportsSplit then
+                        splitToggleButton(splitToggleButtonName, { shortcut: '#toggleSplitState' }, { width: 44 })
+                      else {})
                    // 候选栏展开键。引擎只能给一个方向的图标（展开 / 收起共用一颗键），
                    // 所以用朝右的 › 而不是上下箭头：它读作「还有，往后翻」，
                    // 两个状态下都说得通，不像 ⌄ 那样在收起态就指反了。

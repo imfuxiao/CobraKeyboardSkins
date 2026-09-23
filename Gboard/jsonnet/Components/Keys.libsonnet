@@ -49,8 +49,9 @@ local keyName(id) = id + 'Button';
 //   character  上屏的字符，同时是默认的键面文字
 //   swipe      上划符号，省略则不带角标也不能上划
 //   label      键面显示的字，省略时就是 character 本身
-local charKey(id, character, swipe=null, label=null, fontSize=Fonts.keyLabel, opts={}) =
-  Button.new(keyName(id), {
+//   name       可选，覆盖默认的按键名（keyName(id)）。分体版面里的复制键用得上。
+local charKey(id, character, swipe=null, label=null, fontSize=Fonts.keyLabel, opts={}, name=null) =
+  Button.new(if name == null then keyName(id) else name, {
     role: 'letter',
     label: { text: if label == null then character else label },
     labelFontSize: fontSize,
@@ -87,9 +88,12 @@ local letterLongPress(character, swipe, badgeIndex, upperFirst) =
 //   anchor      这颗键中心占键盘宽的比例，既定长按面板默认高亮哪一格，
 //               也定角标排在三格里的哪一格——两处用的是同一个 Button.anchorCol，不会走岔
 //   upperFirst  角标居中时大写排左边（默认）还是右边
-local letterKey(character, swipe, anchor, upperFirst=true, opts={}) =
+//   name        可选，覆盖默认的按键名（keyName(character)）。分体版面里同一个字母
+//               左右各出现一颗（复制键）时用得上——两颗键上屏同一个字符，但必须是
+//               两个不同的样式名，见 Components/Split.libsonnet 的说明。
+local letterKey(character, swipe, anchor, upperFirst=true, opts={}, name=null) =
   local upper = std.asciiUpper(character);
-  Button.new(keyName(character), {
+  Button.new(if name == null then keyName(character) else name, {
     role: 'letter',
     label: { text: character },
     uppercasedLabel: { text: upper },

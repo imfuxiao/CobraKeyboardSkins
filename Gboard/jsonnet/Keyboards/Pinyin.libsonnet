@@ -10,6 +10,7 @@ local FunctionKeys = import '../Components/FunctionKeys.libsonnet';
 local Keys = import '../Components/Keys.libsonnet';
 local Layout = import '../Components/Layout.libsonnet';
 local Preedit = import '../Components/Preedit.libsonnet';
+local Split = import '../Components/Split.libsonnet';
 local Style = import '../Components/Style.libsonnet';
 local Theme = import '../Components/Theme.libsonnet';
 local Toolbar = import '../Components/Toolbar.libsonnet';
@@ -131,6 +132,57 @@ local keyboardLayout = [
   Layout.row([numericName, emojiCommaName, spaceName, periodName, enterName]),
 ];
 
+// ===== 分体（Split）版面 =====
+// 三行字母的行结构与 default / hamster 完全一致（10 键行 / 9 键带宽边行），
+// 宽度表直接复用 Components/Split.libsonnet 的 row10 / nineKeyRow。
+// 第四行键位是本皮肤特有的（多了表情逗号 / 句号两颗键），宽度表在本文件本地定义。
+local padTopLeftName = 'splitPadTopLeftButton';
+local padTopRightName = 'splitPadTopRightButton';
+local gapTopName = 'splitGapTopButton';
+local padHomeLeftName = 'splitPadHomeLeftButton';
+local padHomeRightName = 'splitPadHomeRightButton';
+local gapHomeName = 'splitGapHomeButton';
+local padBottomLeftName = 'splitPadBottomLeftButton';
+local padBottomRightName = 'splitPadBottomRightButton';
+local gapBottomName = 'splitGapBottomButton';
+local padRowFourLeftName = 'splitPadRowFourLeftButton';
+local padRowFourRightName = 'splitPadRowFourRightButton';
+local gapRowFourName = 'splitGapRowFourButton';
+local spaceRightName = 'spaceRightButton';
+local repeatedName(c) = c + 'SplitButton';
+
+// 第四行分体宽度表：margin(8) + keyboardType(126) + unit(79.2) + space(220) + gap(258.6)
+//   + space(220) + unit(79.2) + keyboardType(126) + margin(8) = 1125
+local rowFour = {
+  margin: '8/1125',
+  keyboardType: '126/1125',
+  unit: '79.2/1125',
+  space: '220/1125',
+  gap: '258.6/1125',
+};
+
+local splitKeyboardLayout = [
+  Layout.row(
+    [padTopLeftName] + [Keys.keyName(entry[0]) for entry in letterRows[0][0:5]]
+    + [gapTopName] + [Keys.keyName(entry[0]) for entry in letterRows[0][5:10]]
+    + [padTopRightName]
+  ),
+  Layout.row(
+    [padHomeLeftName, Keys.keyName('a')] + [Keys.keyName(entry[0]) for entry in letterRows[1][1:5]]
+    + [gapHomeName, repeatedName('g')] + [Keys.keyName(entry[0]) for entry in letterRows[1][5:8]]
+    + [Keys.keyName('l'), padHomeRightName]
+  ),
+  Layout.row(
+    [padBottomLeftName, shiftName] + [Keys.keyName(entry[0]) for entry in letterRows[2][0:4]]
+    + [gapBottomName, repeatedName('v')] + [Keys.keyName(entry[0]) for entry in letterRows[2][4:7]]
+    + [backspaceName, padBottomRightName]
+  ),
+  Layout.row([
+    padRowFourLeftName, numericName, emojiCommaName, spaceName,
+    gapRowFourName, spaceRightName, periodName, enterName, padRowFourRightName,
+  ]),
+];
+
 {
   // device      'iPhone' / 'iPad'
   // isPortrait  竖屏 / 横屏。两者只影响键盘高度与按键间距，布局完全相同。
@@ -140,10 +192,27 @@ local keyboardLayout = [
     local keysHeight = Metrics.keyboardHeight[device][orientation];
     local sideInsets = if device == 'iPad' then Metrics.iPadSideInsets else {};
 
+    // iPhone 竖屏太窄，分体没有使用价值：产物与引入 Split 前逐字节相同。
+    local isSplitCapable = device == 'iPad' || !isPortrait;
+    local splitOnly(extra) = if isSplitCapable then extra else {};
+
+    // 每颗字母键在分体态下的宽度覆盖：第一行 10 键对半分；第二行 a/l 宽边、
+    // 其余 7 键普通宽；第三行（z-m）全部普通宽，两端的 shift/backspace 另在下面处理。
+    local splitLetterExtra(r, letter) =
+      if r == 0 then Split.width(Split.row10.unit)
+      else if r == 1 then
+        if letter == 'a' then
+          Split.widthAnchored(Split.nineKeyRow.side, Split.nineKeyRow.sideVisibleFraction, 'right')
+        else if letter == 'l' then
+          Split.widthAnchored(Split.nineKeyRow.side, Split.nineKeyRow.sideVisibleFraction, 'left')
+        else Split.width(Split.nineKeyRow.unit)
+      else Split.width(Split.nineKeyRow.unit);
+
     Style.merge([
       Preedit.new(),
-      Toolbar.new(sideInsets),
+      Toolbar.new(sideInsets, supportsSplit=isSplitCapable),
       Theme.shared(insets, keysHeight),
+      splitOnly(Split.shared),
       {
         keyboardHeight: keysHeight,
         keyboardStyle: {
@@ -151,7 +220,7 @@ local keyboardLayout = [
           // 按键区整体的左右边距，与键间距是两回事，见 Metrics.keyboardAreaInsets
           insets: Metrics.keyboardAreaInsets[device][orientation],
         },
-        keyboardLayout: keyboardLayout,
+        keyboardLayout: if isSplitCapable then splitKeyboardLayout else keyboardLayout,
       },
       Style.merge([
         Keys.letterKey(
@@ -159,21 +228,60 @@ local keyboardLayout = [
           letterRows[r][c][1],
           letterCenter(r, c),
           !std.member(lowerFirstLetters, letterRows[r][c][0]),
-          letterExtras(letterRows[r][c][0])
+          letterExtras(letterRows[r][c][0]) + splitOnly(splitLetterExtra(r, letterRows[r][c][0]))
         )
         for r in std.range(0, std.length(letterRows) - 1)
         for c in std.range(0, std.length(letterRows[r]) - 1)
       ]),
-      emojiCommaKey,
-      periodKey,
-      FunctionKeys.shift(shiftName, Keys.widths.rowThreeLeft),
-      FunctionKeys.backspace(backspaceName, Keys.widths.rowThreeRight),
+      emojiCommaKey + { [emojiCommaName]+: splitOnly(Split.width(rowFour.unit)) },
+      periodKey + { [periodName]+: splitOnly(Split.width(rowFour.unit)) },
+      // Shift 上划进出分体——这一行唯一天然在角落、分体后仍要用的键。
+      FunctionKeys.shift(shiftName, Keys.widths.rowThreeLeft
+                                     + splitOnly(
+                                       Split.widthAnchored(
+                                         Split.nineKeyRow.side, Split.nineKeyRow.sideVisibleFraction, 'left'
+                                       ) + Split.enterSplitGesture
+                                     )),
+      FunctionKeys.backspace(backspaceName, Keys.widths.rowThreeRight
+                                             + splitOnly(Split.widthAnchored(
+                                               Split.nineKeyRow.side, Split.nineKeyRow.sideVisibleFraction, 'right'
+                                             ))),
       // 最后一行两侧的两颗键在 Gboard 上都是胶囊：左边 ?123、右边回车。
       // switchKeyboard 默认给的是小圆角的灰键，这里把角色覆盖成 pill。
       FunctionKeys.switchKeyboard(
-        numericName, '?123', 'numeric', Keys.widths.rowFourPillLeft { role: 'pill' }
+        numericName, '?123', 'numeric',
+        Keys.widths.rowFourPillLeft { role: 'pill' } + splitOnly(Split.width(rowFour.keyboardType))
       ),
-      FunctionKeys.space(spaceName),
-      FunctionKeys.enter(enterName, Keys.widths.rowFourPillRight),
-    ]),
+      FunctionKeys.space(spaceName, splitOnly(Split.width(rowFour.space))),
+      FunctionKeys.enter(enterName, Keys.widths.rowFourPillRight + splitOnly(Split.width(rowFour.keyboardType))),
+    ] + (
+      if !isSplitCapable then [] else [
+        // ===== 只在分体可用的场景出现的新键：两端留白、中缝、复制键 =====
+        // 平时 0 宽，分体态才撑开，见 Components/Split.libsonnet 开头的约束。
+        Split.spacer(padTopLeftName, Split.row10.margin),
+        Split.spacer(padTopRightName, Split.row10.margin),
+        Split.spacer(gapTopName, Split.row10.gap),
+        Split.spacer(padHomeLeftName, Split.nineKeyRow.margin),
+        Split.spacer(padHomeRightName, Split.nineKeyRow.margin),
+        Split.spacer(gapHomeName, Split.nineKeyRow.bottomGap),
+        Split.spacer(padBottomLeftName, Split.nineKeyRow.margin),
+        Split.spacer(padBottomRightName, Split.nineKeyRow.margin),
+        Split.spacer(gapBottomName, Split.nineKeyRow.bottomGap),
+        Split.spacer(padRowFourLeftName, rowFour.margin),
+        Split.spacer(padRowFourRightName, rowFour.margin),
+        Split.spacer(gapRowFourName, rowFour.gap),
+        // 合并态下 0 宽、不建层；分体态撑开成普通字母键，与本尊各有各的样式名
+        Keys.letterKey(
+          'g', letterRows[1][4][1], letterCenter(1, 4), true,
+          { size: { width: 0 } } + Split.width(Split.nineKeyRow.unit), repeatedName('g')
+        ),
+        Keys.letterKey(
+          'v', letterRows[2][3][1], letterCenter(2, 3), true,
+          { size: { width: 0 } } + Split.width(Split.nineKeyRow.unit), repeatedName('v')
+        ),
+        // 分体态下空格右半边：与本尊同一套外观（键面同样显示方案名），
+        // 合并态 0 宽不建层
+        FunctionKeys.space(spaceRightName, { size: { width: 0 } } + Split.width(rowFour.space)),
+      ]
+    )),
 }
