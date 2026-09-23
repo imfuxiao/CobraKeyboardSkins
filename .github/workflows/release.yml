@@ -8,6 +8,11 @@ on:
 permissions:
   contents: write
 
+# 皮肤目录名含中文，UTF-8 locale 下 zip 才会给文件名打 UTF-8 标记
+env:
+  LANG: C.UTF-8
+  LC_ALL: C.UTF-8
+
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -38,6 +43,20 @@ jobs:
           make build
           ls -l build/
 
+      # GitHub 会把 Release 附件名里的非 ASCII 字符替换掉，中文名的皮肤会撞名（already_exists），
+      # 且应用依赖原文件名，所以打成一个 release.zip 发布。
+      # .cskin 本身已是 zip，这里只存储不再压缩（ZIP_STORED）。
+      # 用 Python zipfile 而非 zip 命令：它会给中文文件名打上 UTF-8 标记，解压方不会乱码
+      - name: Package release.zip
+        run: |
+          python3 - <<'EOF'
+          import pathlib, zipfile
+          with zipfile.ZipFile("release.zip", "w", zipfile.ZIP_STORED) as z:
+              for f in sorted(pathlib.Path("build").glob("*.cskin")):
+                  z.write(f, f.name)
+                  print(f.name)
+          EOF
+
       - name: Publish release
         uses: softprops/action-gh-release@v2
         with:
@@ -45,4 +64,4 @@ jobs:
           name: ${{ github.ref_name }}
           generate_release_notes: true
           fail_on_unmatched_files: true
-          files: build/*.cskin
+          files: release.zip
