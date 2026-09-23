@@ -5,16 +5,23 @@
 //
 // 色相同样只看水平位置（竖条纹）：iPad 一行有十几颗键，十档彩虹平铺过去，
 // 相邻两三颗键才换一档，条纹比 iPhone 上更宽，正好对上表带织纹放大后的样子。
+//
+// 这一页支持分体（Split）：Tab 键上划进分体，分体态下再上划一次合回来（同一个手势，
+// 见 Components/Split.libsonnet 开头的说明）。不区分竖横屏——iPad 屏宽足够，
+// 两个方向都值得分体。
 local Button = import '../Components/Button.libsonnet';
 local FunctionKeys = import '../Components/FunctionKeys.libsonnet';
 local Layout = import '../Components/Layout.libsonnet';
 local Preedit = import '../Components/Preedit.libsonnet';
+local Split = import '../Components/Split.libsonnet';
 local Style = import '../Components/Style.libsonnet';
 local Theme = import '../Components/Theme.libsonnet';
 local Toolbar = import '../Components/Toolbar.libsonnet';
 local Colors = import '../Constants/Colors.libsonnet';
 local Fonts = import '../Constants/Fonts.libsonnet';
 local Metrics = import '../Constants/Metrics.libsonnet';
+
+local sw = Split.iPadWidths;
 
 // ===== 表一：双标签键 =====
 // [样式名前缀, 下排字符（直接点）, 上排字符（Shift 或上划）]
@@ -93,8 +100,10 @@ local lowerLabel = { fontSize: Fonts.iPadDoubleLabel, center: { y: 0.68 } };
 
 local keyName(prefix) = prefix + 'Button';
 
-// 双标签键：点出下排字符，Shift 或上划出上排字符
-local dualKey(entry, role) =
+// 双标签键：点出下排字符，Shift 或上划出上排字符。
+// extra 合进 Button.new 的 opts（而不是加在返回的整份样式片段外面），
+// 这样 Split 覆盖块才会落在按键节点本层，不会在根节点凭空多出一个 `split` 键。
+local dualKey(entry, role, extra={}) =
   local name = keyName(entry[0]);
   local lower = entry[1];
   local upper = entry[2];
@@ -105,10 +114,11 @@ local dualKey(entry, role) =
     action: { character: lower },
     uppercasedStateAction: { character: upper },
     swipeUpAction: { character: upper },
-  } + widths.normal);
+  } + widths.normal + extra);
 
-// 字母键：单标签居中，短按弹大写气泡
-local letterKey(character, role) =
+// 字母键：单标签居中，短按弹大写气泡。
+// iPad 上不配长按符号网格：这一页本身就有整排数字与标点，长按再塞一层是重复。
+local letterKey(character, role, extra={}) =
   local upper = std.asciiUpper(character);
   Button.new(keyName(character), {
     role: role,
@@ -117,7 +127,7 @@ local letterKey(character, role) =
     hint: { label: { text: upper } },
     action: { character: character },
     uppercasedStateAction: { character: upper },
-  } + widths.normal);
+  } + widths.normal + extra);
 
 local tabName = 'tabButton';
 local backspaceName = 'backspaceButton';
@@ -134,21 +144,50 @@ local dismissName = 'dismissButton';
 local names(table) = [keyName(entry[0]) for entry in table];
 local letterNames(row) = [keyName(c) for c in std.stringChars(row)];
 
+// ===== 分体版面要用到的新键 =====
+// 这一页任何方向都支持 Split：数字行分体态整行压成 0 高，与它一起消失的 backspace
+// 靠第四行补一颗 backspaceRight；第三行原本的 enter 分体态隐藏，靠第五行补一颗
+// enterRight——两处都是「原键隐藏、别处补一颗」的同一手法，具体数值见
+// Components/Split.libsonnet 的 iPadWidths 注释。
+local gapTopName = 'splitGapTopButton';
+local padTopName = 'splitPadTopButton';
+local padHomeLeftName = 'splitPadHomeLeftButton';
+local gapHomeName = 'splitGapHomeButton';
+local padHomeRightName = 'splitPadHomeRightButton';
+local padBottomLeftName = 'splitPadBottomLeftButton';
+local gapBottomName = 'splitGapBottomButton';
+local padBottomRightName = 'splitPadBottomRightButton';
+local gapSpaceName = 'splitGapSpaceButton';
+local backspaceRightName = 'backspaceRightButton';
+local spaceRightName = 'spaceRightButton';
+local enterRightName = 'enterRightButton';
+local repeatedName(c) = c + 'SplitButton';
+
 local keyboardLayout = [
+  // 第一行（数字行）在分体态下高度为 0，整行连同键一起消失，不必写中缝
   Layout.row(names(numberRow) + [backspaceName], firstRowStyleName),
-  Layout.row([tabName] + letterNames(letterRows[0]) + names(topPunctuation)),
-  Layout.row([asciiModeName] + letterNames(letterRows[1]) + names(homePunctuation) + [enterName]),
-  Layout.row([leftShiftName] + letterNames(letterRows[2]) + names(bottomPunctuation) + [rightShiftName]),
-  Layout.row([globeName, numericLeftName, spaceName, numericRightName, dismissName]),
+  Layout.row(
+    [tabName] + letterNames('qwert') + [gapTopName] + letterNames('yuiop')
+    + names(topPunctuation) + [padTopName]
+  ),
+  Layout.row(
+    [asciiModeName, padHomeLeftName] + letterNames('asdfg') + [gapHomeName, repeatedName('g')]
+    + letterNames('hjkl') + names(homePunctuation) + [enterName, padHomeRightName]
+  ),
+  Layout.row(
+    [padBottomLeftName, leftShiftName] + letterNames('zxcv') + [gapBottomName, repeatedName('v')]
+    + letterNames('bnm') + names(bottomPunctuation) + [backspaceRightName, rightShiftName, padBottomRightName]
+  ),
+  Layout.row([globeName, numericLeftName, spaceName, gapSpaceName, spaceRightName, enterRightName, numericRightName, dismissName]),
 ];
 
 // 每一行里的白键面：行号 + 该行第一颗白键的位置 + 那张表
-local dualKeysOf(table, row, firstSlot) = Style.merge([
-  dualKey(table[i], at('plain', row, firstSlot + i))
+local dualKeysOf(table, row, firstSlot, extra={}) = Style.merge([
+  dualKey(table[i], at('plain', row, firstSlot + i), extra)
   for i in std.range(0, std.length(table) - 1)
 ]);
-local letterKeysOf(row, rowIndex, firstSlot) = Style.merge([
-  letterKey(std.stringChars(row)[i], at('plain', rowIndex, firstSlot + i))
+local letterKeysOf(row, rowIndex, firstSlot, extra={}) = Style.merge([
+  letterKey(std.stringChars(row)[i], at('plain', rowIndex, firstSlot + i), extra)
   for i in std.range(0, std.length(row) - 1)
 ]);
 
@@ -160,32 +199,80 @@ local letterKeysOf(row, rowIndex, firstSlot) = Style.merge([
     Style.merge([
       // iPad 屏宽富余，预编辑区与候选栏两侧留白，视线不用扫过整个屏幕
       Preedit.new(Metrics.iPadSideInsets),
-      Toolbar.new(Metrics.iPadSideInsets),
+      Toolbar.new(Metrics.iPadSideInsets, supportsSplit=true),
       Theme.shared(insets, Metrics.keyboardHeight.iPad[orientation]),
+      Split.shared,
       {
         keyboardHeight: Metrics.keyboardHeight.iPad[orientation],
         keyboardStyle: { backgroundStyle: Theme.keyboardBackgroundName },
         keyboardLayout: keyboardLayout,
-        [firstRowStyleName]: { size: { height: firstRowHeight[orientation] } },
+        // 分体态下这一行压成 0 高，整行的键不建图层，下面四行分掉整块高度
+        [firstRowStyleName]: {
+          size: { height: firstRowHeight[orientation] },
+          split: { size: { height: 0 } },
+        },
       },
+      // ===== 第一行：数字与符号。分体态整行消失，不必写 split =====
       dualKeysOf(numberRow, 0, 0),
-      dualKeysOf(topPunctuation, 1, 11),
-      dualKeysOf(homePunctuation, 2, 10),
-      dualKeysOf(bottomPunctuation, 3, 8),
-      letterKeysOf(letterRows[0], 1, 1),
-      letterKeysOf(letterRows[1], 2, 1),
-      letterKeysOf(letterRows[2], 3, 1),
-      FunctionKeys.tab(tabName, at('pale', 1, 0), widths.tab),
-      FunctionKeys.backspace(backspaceName, at('solid', 0, 13), widths.backspace),
-      FunctionKeys.asciiMode(asciiModeName, at('stone', 2, 0), widths.asciiMode),
+      // ===== 标点：分体态下让位给中缝 =====
+      dualKeysOf(topPunctuation, 1, 11, Split.hidden),
+      dualKeysOf(homePunctuation, 2, 10, Split.hidden),
+      dualKeysOf(bottomPunctuation, 3, 8, Split.hidden),
+      // ===== 字母 =====
+      letterKeysOf(letterRows[0], 1, 1, Split.width(sw.unit)),
+      letterKeysOf(letterRows[1], 2, 1, Split.width(sw.unit)),
+      letterKeysOf(letterRows[2], 3, 1, Split.width(sw.unit)),
+      Button.new(repeatedName('g'), {
+        role: at('plain', 2, 5),
+        label: { text: 'g' },
+        uppercasedLabel: { text: 'G' },
+        hint: { label: { text: 'G' } },
+        action: { character: 'g' },
+        uppercasedStateAction: { character: 'G' },
+        size: { width: 0 },
+      } + Split.width(sw.unit)),
+      Button.new(repeatedName('v'), {
+        role: at('plain', 3, 4),
+        label: { text: 'v' },
+        uppercasedLabel: { text: 'V' },
+        hint: { label: { text: 'V' } },
+        action: { character: 'v' },
+        uppercasedStateAction: { character: 'V' },
+        size: { width: 0 },
+      } + Split.width(sw.unit)),
+      // ===== 行首行尾的功能键 =====
+      // Tab 键分体后变窄，仍是 Tab；上划进 / 出分体是同一个手势
+      FunctionKeys.tab(tabName, at('pale', 1, 0), widths.tab + Split.width(sw.tab) + Split.enterSplitGesture),
+      // 原本挂在第一行的 backspace 随第一行一起消失，第四行补一颗 backspaceRight
+      FunctionKeys.backspace(backspaceName, at('solid', 0, 13), widths.backspace + Split.hidden),
+      FunctionKeys.backspace(
+        backspaceRightName, at('solid', 3, 9), { size: { width: 0 } } + Split.width(sw.backspace)
+      ),
+      FunctionKeys.asciiMode(asciiModeName, at('stone', 2, 0), widths.asciiMode + Split.hidden),
+      // 原本挂在第三行的 enter 分体态隐藏，第五行补一颗 enterRight
       // 回车的强调态（前往 / 发送 / 完成）不跟位置走，点名主题色玫红
-      FunctionKeys.enter(enterName, at('solid', 2, 12), Colors.role('solid', 'rose'), widths.enter),
-      FunctionKeys.shift(leftShiftName, at('solid', 3, 0), widths.shift),
-      FunctionKeys.shift(rightShiftName, at('solid', 3, 11), widths.shift),
-      FunctionKeys.nextKeyboard(globeName, at('stone', 4, 0), widths.bottom),
-      FunctionKeys.numeric(numericLeftName, at('pale', 4, 1), widths.bottom),
-      FunctionKeys.numeric(numericRightName, at('pale', 4, 3), widths.bottom),
-      FunctionKeys.space(spaceName, at('space', 4, 2)),
-      FunctionKeys.dismiss(dismissName, at('stone', 4, 4), widths.bottom),
+      FunctionKeys.enter(enterName, at('solid', 2, 12), Colors.role('solid', 'rose'), widths.enter + Split.hidden),
+      FunctionKeys.enter(
+        enterRightName, at('solid', 4, 3), Colors.role('solid', 'rose'),
+        { size: { width: 0 } } + Split.width(sw.enter)
+      ),
+      FunctionKeys.shift(leftShiftName, at('solid', 3, 0), widths.shift + Split.width(sw.shift)),
+      FunctionKeys.shift(rightShiftName, at('solid', 3, 11), widths.shift + Split.hidden),
+      FunctionKeys.nextKeyboard(globeName, at('stone', 4, 0), widths.bottom + Split.width(sw.globe)),
+      FunctionKeys.numeric(numericLeftName, at('pale', 4, 1), widths.bottom + Split.width(sw.keyboardType)),
+      FunctionKeys.numeric(numericRightName, at('pale', 4, 3), widths.bottom + Split.hidden),
+      FunctionKeys.space(spaceName, at('space', 4, 2), Split.width(sw.space)),
+      FunctionKeys.space(spaceRightName, at('space', 4, 2), { size: { width: 0 } } + Split.width(sw.space)),
+      FunctionKeys.dismiss(dismissName, at('stone', 4, 4), widths.bottom + Split.width(sw.dismiss)),
+      // ===== 中缝与两侧留白 =====
+      Split.spacer(gapTopName, sw.gapTop),
+      Split.spacer(padTopName, sw.pad),
+      Split.spacer(padHomeLeftName, sw.padHome),
+      Split.spacer(gapHomeName, sw.gapHome),
+      Split.spacer(padHomeRightName, sw.padHome),
+      Split.spacer(padBottomLeftName, sw.pad),
+      Split.spacer(gapBottomName, sw.gapBottom),
+      Split.spacer(padBottomRightName, sw.pad),
+      Split.spacer(gapSpaceName, sw.gapSpace),
     ]),
 }

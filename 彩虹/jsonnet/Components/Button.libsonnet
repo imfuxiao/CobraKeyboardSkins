@@ -32,6 +32,7 @@ local passthroughKeys = [
   'swipeDownAction',
   'notification',
   'animation',
+  'split',
 ];
 
 local passthrough(opts) = {

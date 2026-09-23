@@ -8,16 +8,25 @@
 // 所以九宫格自成一条彩虹，竖屏与横屏的同一颗键因此颜色一致。
 //
 // 屏幕够宽时（横屏、iPad）右侧再挂一块分类符号面板，由 symbolPanel 开关控制。
+//
+// 支持 Split 的场景（iPhone 横屏 + iPad 两个方向）在 config.yaml 里全部对应
+// symbolPanel=true（双栏），唯一的单栏场景是 iPhone 竖屏，本来就不支持 Split，
+// 所以 Split 只需要处理 wideLayout，不必为 compactLayout 另设一张表。
+// 分体手势挂在左列顶部的 #+= 键上（这一页没有天然的「Tab/Shift」角落键，
+// #+= 是左列唯一贯穿合并 / 分体两态都还在的功能键）。
 local Button = import '../Components/Button.libsonnet';
 local FunctionKeys = import '../Components/FunctionKeys.libsonnet';
 local Layout = import '../Components/Layout.libsonnet';
 local Preedit = import '../Components/Preedit.libsonnet';
+local Split = import '../Components/Split.libsonnet';
 local Style = import '../Components/Style.libsonnet';
 local Theme = import '../Components/Theme.libsonnet';
 local Toolbar = import '../Components/Toolbar.libsonnet';
 local Colors = import '../Constants/Colors.libsonnet';
 local Fonts = import '../Constants/Fonts.libsonnet';
 local Metrics = import '../Constants/Metrics.libsonnet';
+
+local sw = Split.numericGridWidths;
 
 // ===== 表一：九宫格数字与它们的上划符号 =====
 // 三列，每列自上而下。第四行不是数字，单独排。
@@ -135,6 +144,20 @@ local wideLayout = [
   { VStack: { style: halfColumnStyleName, subviews: [{ Cell: categoryPanelName }] } },
 ];
 
+// ===== 分体版面（只用于双栏 wideLayout）=====
+// 左右两个半屏内部排布完全不动，只在整行最外侧（左半屏最左边、右半屏最右边）
+// 各加一圈分体态才撑开的窄边，两个半屏因此各让出同样的宽度给外侧留白，
+// 中间的 gap 不动。账目见 Components/Split.libsonnet 的 numericGridWidths 注释。
+local splitMarginLeftName = 'splitMarginLeftColumn';
+local splitMarginRightName = 'splitMarginRightColumn';
+local splitLayout = [
+  Layout.column([splitMarginLeftName], splitMarginLeftName),
+  { VStack: { style: halfColumnStyleName, subviews: numericColumns } },
+  Layout.column([gapCellName], gapColumnStyleName),
+  { VStack: { style: halfColumnStyleName, subviews: [{ Cell: categoryPanelName }] } },
+  Layout.column([splitMarginRightName], splitMarginRightName),
+];
+
 {
   // device       'iPhone' / 'iPad'，决定键盘高度与按键间距
   // isPortrait   竖屏 / 横屏
@@ -142,23 +165,36 @@ local wideLayout = [
   new(device='iPhone', isPortrait=true, symbolPanel=false)::
     local orientation = if isPortrait then 'portrait' else 'landscape';
     local insets = Metrics.keyInsets[device][orientation];
+    // 支持 Split 的场景：iPad 不分方向、iPhone 只在横屏——与 config.yaml 里
+    // symbolPanel=true 的场景完全重合，但仍按条件算，不写死假设。
+    local isSplitCapable = symbolPanel && (device == 'iPad' || !isPortrait);
 
     Style.merge([
       Preedit.new(),
-      Toolbar.new(),
+      Toolbar.new(supportsSplit=isSplitCapable),
       Theme.shared(insets, Metrics.keyboardHeight[device][orientation]),
+      if isSplitCapable then Split.shared else {},
       {
         keyboardHeight: Metrics.keyboardHeight[device][orientation],
         keyboardStyle: { backgroundStyle: Theme.keyboardBackgroundName },
-        keyboardLayout: if symbolPanel then wideLayout else compactLayout,
+        keyboardLayout:
+          if isSplitCapable then splitLayout
+          else if symbolPanel then wideLayout
+          else compactLayout,
         [narrowColumnStyleName]: columnWidths.narrow,
         [wideColumnStyleName]: columnWidths.wide,
       } + (
         if symbolPanel then {
-          [halfColumnStyleName]: columnWidths.half,
+          [halfColumnStyleName]: columnWidths.half + (
+            if isSplitCapable then { split: { size: { width: sw.half } } } else {}
+          ),
           [gapColumnStyleName]: columnWidths.gap,
           [gapCellName]: {},
         } else {}
+      ) + (
+        if isSplitCapable then
+          Split.spacer(splitMarginLeftName, sw.margin) + Split.spacer(splitMarginRightName, sw.margin)
+        else {}
       ),
       symbolList,
       if symbolPanel then categoryPanel else {},
@@ -170,8 +206,13 @@ local wideLayout = [
       digitKey(zeroKey, at('plain', 2)),
       periodKey,
       equalKey,
-      // #+= 只占最左列的四分之一高，上面留给符号列表
-      FunctionKeys.symbolic(symbolicName, at('pale', 0), { size: { height: '1/4' } }),
+      // #+= 只占最左列的四分之一高，上面留给符号列表。这一页没有天然的
+      // 「Tab/Shift」角落键，#+= 是左列唯一贯穿合并 / 分体两态都还在的功能键，
+      // 分体手势就借它的上划。
+      FunctionKeys.symbolic(
+        symbolicName, at('pale', 0),
+        { size: { height: '1/4' } } + (if isSplitCapable then Split.enterSplitGesture else {})
+      ),
       FunctionKeys.returnLastKeyboard(returnName, at('pale', 1)),
       FunctionKeys.space(spaceName, at('space', 3)),
       FunctionKeys.backspace(backspaceName, at('solid', 4)),
