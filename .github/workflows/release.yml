@@ -1,0 +1,48 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: stable
+          cache: false
+
+      # 与本地 Homebrew 的 jsonnet v0.22.0 对齐；apt 源里的版本偏旧
+      - name: Install jsonnet
+        run: |
+          go install github.com/google/go-jsonnet/cmd/jsonnet@v0.22.0
+          echo "$(go env GOPATH)/bin" >> "$GITHUB_PATH"
+
+      - name: Install make & zip
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y make zip
+
+      - name: Build skins
+        run: |
+          jsonnet --version
+          make build
+          ls -l build/
+
+      - name: Publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: ${{ github.ref_name }}
+          generate_release_notes: true
+          fail_on_unmatched_files: true
+          files: build/*.cskin
