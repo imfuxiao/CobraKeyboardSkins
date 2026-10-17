@@ -1,48 +1,31 @@
-.PHONY: all clean build
+.PHONY: all clean build solid
 
+SKINS = default numeric sbxlm46 hamster T9 cangjie zhuyin 胭云 莫吉托 彩虹 Gboard Noctua
+# 支持 GRADIENT 参数（渐变 / 纯色背景）的皮肤，其余皮肤两个版本完全相同
+GRADIENT_SKINS = 胭云 莫吉托 彩虹 Noctua
+
+# 渐变背景版，产物在 build/
 build:
 	@echo "Building the project..."
-	$(MAKE) -C default
-	$(MAKE) -C numeric
-	$(MAKE) -C sbxlm46
-	$(MAKE) -C hamster
-	$(MAKE) -C T9
-	$(MAKE) -C cangjie
-	$(MAKE) -C zhuyin
-	$(MAKE) -C 胭云
-	$(MAKE) -C 莫吉托
-	$(MAKE) -C 彩虹
-	$(MAKE) -C Gboard
-	$(MAKE) -C Noctua
+	@for s in $(SKINS); do $(MAKE) -C "$$s" || exit 1; done
 	rm -rf build && mkdir -p build/
-	cp -r default/build/*.cskin \
-	numeric/build/*.cskin \
-	sbxlm46/build/*.cskin \
-	hamster/build/*.cskin \
-	T9/build/*.cskin \
-	cangjie/build/*.cskin \
-	zhuyin/build/*.cskin \
-	胭云/build/*.cskin \
-	莫吉托/build/*.cskin \
-	彩虹/build/*.cskin \
-	Gboard/build/*.cskin \
-	Noctua/build/*.cskin \
-	build/
+	@for s in $(SKINS); do cp -r "$$s"/build/*.cskin build/ || exit 1; done
+
+# 纯色背景（无渐变）版，产物在 build-solid/。皮肤名与渐变版相同，可直接替换
+solid:
+	@echo "Building the project (solid background)..."
+	@for s in $(SKINS); do \
+		case " $(GRADIENT_SKINS) " in \
+			*" $$s "*) $(MAKE) -C "$$s" GRADIENT=false || exit 1;; \
+			*) $(MAKE) -C "$$s" || exit 1;; \
+		esac; \
+	done
+	rm -rf build-solid && mkdir -p build-solid/
+	@for s in $(SKINS); do cp -r "$$s"/build/*.cskin build-solid/ || exit 1; done
 
 clean:
 	@echo "Cleaning the project..."
-	$(MAKE) -C default clean
-	$(MAKE) -C numeric clean
-	$(MAKE) -C sbxlm46 clean
-	$(MAKE) -C hamster clean
-	$(MAKE) -C T9 clean
-	$(MAKE) -C cangjie clean
-	$(MAKE) -C zhuyin clean
-	$(MAKE) -C 胭云 clean
-	$(MAKE) -C 莫吉托 clean
-	$(MAKE) -C 彩虹 clean
-	$(MAKE) -C Gboard clean
-	$(MAKE) -C Noctua clean
-	rm -rf build
+	@for s in $(SKINS); do $(MAKE) -C "$$s" clean || exit 1; done
+	rm -rf build build-solid
 
 all: build

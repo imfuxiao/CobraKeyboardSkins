@@ -4,6 +4,7 @@
 // 具体长什么样全部由本文件决定；反过来，本文件不知道有哪些键。
 local Colors = import '../Constants/Colors.libsonnet';
 local Metrics = import '../Constants/Metrics.libsonnet';
+local Options = import '../Constants/Options.libsonnet';
 local Style = import 'Style.libsonnet';
 
 // ===== 约定的样式名 =====
@@ -126,15 +127,19 @@ local backgroundStyle(name) =
       normalColor: Colors.keyboardBackground,
     }),
     // 预编辑区：整条都是渐隐色，正好落在 iOS 26 那段圆角高度里
+    // 无渐变版（Options.gradient 为 false）三块都直接铺底板色
     [preeditBackgroundName]: Style.geometry({
-      normalColor: fadeColor,
+      normalColor: if Options.gradient then fadeColor else Colors.keyboardBackground,
     }),
     // 工具栏区：下缘接按键区的底板色，上缘接预编辑区的渐隐色
-    [toolbarBackgroundName]: Style.geometry(fadeGradient()),
+    [toolbarBackgroundName]: Style.geometry(
+      if Options.gradient then fadeGradient() else { normalColor: Colors.keyboardBackground }
+    ),
     // 纵排候选栏展开后会盖住工具栏区 + 按键区，自带的底板要替这两块一起画，
     // 所以把渐隐带压回原本工具栏所占的那一段高度里。
     [candidatePanelBackgroundName]: Style.geometry(
-      fadeGradient(Metrics.toolbar.height / (Metrics.toolbar.height + keysHeight))
+      if Options.gradient then fadeGradient(Metrics.toolbar.height / (Metrics.toolbar.height + keysHeight))
+      else { normalColor: Colors.keyboardBackground }
     ),
     [hintBackgroundName]: Style.geometry({
       normalColor: Colors.hint.fill,
