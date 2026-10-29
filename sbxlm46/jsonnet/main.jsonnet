@@ -47,22 +47,22 @@ local darkIpadNumericLandscapeContent = iPadNumeric.new(isDark=true, isPortrait=
 
 local config = {
   pinyin: {
-    iPhone: {
+    phone: {
       portrait: pinyinPortraitFileName,
       landscape: pinyinLandscapeFileName,
     },
-    iPad: {
+    pad: {
       portrait: iPadPinyinPortraitName,
       landscape: iPadPinyinLandscapeName,
       floating: pinyinPortraitFileName,
     },
   },
   // numeric: {
-  //   iPhone: {
+  //   phone: {
   //     portrait: numericPortraitFileName,
   //     landscape: numericLandscapeName,
   //   },
-  //   iPad: {
+  //   pad: {
   //     portrait: iPadNumericPortraitName,
   //     landscape: iPadNumericLandscapeName,
   //     floating: numericPortraitFileName,
@@ -71,11 +71,11 @@ local config = {
 
   // 符号键盘
   // symbolic: {
-  //   iPhone: {
+  //   phone: {
   //     portrait: symbolicPortraitFileName,
   //     landscape: symbolicLandscapeName,
   //   },
-  //   iPad: {
+  //   pad: {
   //     portrait: iPadPinyinPortraitName,
   //     landscape: iPadPinyinLandscapeName,
   //     floating: symbolicPortraitFileName,

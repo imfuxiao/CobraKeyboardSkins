@@ -42,24 +42,24 @@ local darkLandscapeNumericFileContent = landscapeNumeric.new(isDark=true, isPort
 local config = {
   name: '大千注音',
   pinyin: {
-    iPhone: {
+    phone: {
       portrait: pinyinPortraitFileName,
       landscape: pinyinLandscapeFileName,
     },
-    // iPad: {
+    // pad: {
     //   portrait: iPadPinyinPortraitName,
     //   landscape: iPadPinyinLandscapeName,
     //   floating: pinyinPortraitFileName,
     // },
   },
   alphabetic: {
-    iPhone: {
+    phone: {
       portrait: alphabeticPortraitFileName,
       landscape: alphabeticLandscapeFileName,
     },
   },
   numeric: {
-    iPhone: {
+    phone: {
       portrait: portraitNumericFileName,
       landscape: landscapeNumericFileName,
     },

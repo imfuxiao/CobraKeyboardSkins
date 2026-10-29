@@ -28,11 +28,11 @@ local keyboards = {
 // 缺声明的场景键盘会显示为空白，不会回退，所以四个方向都要给全。
 local config = {
   pinyin: {
-    iPhone: {
+    phone: {
       portrait: 'pinyinPortrait',
       landscape: 'pinyinLandscape',
     },
-    iPad: {
+    pad: {
       portrait: 'iPadPinyinPortrait',
       landscape: 'iPadPinyinLandscape',
       floating: 'pinyinPortrait',
@@ -41,11 +41,11 @@ local config = {
 
   // numberPad 与 numeric 两种键盘类型都读这一项
   numeric: {
-    iPhone: {
+    phone: {
       portrait: 'numericPortrait',
       landscape: 'numericLandscape',
     },
-    iPad: {
+    pad: {
       portrait: 'iPadNumericPortrait',
       landscape: 'iPadNumericLandscape',
       floating: 'numericPortrait',

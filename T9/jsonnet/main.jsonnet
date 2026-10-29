@@ -32,19 +32,19 @@ local darkLandscapeNumericFileContent = landscapeNumeric.new(isDark=true, isPort
 
 local config = {
   pinyin: {
-    iPhone: {
+    phone: {
       portrait: portraitPinyinFileName,
       landscape: landscapePinyinFileName,
     },
   },
   alphabetic: {
-    iPhone: {
+    phone: {
       portrait: alphabeticPortraitFileName,
       landscape: alphabeticLandscapeFileName,
     },
   },
   numeric: {
-    iPhone: {
+    phone: {
       portrait: portraitNumericFileName,
       landscape: landscapeNumericFileName,
     },

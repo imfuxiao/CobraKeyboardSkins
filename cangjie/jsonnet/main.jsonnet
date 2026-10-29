@@ -22,11 +22,11 @@ local darkIpadPinyinLandscapeContent = iPadPinyin.new(isDark=true, isPortrait=fa
 local config = {
   name: '仓颉',
   pinyin: {
-    iPhone: {
+    phone: {
       portrait: pinyinPortraitFileName,
       landscape: pinyinLandscapeFileName,
     },
-    iPad: {
+    pad: {
       portrait: iPadPinyinPortraitName,
       landscape: iPadPinyinLandscapeName,
       floating: pinyinPortraitFileName,

@@ -63,11 +63,11 @@ local keyboards = {
 // 「numberPad 先查自己这一项，查不到再回退 numeric」，所以九宫格才能独立排版。
 // 只写 numeric 的老皮肤行为不变。
 local scenes(type) = {
-  iPhone: {
+  phone: {
     portrait: fileName(type, 'Portrait'),
     landscape: fileName(type, 'Landscape'),
   },
-  iPad: {
+  pad: {
     portrait: fileName(type, 'iPadPortrait'),
     landscape: fileName(type, 'iPadLandscape'),
     // iPad 浮动键盘的宽度接近 iPhone 竖屏，直接复用那一份

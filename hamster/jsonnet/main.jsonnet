@@ -33,8 +33,8 @@ local darkKeyboards = {
 
 local config = {
   pinyin: {
-    iPhone: { portrait: 'pinyinPortrait', landscape: 'pinyinLandscape' },
-    iPad: {
+    phone: { portrait: 'pinyinPortrait', landscape: 'pinyinLandscape' },
+    pad: {
       portrait: 'iPadPinyinPortrait',
       landscape: 'iPadPinyinLandscape',
       floating: 'pinyinPortrait',

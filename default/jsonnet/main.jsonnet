@@ -32,8 +32,8 @@ local keyboards = {
 // 所以 symbolic 在 iPad 上直接指回拼音页（按 `123` 走数字页，不存在第二页）。
 local config = {
   pinyin: {
-    iPhone: { portrait: 'pinyinPortrait', landscape: 'pinyinLandscape' },
-    iPad: {
+    phone: { portrait: 'pinyinPortrait', landscape: 'pinyinLandscape' },
+    pad: {
       portrait: 'iPadPinyinPortrait',
       landscape: 'iPadPinyinLandscape',
       // iPad 浮动键盘的宽度接近 iPhone 竖屏，直接复用那一份
@@ -41,16 +41,16 @@ local config = {
     },
   },
   numeric: {
-    iPhone: { portrait: 'numericPortrait', landscape: 'numericLandscape' },
-    iPad: {
+    phone: { portrait: 'numericPortrait', landscape: 'numericLandscape' },
+    pad: {
       portrait: 'iPadNumericPortrait',
       landscape: 'iPadNumericLandscape',
       floating: 'numericPortrait',
     },
   },
   symbolic: {
-    iPhone: { portrait: 'symbolicPortrait', landscape: 'symbolicLandscape' },
-    iPad: {
+    phone: { portrait: 'symbolicPortrait', landscape: 'symbolicLandscape' },
+    pad: {
       portrait: 'iPadPinyinPortrait',
       landscape: 'iPadPinyinLandscape',
       floating: 'symbolicPortrait',
