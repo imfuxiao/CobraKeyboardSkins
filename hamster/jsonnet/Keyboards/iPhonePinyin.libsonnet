@@ -131,6 +131,10 @@ local landscapeKeyboardLayout = [
     local isSplitCapable = !isPortrait && !addSemicolon;
     local splitOnly(extra) = if isSplitCapable then extra else {};
     local iw = Split.iPhoneWidths;
+    local shiftLayout = {
+      size: { width: { percentage: 0.15 } },
+      bounds: { width: '151/168.75', alignment: 'left' },
+    } + splitOnly(Split.widthAnchored(iw.side, iw.sideVisibleFraction, 'left'));
 
     local anchors = letterAnchors(addSemicolon);
     local letters(rowSpec, extraByName={}) = Style.merge([
@@ -157,7 +161,12 @@ local landscapeKeyboardLayout = [
       + Button.preeditChangedForSpaceButtonNotification
       + Button.asciiModeIsTrueChangedNotification
       + Button.secondrayCandidatePreeditChangedNotification
-      + Button.shiftSecondrayCandidatePreeditChangedNotification,
+      + Button.shiftSecondrayCandidatePreeditChangedNotification {
+        // 通知样式不会继承按键的可视区域，普通态与分体态都需显式带入。
+        shiftSecondrayCandidatePreeditChangedNotification+: {
+          bounds: shiftLayout.bounds,
+        } + (if isSplitCapable then { split: { bounds: shiftLayout.split.bounds } } else {}),
+      },
       splitOnly(Split.shared),
       {
         keyboardHeight: Metrics.keyboardHeight.iPhone[orientation],
@@ -190,10 +199,9 @@ local landscapeKeyboardLayout = [
 
       // 第三行：Shift 上划进分体（横屏专属手势），删除键镜像处理
       Button.newSystemButton('shiftButton', isDark,
-                              { size: { width: { percentage: 0.15 } }, bounds: { width: '151/168.75', alignment: 'left' } }
-                              + Keys.shiftButton.params
+                              shiftLayout + Keys.shiftButton.params
                               + { uppercasedStateForegroundStyle: 'shiftButtonUppercasedForegroundStyle', capsLockedStateForegroundStyle: 'shiftButtonCapsLockedForegroundStyle' }
-                              + splitOnly(Split.widthAnchored(iw.side, iw.sideVisibleFraction, 'left') + Split.enterSplitGesture))
+                              + splitOnly(Split.enterSplitGesture))
       + {
         shiftButtonUppercasedForegroundStyle: Button.newImageSystemButtonForegroundStyle(isDark, Keys.shiftButton.uppercasedParams),
         shiftButtonCapsLockedForegroundStyle: Button.newImageSystemButtonForegroundStyle(isDark, Keys.shiftButton.capsLockedParams),

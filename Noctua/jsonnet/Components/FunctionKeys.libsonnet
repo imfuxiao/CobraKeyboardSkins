@@ -40,7 +40,11 @@ local primaryRole = 'primary';
       notificationType: 'preeditChanged',
       backgroundStyle: Theme.backgroundName(accentRole),
       foregroundStyle: name + 'EscLabel',
-    },
+      // 通知样式不会继承按键的可视区域，普通态与分体态都需显式带入。
+    } + (if std.objectHas(opts, 'bounds') then { bounds: opts.bounds } else {})
+      + (if std.objectHas(opts, 'split') && std.objectHas(opts.split, 'bounds') then
+           { split: { bounds: opts.split.bounds } }
+         else {}),
     [name + 'EscLabel']: Button.paint(textLabel('Esc'), Button.roleTint(accentRole), Fonts.keyText),
   },
 
