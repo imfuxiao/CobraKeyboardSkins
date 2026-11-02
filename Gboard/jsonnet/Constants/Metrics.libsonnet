@@ -107,8 +107,8 @@
     cornerRadius: 10,
     cellCornerRadius: 6,
     borderSize: 0.5,
-    // 面板默认贴着按键上沿，再抬高一点，免得手指盖住最下面一行
-    offset: { x: 0, y: -6 },
+    // 面板底边与普通 hint 一样贴齐按键布局上沿；需要额外间隔时再调整 y。
+    offset: { x: 0, y: 0 },
     // 手指抖动小于这个距离时维持初始高亮，不误选
     moveThreshold: 8,
     // 与气泡同一套做法：投影收紧管底边，描边管四周，见上面 hint 的说明

@@ -52,8 +52,8 @@ local fonts = import 'Fonts.libsonnet';
     cornerRadius: 10,
     cellCornerRadius: 6,
     borderSize: 0.5,
-    // 面板默认贴着按键上沿，再抬高一点，免得手指盖住格子
-    offset: { x: 0, y: -6 },
+    // 面板底边与普通 hint 一样贴齐按键布局上沿；需要额外间隔时再调整 y。
+    offset: { x: 0, y: 0 },
     // 手指抖动小于这个距离时维持初始高亮，不误选
     moveThreshold: 8,
   },

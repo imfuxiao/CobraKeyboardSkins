@@ -178,7 +178,8 @@ class LongPressTest(unittest.TestCase):
         self.assertEqual(len(set(row)), len(row))
         # 与 Gboard/hamster 一致，省略 anchor 才走引擎的键上方定位分支。
         self.assertNotIn("anchor", grid)
-        self.assertLess(grid["offset"]["y"], 0)
+        # 默认与普通 hint 底部对齐，不再额外抬高面板。
+        self.assertEqual(grid["offset"]["y"], 0)
         self.assertEqual(grid["selected"]["row"], 0)
         column = grid["selected"]["col"]
         self.assertIs(type(column), int)

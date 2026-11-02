@@ -50,7 +50,7 @@
     cornerRadius: 10,
     cellCornerRadius: 6,
     borderSize: 0.5,
-    offset: { x: 0, y: -6 },
+    offset: { x: 0, y: 0 },
     moveThreshold: 8,
   },
 
