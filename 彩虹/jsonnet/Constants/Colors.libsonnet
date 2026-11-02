@@ -107,6 +107,8 @@ local hueAt(center) = P.order[std.max(0, std.min(hueCount - 1, std.floor(center 
     fill: P.cloud,
     border: P.divider,
     ink: P.inkFace,
+    selectedFill: P.hues.rose.basePressed,
+    selectedInk: P.inkOnColor,
   },
 
   // 工具栏图标（命令菜单、收起键盘、候选栏翻页等）。

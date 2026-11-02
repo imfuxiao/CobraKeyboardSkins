@@ -12,6 +12,7 @@
   keyText: 16,  // 功能键文字（123、#+=、回车文案）
 
   hintLabel: 26,  // 短按气泡里的大字
+  hintGridLabel: 20,
 
   candidateIndex: 12,
   candidateText: 16,

@@ -47,6 +47,8 @@ local P = import 'Palette.libsonnet';
     fill: P.cream,
     border: P.divider,
     ink: P.inkMint,
+    selectedFill: P.mintDeepPressed,
+    selectedInk: P.inkLeaf,
   },
 
   // 工具栏图标（命令菜单、收起键盘、候选栏翻页等）

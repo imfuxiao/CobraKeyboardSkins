@@ -82,12 +82,20 @@ local widths = {
   homeRowRightEdge: { size: { width: '168.75/1125' }, bounds: { width: '111/168.75', alignment: 'left' } },
 };
 
+local letterAnchors(addSemicolon) =
+  local rowLeftOffset = [0, if addSemicolon then 0 else 0.05, 0.15];
+  {
+    [letterRows[r][c][0]]: rowLeftOffset[r] + (c + 0.5) / 10
+    for r in std.range(0, 2)
+    for c in std.range(0, std.length(letterRows[r]) - 1)
+  };
+
 local keyName(character) = character + 'Button';
 
 // 一个字母键：主标签 + 角标 + 短按气泡（大写字母，右上角是上划符号）
-local letterKey(character, swipe, extra={}) =
+local letterKey(character, swipe, anchor, extra={}, name=null) =
   local upper = std.asciiUpper(character);
-  Button.new(keyName(character), {
+  Button.new(if name == null then keyName(character) else name, {
     role: 'letter',
     label: { text: character },
     uppercasedLabel: { text: upper },
@@ -96,7 +104,7 @@ local letterKey(character, swipe, extra={}) =
     action: { character: character },
     uppercasedStateAction: { character: upper },
     swipeUpAction: { character: swipe },
-  } + extra);
+  } + Button.letterLongPress(character, swipe, anchor) + extra);
 
 // 一个标点键：没有大小写，也不弹气泡
 local punctuationKey(name, character, swipe, extra={}) =
@@ -185,7 +193,7 @@ local landscapeKeyboardLayout = [
     local extras = homeRowExtras(addSemicolon);
     local letterKeys = Style.merge([
       letterKey(
-        entry[0], entry[1],
+        entry[0], entry[1], letterAnchors(addSemicolon)[entry[0]],
         (if std.objectHas(extras, entry[0]) then extras[entry[0]] else {})
         + (
           if entry[0] == 'a' then splitOnly(Split.widthAnchored(sw.side, sw.sideVisibleFraction, 'right'))
@@ -208,8 +216,12 @@ local landscapeKeyboardLayout = [
         keyboardLayout: if isSplitCapable then landscapeKeyboardLayout else keyboardLayout(addSemicolon),
       },
       letterKeys,
-      if addSemicolon then punctuationKey(semicolonName, ';', ':') else {},
-      punctuationKey(commaName, ',', '.', widths.comma + splitOnly(Split.width(sw.smallKey))),
+      if addSemicolon then punctuationKey(semicolonName, ';', ':', {
+        longPress: [';', ':'], longPressAnchor: 0.95,
+      }) else {},
+      punctuationKey(commaName, ',', '.', {
+        longPress: ['，', '、', '；', '：', '“', '”'], longPressAnchor: 0.25,
+      } + widths.comma + splitOnly(Split.width(sw.smallKey))),
       FunctionKeys.shift(
         shiftName,
         widths.shift
@@ -238,18 +250,14 @@ local landscapeKeyboardLayout = [
         Split.spacer(padRow4LeftName, sw.margin),
         Split.spacer(padRow4RightName, sw.margin),
         Split.spacer(gapRow4Name, sw.gap),
-        Button.new(repeatedName('g'), {
-          role: 'letter',
-          label: { text: 'g' },
-          action: { character: 'g' },
-          size: { width: 0 },
-        } + Split.width(sw.unit)),
-        Button.new(repeatedName('v'), {
-          role: 'letter',
-          label: { text: 'v' },
-          action: { character: 'v' },
-          size: { width: 0 },
-        } + Split.width(sw.unit)),
+        letterKey(
+          'g', letterRows[1][4][1], letterAnchors(addSemicolon).g,
+          { size: { width: 0 } } + Split.width(sw.unit), repeatedName('g')
+        ),
+        letterKey(
+          'v', letterRows[2][3][1], letterAnchors(addSemicolon).v,
+          { size: { width: 0 } } + Split.width(sw.unit), repeatedName('v')
+        ),
         FunctionKeys.space(spaceRightName, { size: { width: 0 } } + Split.width(sw.space)),
       ]
     )),

@@ -42,6 +42,18 @@
     borderSize: 0.5,
   },
 
+  hintGrid: {
+    cell: { width: 36, height: 42 },
+    spacing: { horizontal: 3, vertical: 3 },
+    insets: { top: 5, left: 5, bottom: 5, right: 5 },
+    selectedInsets: { top: 3, left: 3, bottom: 3, right: 3 },
+    cornerRadius: 10,
+    cellCornerRadius: 6,
+    borderSize: 0.5,
+    offset: { x: 0, y: -6 },
+    moveThreshold: 8,
+  },
+
   candidate: {
     cornerRadius: 6,
     horizontalInsets: { top: 8, left: 3, bottom: 1 },

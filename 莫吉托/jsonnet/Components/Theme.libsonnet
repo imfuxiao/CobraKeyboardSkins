@@ -14,6 +14,8 @@ local preeditBackgroundName = 'preeditBackground';
 local toolbarBackgroundName = 'toolbarBackground';
 local candidatePanelBackgroundName = 'candidatePanelBackground';
 local hintBackgroundName = 'hintBackground';
+local hintGridBackgroundName = 'hintGridBackground';
+local hintGridSelectedBackgroundName = 'hintGridSelectedBackground';
 local pressAnimationName = 'keyPressScale';
 
 // ===== 按压反馈 =====
@@ -105,6 +107,8 @@ local backgroundStyle(name) =
   toolbarBackgroundName: toolbarBackgroundName,
   candidatePanelBackgroundName: candidatePanelBackgroundName,
   hintBackgroundName: hintBackgroundName,
+  hintGridBackgroundName: hintGridBackgroundName,
+  hintGridSelectedBackgroundName: hintGridSelectedBackgroundName,
   pressAnimationName: pressAnimationName,
 
   // 分割线色，符号面板一类的集合视图会用到
@@ -146,6 +150,18 @@ local backgroundStyle(name) =
       normalBorderColor: Colors.hint.border,
       borderSize: Metrics.hint.borderSize,
       cornerRadius: Metrics.hint.cornerRadius,
+    }),
+    [hintGridBackgroundName]: Style.geometry({
+      normalColor: Colors.hint.fill,
+      normalBorderColor: Colors.hint.border,
+      borderSize: Metrics.hintGrid.borderSize,
+      cornerRadius: Metrics.hintGrid.cornerRadius,
+    }),
+    [hintGridSelectedBackgroundName]: Style.geometry({
+      normalColor: Colors.hint.selectedFill,
+      highlightColor: Colors.hint.selectedFill,
+      insets: Metrics.hintGrid.selectedInsets,
+      cornerRadius: Metrics.hintGrid.cellCornerRadius,
     }),
     [pressAnimationName]: pressAnimation,
   } + {

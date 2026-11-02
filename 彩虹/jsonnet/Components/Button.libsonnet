@@ -78,6 +78,58 @@ local hintFragment(name, hint) =
     else {}
   );
 
+local anchorCol(anchor, count) =
+  if count <= 1 then 0
+  else if anchor < 0.175 then 0
+  else if anchor < 0.275 then 1
+  else if anchor > 0.825 then count - 1
+  else if anchor > 0.725 then std.max(0, count - 2)
+  else std.floor((count - 1) / 2);
+
+// 上划符号必须落在默认高亮格，长按后直接松手与上划输入一致。
+local letterLongPress(character, swipe, anchor) =
+  local upper = std.asciiUpper(character);
+  local index = anchorCol(anchor, 3);
+  {
+    longPress:
+      if index == 0 then [swipe, character, upper]
+      else if index == 2 then [upper, character, swipe]
+      else [upper, swipe, character],
+    longPressAnchor: anchor,
+  };
+
+local gridFragment(name, symbols, anchor) =
+  local cellName(i) = name + 'GridCell' + i;
+  local indices = std.range(0, std.length(symbols) - 1);
+  local selected = { row: 0, col: anchorCol(anchor, std.length(symbols)) };
+  {
+    [name + 'Grid']: {
+      size: Metrics.hintGrid.cell,
+      spacing: Metrics.hintGrid.spacing,
+      insets: Metrics.hintGrid.insets,
+      offset: Metrics.hintGrid.offset,
+      moveThreshold: Metrics.hintGrid.moveThreshold,
+      backgroundStyle: Theme.hintGridBackgroundName,
+      selectedBackgroundStyle: Theme.hintGridSelectedBackgroundName,
+      // anchor 还会对齐纵向中心；省略它才能让面板保持在按键上方。
+      selected: selected,
+      symbolRows: [[cellName(i) for i in indices]],
+    },
+  } + {
+    [cellName(i)]: {
+      foregroundStyle: cellName(i) + 'Label',
+      action: { character: symbols[i] },
+    }
+    for i in indices
+  } + {
+    [cellName(i) + 'Label']: paint(
+      { text: symbols[i] },
+      { normalColor: Colors.hint.ink, highlightColor: Colors.hint.selectedInk },
+      Fonts.hintGridLabel
+    )
+    for i in indices
+  };
+
 // opts:
 //   role              必填，见 Constants/Colors.libsonnet 的 roles 表
 //   label             必填，主标签外观 { text } / { systemImageName } / { assetImageName }
@@ -93,6 +145,7 @@ local hintFragment(name, hint) =
 local new(name, opts) =
   local role = opts.role;
   local tint = roleTint(role);
+  local hasLongPress = std.objectHas(opts, 'longPress') && std.length(opts.longPress) > 0;
 
   local layers =
     [name + 'Label']
@@ -118,6 +171,8 @@ local new(name, opts) =
         { capsLockedStateForegroundStyle: name + 'LabelCapsLocked' } else {}
     ) + (
       if std.objectHas(opts, 'hint') then { hintStyle: name + 'Hint' } else {}
+    ) + (
+      if hasLongPress then { hintSymbolsGridStyle: name + 'Grid' } else {}
     ),
 
     [name + 'Label']: paint(opts.label, tint, Fonts.keyLabel),
@@ -145,10 +200,17 @@ local new(name, opts) =
     else {}
   ) + (
     if std.objectHas(opts, 'hint') then hintFragment(name, opts.hint) else {}
+  ) + (
+    if hasLongPress then gridFragment(
+      name,
+      opts.longPress,
+      if std.objectHas(opts, 'longPressAnchor') then opts.longPressAnchor else 0.5
+    ) else {}
   );
 
 {
   new: new,
   paint: paint,
   roleTint: roleTint,
+  letterLongPress: letterLongPress,
 }
