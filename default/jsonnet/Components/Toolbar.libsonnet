@@ -145,7 +145,7 @@ local backspaceName = 'verticalBackspaceButtonStyle';
        splitToggleButton(splitToggleButtonName, { shortcut: '#toggleSplitState' }, { width: 44 })
      else {}),
     // 展开按钮不带底色，直接浮在候选栏右端
-    iconButton(expandName, 'chevron.forward', { shortcut: '#candidatesBarStateToggle' })
+    iconButton(expandName, 'chevron.forward', { shortcut: '#candidateFilterPanelToggle' })
     + { [expandName]+: { size: { width: 44 } } },
     iconButton(pageUpName, 'chevron.up', { shortcut: '#verticalCandidatesPageUp' }, Theme.systemBackgroundName),
     iconButton(pageDownName, 'chevron.down', { shortcut: '#verticalCandidatesPageDown' }, Theme.systemBackgroundName),

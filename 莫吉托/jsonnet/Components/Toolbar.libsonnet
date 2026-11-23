@@ -120,6 +120,8 @@ local panelBackspaceName = 'candidatesBackspaceButton';
                      },
                      horizontalCandidateStyle: candidateCellStyle(Metrics.candidate.cellInsets),
 
+                     candidateFilterPanelStyle: Colors.filterPanel,
+
                      // ===== 纵排候选栏（展开态）=====
                      verticalCandidatesStyle: {
                        insets: insets,
@@ -163,7 +165,7 @@ local panelBackspaceName = 'candidatesBackspaceButton';
                    + (if supportsSplit then splitToggleButton(splitToggleButtonName, { width: 44 }) else {})
                    + iconButton(expandButtonName,
                                 'chevron.forward',
-                                { shortcut: '#candidatesBarStateToggle' },
+                                { shortcut: '#candidateFilterPanelToggle' },
                                 { width: Metrics.candidate.expandButtonWidth })
                    + panelButton(pageUpName, 'symbol', 'chevron.up', { shortcut: '#verticalCandidatesPageUp' })
                    + panelButton(pageDownName, 'symbol', 'chevron.down', { shortcut: '#verticalCandidatesPageDown' })

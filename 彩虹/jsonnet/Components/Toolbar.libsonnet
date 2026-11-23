@@ -117,6 +117,8 @@ local panelBackspaceName = 'candidatesBackspaceButton';
                      },
                      horizontalCandidateStyle: candidateCellStyle(Metrics.candidate.cellInsets),
 
+                     candidateFilterPanelStyle: Colors.filterPanel,
+
                      // ===== 纵排候选栏（展开态）=====
                      verticalCandidatesStyle: {
                        insets: insets,
@@ -161,7 +163,7 @@ local panelBackspaceName = 'candidatesBackspaceButton';
                       else {})
                    + iconButton(expandButtonName,
                                 'chevron.forward',
-                                { shortcut: '#candidatesBarStateToggle' },
+                                { shortcut: '#candidateFilterPanelToggle' },
                                 { width: Metrics.candidate.expandButtonWidth })
                    // 纵排候选栏底部这一行四颗键等宽，中心依次落在 1/8、3/8、5/8、7/8，
                    // 于是它们的色相由 hueAt 顺着取出四档，和按键区的竖条纹对得上。

@@ -45,6 +45,9 @@ jobs:
           make solid
           ls -l build-solid/
 
+      - name: Verify candidate filter panels in packaged layouts
+        run: python3 tests/candidate_filter_panel_test.py
+
       # GitHub 会把 Release 附件名里的非 ASCII 字符替换掉，中文名的皮肤会撞名（already_exists），
       # 且应用依赖原文件名，所以打成 zip 发布：
       #   release.zip        渐变背景版（make build）

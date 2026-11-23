@@ -1,8 +1,8 @@
 .PHONY: all clean build solid
 
 SKINS = default numeric sbxlm46 hamster T9 cangjie zhuyin 胭云 莫吉托 彩虹 Gboard Noctua
-# 支持 GRADIENT 参数（渐变 / 纯色背景）的皮肤，其余皮肤两个版本完全相同
-GRADIENT_SKINS = 胭云 莫吉托 彩虹 Noctua
+# 支持 GRADIENT 参数（iOS 渐变/系统底版 vs 纯色/Android 版）的皮肤，其余皮肤两个版本完全相同
+GRADIENT_SKINS = 胭云 莫吉托 彩虹 Gboard Noctua
 
 # 渐变背景版，产物在 build/
 build:

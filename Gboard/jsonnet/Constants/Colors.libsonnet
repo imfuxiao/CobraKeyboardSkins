@@ -17,6 +17,7 @@
 //   inkPressed  按下字色
 //   inkSoft     角标（上划符号）字色
 //   pill        true 表示这颗键用胶囊圆角（半径 = 键高的一半），默认小圆角
+local Options = import 'Options.libsonnet';
 local P = import 'Palette.libsonnet';
 
 {
@@ -111,6 +112,33 @@ local P = import 'Palette.libsonnet';
   toolbarIcon: {
     normal: P.toolbarIcon,
     pressed: P.toolbarIconPressed,
+  },
+
+  // iOS 版（Options.gradient）不设底色以透出系统内置背景，避免与 iOS 26+ 顶部 17px 圆角区割裂；
+  // 纯色版（Android）铺 Gboard 灰底板。
+  // 候选字与未展开的横排候选栏保持一致（首选不加药丸，只染 Google Blue）；
+  // 首笔与范围分段需要清晰的选中态，使用 Google Blue 胶囊。
+  filterPanel: (if Options.gradient then {} else { backgroundColor: P.background }) + {
+    textColor: P.candidateText,
+    selected: { backgroundColor: P.hintGridSelectedFill, textColor: P.hintGridSelectedLabel },
+    pressed: { backgroundColor: P.candidatePressed, textColor: P.candidateText },
+    candidate: {
+      textColor: P.candidateText,
+      selected: { backgroundColor: P.candidatePreferredBackground, textColor: P.candidatePreferredText },
+      pressed: { backgroundColor: P.candidatePressed, textColor: P.candidateText },
+    },
+    stroke: {
+      selected: { backgroundColor: P.hintGridSelectedFill, textColor: P.hintGridSelectedLabel },
+      pressed: { backgroundColor: P.candidatePressed, textColor: P.candidateText },
+    },
+    tool: {
+      textColor: P.toolbarIcon,
+      selected: { backgroundColor: P.hintGridSelectedFill, textColor: P.hintGridSelectedLabel },
+      pressed: { backgroundColor: P.candidatePressed, textColor: P.toolbarIconPressed },
+    },
+    heading: {
+      textColor: P.labelMuted,
+    },
   },
 
   candidate: {

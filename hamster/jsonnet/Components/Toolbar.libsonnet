@@ -148,7 +148,7 @@ local newToolbar(isDark=false, insets={}, supportsSplit=false) = Style.merge([
      splitToggleButton(isDark, splitToggleButtonName, { shortcut: '#toggleSplitState' }, toolbarButtonSize)
    else {}),
   // 展开按钮不带底色，直接浮在候选栏右端
-  iconButton(isDark, expandName, 'chevron.forward', { shortcut: '#candidatesBarStateToggle' }, size={ width: 44 }),
+  iconButton(isDark, expandName, 'chevron.forward', { shortcut: '#candidateFilterPanelToggle' }, size={ width: 44 }),
   iconButton(isDark, pageUpName, 'chevron.up', { shortcut: '#verticalCandidatesPageUp' }, Theme.systemButtonBackgroundName),
   iconButton(isDark, pageDownName, 'chevron.down', { shortcut: '#verticalCandidatesPageDown' }, Theme.systemButtonBackgroundName),
   iconButton(isDark, returnName, 'return', { shortcut: '#candidatesBarStateToggle' }, Theme.systemButtonBackgroundName),

@@ -5,6 +5,7 @@
 //   Colors.libsonnet   这些颜色怎么用
 //
 // 换肤只需改这两个文件，Components/ 与 Keyboards/ 下的代码一律不必动。
+local Options = import 'Options.libsonnet';
 local P = import 'Palette.libsonnet';
 
 {
@@ -55,6 +56,27 @@ local P = import 'Palette.libsonnet';
   toolbarIcon: {
     normal: P.inkCarmine,
     pressed: P.inkCarminePressed,
+  },
+
+  // iOS 版（Options.gradient）不设底色以透出系统内置背景，避免与 iOS 26+ 顶部 17px 圆角区割裂；
+  // 纯色版（Android）铺纸底 / 深暮紫底板。
+  // 候选字与未展开的横排候选栏完全一致（胭脂字 + 胭脂药丸 + 粉雾按压）；
+  // 首笔、范围分段与工具图标字号较小，采用深一档的胭脂按压字与深胭脂胶囊，在系统内置背景上更清晰。
+  filterPanel: (if Options.gradient then {} else { backgroundColor: P.canvas }) + {
+    textColor: P.inkCarmine,
+    selected: { backgroundColor: P.carmine, textColor: P.inkCloud },
+    pressed: { backgroundColor: P.cloudPressed, textColor: P.inkCarmine },
+    stroke: {
+      textColor: P.inkCarminePressed,
+      selected: { backgroundColor: P.carmineDeepPressed, textColor: P.inkCloud },
+      pressed: { backgroundColor: P.cloudPressed, textColor: P.inkCarminePressed },
+    },
+    tool: {
+      textColor: P.inkCarminePressed,
+      selected: { backgroundColor: P.carmineDeepPressed, textColor: P.inkCloud },
+      pressed: { backgroundColor: P.cloudPressed, textColor: P.inkCarminePressed },
+    },
+    heading: { textColor: P.inkCarmine },
   },
 
   // 候选栏

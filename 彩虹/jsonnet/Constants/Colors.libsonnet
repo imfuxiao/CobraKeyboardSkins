@@ -15,6 +15,7 @@
 //
 // 于是一个角色名就是「处理 + 色相」，例如 plainAzure（天蓝那一列的白键面）、
 // solidViolet（最右一列的纯紫功能键）。角色表由下面两个循环乘出来，不手写。
+local Options = import 'Options.libsonnet';
 local P = import 'Palette.libsonnet';
 
 // ===== 五种处理 =====
@@ -116,6 +117,15 @@ local hueAt(center) = P.order[std.max(0, std.min(hueCount - 1, std.floor(center 
   toolbarIcon: {
     normal: P.inkQuiet,
     pressed: P.hues.rose.chroma,
+  },
+
+  // iOS 版（Options.gradient）不设底色以透出系统内置背景，避免与 iOS 26+ 顶部 17px 圆角区割裂；
+  // 纯色版（Android）铺织白 / 深石底板。候选字、首笔与分段沿用横排候选栏的玫红药丸配色。
+  filterPanel: (if Options.gradient then {} else { backgroundColor: P.weave }) + {
+    textColor: P.inkFace,
+    selected: { backgroundColor: P.hues.rose.base, textColor: P.inkOnColor },
+    pressed: { backgroundColor: P.hues.rose.face, textColor: P.inkFace },
+    heading: { textColor: P.inkQuiet },
   },
 
   // ===== 候选栏 =====

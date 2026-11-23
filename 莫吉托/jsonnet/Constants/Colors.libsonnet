@@ -5,6 +5,7 @@
 //   Colors.libsonnet   这些颜色怎么用
 //
 // 换肤只需改这两个文件，Components/ 与 Keyboards/ 下的代码一律不必动。
+local Options = import 'Options.libsonnet';
 local P = import 'Palette.libsonnet';
 
 {
@@ -55,6 +56,27 @@ local P = import 'Palette.libsonnet';
   toolbarIcon: {
     normal: P.inkMint,
     pressed: P.inkMintPressed,
+  },
+
+  // iOS 版（Options.gradient）不设底色以透出系统内置背景，避免与 iOS 26+ 顶部 17px 圆角区割裂；
+  // 纯色版（Android）铺冰砂 / 深墨绿底板。
+  // 候选字与未展开的横排候选栏完全一致（薄荷字 + 薄荷药丸 + 淡绿按压）；
+  // 首笔、范围分段与工具图标字号较小，采用深一档的薄荷按压字与深薄荷胶囊，在系统内置背景上更清晰。
+  filterPanel: (if Options.gradient then {} else { backgroundColor: P.frost }) + {
+    textColor: P.inkMint,
+    selected: { backgroundColor: P.mint, textColor: P.inkLeaf },
+    pressed: { backgroundColor: P.creamPressed, textColor: P.inkMint },
+    stroke: {
+      textColor: P.inkMintPressed,
+      selected: { backgroundColor: P.mintDeepPressed, textColor: P.inkLeaf },
+      pressed: { backgroundColor: P.creamPressed, textColor: P.inkMintPressed },
+    },
+    tool: {
+      textColor: P.inkMintPressed,
+      selected: { backgroundColor: P.mintDeepPressed, textColor: P.inkLeaf },
+      pressed: { backgroundColor: P.creamPressed, textColor: P.inkMintPressed },
+    },
+    heading: { textColor: P.inkMint },
   },
 
   // 候选栏

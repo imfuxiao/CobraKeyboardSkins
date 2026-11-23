@@ -21,7 +21,7 @@ compile: clean
 
 # 结构校验：查出引用了不存在的样式名这类会让按键静默变空白的问题
 validate: compile
-	python3 ~/.claude/skills/hamster-skin-skill/scripts/validate_skin.py .
+	python3 ../tests/validate_skin.py .
 
 # 渲染预览图，几何问题（键太矮、某行没铺满）只能看图
 preview: compile

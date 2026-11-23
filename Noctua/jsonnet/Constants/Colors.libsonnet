@@ -18,6 +18,7 @@
 //   ink         常态字色 / 图标色
 //   inkPressed  按下字色
 //   inkSoft     角标（上划符号）字色
+local Options = import 'Options.libsonnet';
 local P = import 'Palette.libsonnet';
 
 {
@@ -122,6 +123,15 @@ local P = import 'Palette.libsonnet';
   toolbarIcon: {
     normal: P.toolbarIcon,
     pressed: P.toolbarIconPressed,
+  },
+
+  // iOS 版（Options.gradient）不设底色以透出系统内置背景，避免与 iOS 26+ 顶部 17px 圆角区割裂；
+  // 纯色版（Android）铺米色 / 黑棕底板。候选字、首笔与分段沿用横排候选栏的主棕药丸配色。
+  filterPanel: (if Options.gradient then {} else { backgroundColor: P.canvas }) + {
+    textColor: P.candidateText,
+    selected: { backgroundColor: P.candidatePreferredBackground, textColor: P.candidatePreferredText },
+    pressed: { backgroundColor: P.candidatePressed, textColor: P.candidateText },
+    heading: { textColor: P.labelMuted },
   },
 
   candidate: {

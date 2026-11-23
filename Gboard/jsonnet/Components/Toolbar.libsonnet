@@ -2,7 +2,7 @@
 // 候选栏有横排（盖住工具栏）与纵排（展开后盖住工具栏 + 按键区）两套。
 //
 // Gboard 的候选条：候选之间一条细竖线，首选不加药丸只染成蓝色，
-// 最右边一颗 ⌄ 展开成纵排——见 ../../资料/拼音键盘 tint.png。
+// 最右边一颗 › 打开筛选面板。
 local Colors = import '../Constants/Colors.libsonnet';
 local Fonts = import '../Constants/Fonts.libsonnet';
 local Metrics = import '../Constants/Metrics.libsonnet';
@@ -123,6 +123,8 @@ local panelBackspaceName = 'candidatesBackspaceButton';
                      },
                      horizontalCandidateStyle: candidateCellStyle(Metrics.candidate.cellInsets),
 
+                     candidateFilterPanelStyle: Colors.filterPanel,
+
                      // ===== 纵排候选栏（展开态）=====
                      verticalCandidatesStyle: {
                        insets: insets,
@@ -167,12 +169,9 @@ local panelBackspaceName = 'candidatesBackspaceButton';
                    + (if supportsSplit then
                         splitToggleButton(splitToggleButtonName, { shortcut: '#toggleSplitState' }, { width: 44 })
                       else {})
-                   // 候选栏展开键。引擎只能给一个方向的图标（展开 / 收起共用一颗键），
-                   // 所以用朝右的 › 而不是上下箭头：它读作「还有，往后翻」，
-                   // 两个状态下都说得通，不像 ⌄ 那样在收起态就指反了。
                    + iconButton(expandButtonName,
                                 'chevron.forward',
-                                { shortcut: '#candidatesBarStateToggle' },
+                                { shortcut: '#candidateFilterPanelToggle' },
                                 { width: Metrics.candidate.expandButtonWidth })
                    + panelButton(pageUpName, 'function', 'chevron.up', { shortcut: '#verticalCandidatesPageUp' })
                    + panelButton(pageDownName, 'function', 'chevron.down', { shortcut: '#verticalCandidatesPageDown' })

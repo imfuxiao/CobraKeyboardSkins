@@ -69,7 +69,7 @@ local newExpandButton(isDark) = {
   [expandButtonName]:
     {
       size: { width: 44 },
-      action: { shortcut: '#candidatesBarStateToggle' },
+      action: { shortcut: '#candidateFilterPanelToggle' },
     }
     + utils.newForegroundStyle(style=expandButtonName + 'ForegroundStyle'),
   [expandButtonName + 'ForegroundStyle']:

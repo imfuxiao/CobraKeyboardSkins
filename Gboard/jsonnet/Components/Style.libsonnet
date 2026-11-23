@@ -31,6 +31,7 @@ local structuralKeys = std.set([
   'horizontalCandidatesLayout',
   'verticalCandidatesStyle',
   'verticalCandidatesLayout',
+  'candidateFilterPanelStyle',
   'candidateContextMenu',
   'floatTargetScale',
   'floatKeyboardAlpha',
