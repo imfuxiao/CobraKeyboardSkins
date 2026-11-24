@@ -11,5 +11,5 @@ compile: clean
 
 build: compile
 	rm -rf build && mkdir -p build/T9
-	cp -r demo.png config.yaml light dark jsonnet build/T9/
+	cp -r README.md demo.png config.yaml light dark jsonnet build/T9/
 	cd build && zip -r T9.cskin T9/ -x "*.DS_Store" "*/.*" "*/Test*"

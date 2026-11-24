@@ -1,36 +1,33 @@
+// 字号表：所有字号以 point 为单位。
 {
-  preeditFontSize: 17,
+  preedit: 17,
 
-  toolbarButtonTextFontSize: 16,
-  toolbarButtonImageFontSize: 20,
+  toolbarButtonImage: 20,
+  candidateStateButton: 20,
 
-  candidateStateButtonFontSize: 20,
+  // 九键主标签（竖屏 / 横屏）
+  t9Key: 18,
+  t9KeyLandscape: 14,
 
-  t9ButtonLandscapeTextFontSize: 14,
-  t9ButtonTextFontSize: 18,
-  standardButtonTextFontSize: 22.5,
-  standardButtonUppercasedTextFontSize: 22.5,
-  standardButtonImageFontSize: 20,
+  // 标准按键（26 键字母、数字键）
+  keyLabel: 22.5,
+  keyUppercasedLabel: 22.5,
+  keyImage: 20,
+  keyBadge: 11,
 
-  systemButtonTextFontSize: 16,
-  systemButtonImageFontSize: 20,
+  // 系统功能键
+  systemKeyText: 16,
+  systemKeyImage: 20,
 
-  hintTextFontSize: 26,
-
-  candidateIndexFontSize: 12,
-  candidateTextFontSize: 16,
-  candidateCommentFontSize: 14,
-
-  ipad: {
-    button: {
-      doubleLabelFontSize: 18,
-      doubleLabelSmallFontSize: 14,
-    },
+  // 短按气泡与长按网格
+  hintLabel: 26,
+  hintGrid: {
+    portrait: 18,
+    landscape: 16,
   },
-  iPhone: {
-    button: {
-      doubleLabelFontSize: 16,
-      doubleLabelSmallFontSize: 11,
-    },
-  },
+
+  // 候选字栏
+  candidateIndex: 12,
+  candidateText: 16,
+  candidateComment: 14,
 }
