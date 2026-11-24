@@ -38,7 +38,7 @@ local standardButtonBackgroundColor = {
 
 // 标准按键按下时的背景色
 local standardButtonHighlightedBackgroundColor = {
-  light: '#E6E6E6',
+  light: '#C7CBD4',
   dark: '#4C4C4C',
 };
 
@@ -55,7 +55,7 @@ local standardButtonShadowColor = {
 
 // 系统按键（如回车、删除等）背景颜色
 local systemButtonBackgroundColor = {
-  light: '#E6E6E6',
+  light: '#C7CBD4',
   dark: '#4C4C4C',
 };
 
