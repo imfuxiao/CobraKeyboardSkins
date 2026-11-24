@@ -32,6 +32,8 @@ local darkKeyboards = {
 };
 
 local config = {
+  name: '仓默认 26 键盘',
+  author: 'Morse',
   pinyin: {
     phone: { portrait: 'pinyinPortrait', landscape: 'pinyinLandscape' },
     pad: {

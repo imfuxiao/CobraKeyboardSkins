@@ -27,6 +27,8 @@ local keyboards = {
 // 哪种键盘、哪种设备与方向读哪个文件。
 // 缺声明的场景键盘会显示为空白，不会回退，所以四个方向都要给全。
 local config = {
+  name: '莫吉托',
+  author: 'Morse',
   pinyin: {
     phone: {
       portrait: 'pinyinPortrait',

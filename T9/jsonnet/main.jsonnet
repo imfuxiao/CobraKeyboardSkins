@@ -17,6 +17,8 @@ local keyboards = {
 };
 
 local config = {
+  name: '中文九键',
+  author: 'Morse',
   pinyin: {
     phone: {
       portrait: 'portraitPinyin',

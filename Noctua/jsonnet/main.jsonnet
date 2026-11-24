@@ -82,7 +82,10 @@ local scenes(type) = {
   },
 };
 
-local config = { [type]: scenes(type) for type in std.objectFields(builders) };
+local config = {
+  name: 'Noctua',
+  author: 'Morse',
+} + { [type]: scenes(type) for type in std.objectFields(builders) };
 
 {
   'config.yaml': std.manifestYamlDoc(config, indent_array_in_object=true, quote_keys=false),

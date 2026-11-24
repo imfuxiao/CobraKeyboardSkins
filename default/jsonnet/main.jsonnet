@@ -31,6 +31,8 @@ local keyboards = {
 // iPad 上没有单独的符号页：iPad 的数字页一页就放下了 iPhone 上两页的内容，
 // 所以 symbolic 在 iPad 上直接指回拼音页（按 `123` 走数字页，不存在第二页）。
 local config = {
+  name: '极简',
+  author: 'Morse',
   pinyin: {
     phone: { portrait: 'pinyinPortrait', landscape: 'pinyinLandscape' },
     pad: {

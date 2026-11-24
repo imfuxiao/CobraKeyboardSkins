@@ -46,6 +46,8 @@ local lightIpadNumericLandscapeContent = iPadNumeric.new(isDark=false, isPortrai
 local darkIpadNumericLandscapeContent = iPadNumeric.new(isDark=true, isPortrait=false);
 
 local config = {
+  name: '声笔 46 键',
+  author: '谭淞宸/移植：Morse',
   pinyin: {
     phone: {
       portrait: pinyinPortraitFileName,

@@ -41,6 +41,7 @@ local darkLandscapeNumericFileContent = landscapeNumeric.new(isDark=true, isPort
 
 local config = {
   name: '大千注音',
+  author: 'Morse',
   pinyin: {
     phone: {
       portrait: pinyinPortraitFileName,

@@ -21,6 +21,7 @@ local darkIpadPinyinLandscapeContent = iPadPinyin.new(isDark=true, isPortrait=fa
 
 local config = {
   name: '仓颉',
+  author: 'Morse',
   pinyin: {
     phone: {
       portrait: pinyinPortraitFileName,
