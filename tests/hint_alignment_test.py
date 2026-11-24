@@ -6,7 +6,9 @@
 检查 Jsonnet 源配置、所有 light/dark 生成布局及待分发 cskin，防止只改源码未更新包。
 """
 import json
+import os
 from pathlib import Path
+import shutil
 import subprocess
 import unittest
 import zipfile
@@ -17,10 +19,14 @@ SKINS = ("Gboard", "胭云", "彩虹", "莫吉托", "hamster")
 
 class HintAlignmentTest(unittest.TestCase):
     def test_source_grid_offset_is_zero(self):
+        configured = os.environ.get("JSONNET", "jrsonnet")
+        executable = shutil.which(configured)
+        if executable is None:
+            raise AssertionError(f"需要本机 {configured}；缺少依赖不能静默跳过测试")
         for name in SKINS:
             with self.subTest(skin=name):
                 output = subprocess.check_output(
-                    ["jsonnet", "-J", str(ROOT / name / "jsonnet"), "-e",
+                    [executable, "-J", str(ROOT / name / "jsonnet"), "-e",
                      "(import 'Constants/Metrics.libsonnet').hintGrid.offset"],
                     text=True,
                 )

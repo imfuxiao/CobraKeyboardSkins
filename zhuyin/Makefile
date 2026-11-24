@@ -1,5 +1,7 @@
 .PHONY: all compile build clean
 
+JSONNET ?= jrsonnet
+
 all: build
 
 clean:
@@ -7,7 +9,7 @@ clean:
 
 compile: clean
 	mkdir -p dark light
-	jsonnet -S -m . jsonnet/main.jsonnet
+	$(JSONNET) -S -m . jsonnet/main.jsonnet
 
 build: compile
 	rm -rf build && mkdir -p build/zhuyin

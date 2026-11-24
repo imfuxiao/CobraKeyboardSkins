@@ -9,6 +9,7 @@
 """
 from functools import lru_cache
 import json
+import os
 from pathlib import Path
 import re
 import shutil
@@ -63,9 +64,10 @@ def manifest(skin, scenario, portrait=True, semicolon=False):
 
 @lru_cache(maxsize=None)
 def _manifest(skin, scenario, portrait, semicolon):
-    executable = shutil.which("jsonnet")
+    configured = os.environ.get("JSONNET", "jrsonnet")
+    executable = shutil.which(configured)
     if executable is None:
-        raise AssertionError("需要本机 jsonnet；缺少依赖不能静默跳过测试")
+        raise AssertionError(f"需要本机 {configured}；缺少依赖不能静默跳过测试")
     boolean = lambda value: str(value).lower()
     if scenario == "phone":
         keyboard = (
@@ -109,7 +111,14 @@ def _manifest(skin, scenario, portrait, semicolon):
         """.replace("ROLE", role)
     elif scenario == "routing":
         # 对入口只求值 config.yaml，不会触发所有主题文件的惰性生成。
-        keyboard = "{ config: (import 'main.jsonnet')['config.yaml'] }"
+        source = "{ raw: { config: (import 'main.jsonnet')['config.yaml'] } }"
+        result = subprocess.run(
+            [executable, "-J", str(SKINS / skin / "jsonnet"), "-e", source],
+            capture_output=True, text=True, timeout=120,
+        )
+        if result.returncode:
+            raise AssertionError(f"{skin}/{scenario}/{portrait}/{semicolon}\n{result.stderr}")
+        return json.loads(result.stdout)
     else:
         raise ValueError(scenario)
 
@@ -133,8 +142,6 @@ def _manifest(skin, scenario, portrait, semicolon):
         local graph = seeds + {
           [n]: K[n] for n in std.objectFields(K) if std.setMember(n, refs)
         } + (if std.objectHas(K, 'keyboardLayout') then { keyboardLayout: K.keyboardLayout } else {});
-        // 样式引用不随配色改变，先裁剪一次，再分别解析深浅色。
-        local prepared = Style.prune(graph);
         local palette = {
           hint: Colors.hint,
           emphasisFill: Colors.hint.selectedFill,
@@ -143,12 +150,16 @@ def _manifest(skin, scenario, portrait, semicolon):
         {
           raw: K,
           colors: palette,
-          themes: if WITH_THEMES then {
-            [scheme]: {
-              nodes: Style.resolve(prepared, scheme == 'dark'),
-              colors: Style.resolve(palette, scheme == 'dark'),
-            } for scheme in ['light', 'dark']
-          } else {},
+          themes: if WITH_THEMES then (
+            // 样式引用不随配色改变，先裁剪一次，再分别解析深浅色。
+            local prepared = Style.prune(graph);
+            {
+              [scheme]: {
+                nodes: Style.resolve(prepared, scheme == 'dark'),
+                colors: Style.resolve(palette, scheme == 'dark'),
+              } for scheme in ['light', 'dark']
+            }
+          ) else {},
         }
     """.replace("KEYBOARD", keyboard).replace("WITH_THEMES", boolean(scenario == "button"))
     result = subprocess.run(
@@ -375,9 +386,12 @@ class LongPressTest(unittest.TestCase):
                 for line in config.splitlines():
                     if not line.strip() or line.lstrip().startswith("#"):
                         continue
-                    match = re.fullmatch(r"( *)([A-Za-z]+):(?:\s*[\"']?([A-Za-z]+)[\"']?)?", line)
+                    match = re.fullmatch(
+                        r"( *)([A-Za-z]+):(?:\s*(?:\"([^\"]*)\"|'([^']*)'|([^\s#]+)))?", line
+                    )
                     self.assertIsNotNone(match, f"不支持的配置行：{line!r}")
-                    indent, key, value = match.groups()
+                    indent, key, dq, sq, bare = match.groups()
+                    value = dq if dq is not None else (sq if sq is not None else bare)
                     while stack[-1][0] >= len(indent):
                         stack.pop()
                     parent = stack[-1][1]

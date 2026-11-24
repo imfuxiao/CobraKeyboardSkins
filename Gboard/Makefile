@@ -1,6 +1,7 @@
 .PHONY: all compile build clean preview validate
 
 SKIN = Gboard
+JSONNET ?= jrsonnet
 
 # 背景模式：true 为 iOS 版（筛选面板使用系统内置背景，默认），false 为纯色版 / Android（筛选面板铺主题底板色）。例：make build GRADIENT=false
 GRADIENT ?= true
@@ -17,7 +18,7 @@ compile: clean
 	mkdir -p dark light "$(STAGE)"
 	cp -r jsonnet "$(STAGE)/"
 	sed 's/^  gradient: .*/  gradient: $(GRADIENT),/' jsonnet/Constants/Options.libsonnet > "$(STAGE)/jsonnet/Constants/Options.libsonnet"
-	jsonnet -S -m . "$(STAGE)/jsonnet/main.jsonnet"
+	$(JSONNET) -S -m . "$(STAGE)/jsonnet/main.jsonnet"
 
 # 结构校验：查出引用了不存在的样式名这类会让按键静默变空白的问题
 validate: compile
