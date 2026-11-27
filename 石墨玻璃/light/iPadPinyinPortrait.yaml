@@ -1,0 +1,4642 @@
+# 石墨玻璃 — 浅色模式（冰晶石墨玻璃） — iPadPinyinPortrait
+preeditHeight: 25
+toolbarHeight: 42
+keyboardHeight: 311
+transparentBackgroundStyle:
+  buttonStyleType: geometry
+  normalColor: "#E8EEF601"
+  highlightColor: "#E8EEF601"
+verticalCandidatesBackgroundStyle:
+  buttonStyleType: geometry
+  cornerRadius: 12
+  normalColor: &id001
+  - "#F3F7FCFA"
+  - "#E6EEF8FC"
+  highlightColor: *id001
+  colorLocation:
+  - 0
+  - 1
+  colorStartPoint:
+    x: 0.5
+    "y": 0
+  colorEndPoint:
+    x: 0.5
+    "y": 1
+  colorGradientType: axial
+  borderSize: 0.5
+  normalBorderColor: "#FFFFFFD6"
+  highlightBorderColor: "#FFFFFFD6"
+preeditStyle:
+  backgroundStyle: transparentBackgroundStyle
+  foregroundStyle: preeditForegroundStyle
+  insets:
+    top: 2
+    left: 8
+    bottom: 1
+    right: 8
+preeditForegroundStyle:
+  buttonStyleType: text
+  fontSize: 15
+  fontWeight: medium
+  textColor: "#2364A6"
+toolbarStyle:
+  backgroundStyle: transparentBackgroundStyle
+  insets:
+    left: 4
+    right: 4
+toolbarLayout:
+- HStack:
+    subviews:
+    - Cell: toolbarMenuButton
+    - Cell: toolbarSpacer
+    - Cell: toolbarDismissButton
+toolbarMenuButton:
+  size:
+    width: 44
+  action:
+    shortcut: "#keyboardMenu"
+  foregroundStyle: toolbarMenuButtonIcon
+toolbarMenuButtonIcon:
+  buttonStyleType: systemImage
+  systemImageName: command
+  fontSize: 17
+  fontWeight: regular
+  normalColor: "#334866D9"
+  highlightColor: "#2364A6"
+toolbarSpacer: {}
+toolbarDismissButton:
+  size:
+    width: 44
+  action: dismissKeyboard
+  foregroundStyle: toolbarDismissButtonIcon
+toolbarDismissButtonIcon:
+  buttonStyleType: systemImage
+  systemImageName: keyboard.chevron.compact.down
+  fontSize: 18
+  fontWeight: regular
+  normalColor: "#334866D9"
+  highlightColor: "#2364A6"
+horizontalCandidatesStyle:
+  backgroundStyle: transparentBackgroundStyle
+  insets:
+    top: 3
+    left: 6
+    bottom: 2
+    right: 4
+horizontalCandidatesLayout:
+- HStack:
+    subviews:
+    - Cell: horizontalCandidatesCell
+    - Cell: candidatesExpandButton
+horizontalCandidatesCell:
+  type: horizontalCandidates
+  candidateStyle: candidateCellStyle
+  maxColumns: 7
+candidatesExpandButton:
+  size:
+    width: 44
+  action:
+    shortcut: "#candidatesBarStateToggle"
+  foregroundStyle: candidatesExpandButtonIcon
+candidatesExpandButtonIcon:
+  buttonStyleType: systemImage
+  systemImageName: chevron.down
+  fontSize: 15
+  fontWeight: medium
+  normalColor: "#334866D9"
+  highlightColor: "#2364A6"
+verticalCandidatesStyle:
+  backgroundStyle: verticalCandidatesBackgroundStyle
+  insets:
+    top: 6
+    left: 6
+    bottom: 6
+    right: 6
+verticalCandidatesLayout:
+- HStack:
+    subviews:
+    - Cell: verticalCandidatesCell
+- HStack:
+    style: verticalLastRowStyle
+    subviews:
+    - Cell: verticalPageUpButton
+    - Cell: verticalPageDownButton
+    - Cell: verticalReturnButton
+    - Cell: verticalBackspaceButton
+verticalCandidatesCell:
+  type: verticalCandidates
+  candidateStyle: candidateCellStyle
+  maxRows: 5
+  maxColumns: 7
+  separatorColor: "#3B4D6B24"
+  insets:
+    top: 4
+    left: 4
+    bottom: 4
+    right: 4
+verticalLastRowStyle:
+  size:
+    height: 48
+verticalPageUpButton:
+  action:
+    shortcut: "#verticalCandidatesPageUp"
+  animation:
+  - keyPressScale
+  backgroundStyle: functionalKeyBackground
+  foregroundStyle: verticalPageUpIcon
+verticalPageUpIcon:
+  buttonStyleType: systemImage
+  systemImageName: chevron.up
+  fontSize: 18
+  normalColor: "#2B3F5E"
+  highlightColor: "#142238"
+verticalPageDownButton:
+  action:
+    shortcut: "#verticalCandidatesPageDown"
+  animation:
+  - keyPressScale
+  backgroundStyle: functionalKeyBackground
+  foregroundStyle: verticalPageDownIcon
+verticalPageDownIcon:
+  buttonStyleType: systemImage
+  systemImageName: chevron.down
+  fontSize: 18
+  normalColor: "#2B3F5E"
+  highlightColor: "#142238"
+verticalReturnButton:
+  action:
+    shortcut: "#candidatesBarStateToggle"
+  animation:
+  - keyPressScale
+  backgroundStyle: functionalKeyBackground
+  foregroundStyle: verticalReturnIcon
+verticalReturnIcon:
+  buttonStyleType: systemImage
+  systemImageName: return
+  fontSize: 18
+  normalColor: "#2B3F5E"
+  highlightColor: "#142238"
+verticalBackspaceButton:
+  action: backspace
+  repeatAction: backspace
+  animation:
+  - keyPressScale
+  backgroundStyle: functionalKeyBackground
+  foregroundStyle: verticalBackspaceIcon
+verticalBackspaceIcon:
+  buttonStyleType: systemImage
+  systemImageName: delete.left
+  highlightSystemImageName: delete.left.fill
+  fontSize: 18
+  normalColor: "#2B3F5E"
+  highlightColor: "#142238"
+candidateCellStyle:
+  insets:
+    top: 3
+    left: 8
+    bottom: 3
+    right: 8
+  backgroundCornerRadius: 8
+  textFontSize: 18
+  commentFontSize: 12
+  indexFontSize: 11
+  textColor: "#1B2536"
+  commentColor: "#5E728FC4"
+  indexColor: "#6C809EB0"
+  preferredBackgroundColor: "#3A8CD426"
+  preferredTextColor: "#185691"
+  preferredCommentColor: "#2A6AA6CC"
+  preferredIndexColor: "#2A6AA6B8"
+  highlightBackgroundColor: "#3A8CD43A"
+candidateContextMenu:
+- name: 复制
+  action:
+    shortcut: "#copy"
+keyboardStyle:
+  backgroundStyle: transparentBackgroundStyle
+keyPressScale:
+  animationType: scale
+  scale: 0.94
+  pressDuration: 45
+  releaseDuration: 95
+  isAutoReverse: false
+letterKeyBackground:
+  buttonStyleType: geometry
+  insets: &id002
+    top: 4
+    left: 3.5
+    bottom: 4
+    right: 3.5
+  cornerRadius: 10.5
+  normalColor:
+  - "#FFFFFFDB"
+  - "#EFF5FCCB"
+  highlightColor:
+  - "#D6EAFAE3"
+  - "#BCDDF7D6"
+  colorLocation:
+  - 0
+  - 1
+  colorStartPoint:
+    x: 0.5
+    "y": 0
+  colorEndPoint:
+    x: 0.5
+    "y": 1
+  colorGradientType: axial
+  borderSize: 0.5
+  normalBorderColor: "#FFFFFFF2"
+  highlightBorderColor: "#5CAEEB9E"
+  normalShadowColor: "#283B5826"
+  highlightShadowColor: "#283B5826"
+  shadowOpacity: 0.45
+  shadowRadius: 2.2
+  shadowOffset:
+    x: 0
+    "y": 1.5
+spaceKeyBackground:
+  buttonStyleType: geometry
+  insets: *id002
+  cornerRadius: 10.5
+  normalColor:
+  - "#FFFFFFD4"
+  - "#ECF2FAC2"
+  highlightColor:
+  - "#D6EAFAE3"
+  - "#BCDDF7D6"
+  colorLocation:
+  - 0
+  - 1
+  colorStartPoint:
+    x: 0.5
+    "y": 0
+  colorEndPoint:
+    x: 0.5
+    "y": 1
+  colorGradientType: axial
+  borderSize: 0.5
+  normalBorderColor: "#FFFFFFEB"
+  highlightBorderColor: "#5CAEEB99"
+  normalShadowColor: "#283B5826"
+  highlightShadowColor: "#283B5826"
+  shadowOpacity: 0.45
+  shadowRadius: 2.2
+  shadowOffset:
+    x: 0
+    "y": 1.5
+functionalKeyBackground:
+  buttonStyleType: geometry
+  insets: *id002
+  cornerRadius: 10.5
+  normalColor:
+  - "#DCE5F5BA"
+  - "#CBD6EBAA"
+  highlightColor:
+  - "#C2D8F2CF"
+  - "#B0CCEAC4"
+  colorLocation:
+  - 0
+  - 1
+  colorStartPoint:
+    x: 0.5
+    "y": 0
+  colorEndPoint:
+    x: 0.5
+    "y": 1
+  colorGradientType: axial
+  borderSize: 0.5
+  normalBorderColor: "#FFFFFFCC"
+  highlightBorderColor: "#5CAEEB85"
+  normalShadowColor: "#283B5826"
+  highlightShadowColor: "#283B5826"
+  shadowOpacity: 0.45
+  shadowRadius: 2.2
+  shadowOffset:
+    x: 0
+    "y": 1.5
+enterKeyBackground:
+  buttonStyleType: geometry
+  insets: *id002
+  cornerRadius: 10.5
+  normalColor:
+  - "#CBE2F7C7"
+  - "#B6D3F0B8"
+  highlightColor:
+  - "#B0D4F4DB"
+  - "#9AC4ECE0"
+  colorLocation:
+  - 0
+  - 1
+  colorStartPoint:
+    x: 0.5
+    "y": 0
+  colorEndPoint:
+    x: 0.5
+    "y": 1
+  colorGradientType: axial
+  borderSize: 0.5
+  normalBorderColor: "#FFFFFFD6"
+  highlightBorderColor: "#4A9CE09E"
+  normalShadowColor: "#283B5826"
+  highlightShadowColor: "#283B5826"
+  shadowOpacity: 0.45
+  shadowRadius: 2.2
+  shadowOffset:
+    x: 0
+    "y": 1.5
+enterAccentKeyBackground:
+  buttonStyleType: geometry
+  insets: *id002
+  cornerRadius: 10.5
+  normalColor:
+  - "#489CE3F0"
+  - "#2F7CC4EB"
+  highlightColor:
+  - "#3A8DD6F5"
+  - "#246DB3F0"
+  colorLocation:
+  - 0
+  - 1
+  colorStartPoint:
+    x: 0.5
+    "y": 0
+  colorEndPoint:
+    x: 0.5
+    "y": 1
+  colorGradientType: axial
+  borderSize: 0.5
+  normalBorderColor: "#A8D8FF9E"
+  highlightBorderColor: "#D1EBFFBF"
+  normalShadowColor: "#283B5826"
+  highlightShadowColor: "#283B5826"
+  shadowOpacity: 0.45
+  shadowRadius: 2.2
+  shadowOffset:
+    x: 0
+    "y": 1.5
+hintBackgroundStyle:
+  buttonStyleType: geometry
+  cornerRadius: 12
+  normalColor: &id003
+  - "#FFFFFFF5"
+  - "#EDF3FAF2"
+  highlightColor: *id003
+  colorLocation:
+  - 0
+  - 1
+  colorStartPoint:
+    x: 0.5
+    "y": 0
+  colorEndPoint:
+    x: 0.5
+    "y": 1
+  colorGradientType: axial
+  borderSize: 0.75
+  normalBorderColor: "#C6D7ECE8"
+  highlightBorderColor: "#C6D7ECE8"
+  normalShadowColor: "#1C2A4036"
+  shadowOpacity: 0.7
+  shadowRadius: 6
+  shadowOffset:
+    x: 0
+    "y": 3
+hintGridBackgroundStyle:
+  buttonStyleType: geometry
+  cornerRadius: 11
+  normalColor: *id003
+  highlightColor: *id003
+  colorLocation:
+  - 0
+  - 1
+  colorStartPoint:
+    x: 0.5
+    "y": 0
+  colorEndPoint:
+    x: 0.5
+    "y": 1
+  colorGradientType: axial
+  borderSize: 0.75
+  normalBorderColor: "#C6D7ECE8"
+  highlightBorderColor: "#C6D7ECE8"
+  normalShadowColor: "#1C2A4036"
+  shadowOpacity: 0.75
+  shadowRadius: 8
+  shadowOffset:
+    x: 0
+    "y": 4
+hintGridSelectedBackgroundStyle:
+  buttonStyleType: geometry
+  insets:
+    top: 3
+    left: 3
+    bottom: 3
+    right: 3
+  cornerRadius: 7
+  normalColor: "#3A8CD4E8"
+  highlightColor: "#3A8CD4E8"
+firstRowStyle:
+  size:
+    height: 54
+keyboardLayout:
+- HStack:
+    style: firstRowStyle
+    subviews:
+    - Cell: graveButton
+    - Cell: oneButton
+    - Cell: twoButton
+    - Cell: threeButton
+    - Cell: fourButton
+    - Cell: fiveButton
+    - Cell: sixButton
+    - Cell: sevenButton
+    - Cell: eightButton
+    - Cell: nineButton
+    - Cell: zeroButton
+    - Cell: hyphenButton
+    - Cell: equalButton
+    - Cell: backspaceButton
+- HStack:
+    subviews:
+    - Cell: tabButton
+    - Cell: qButton
+    - Cell: wButton
+    - Cell: eButton
+    - Cell: rButton
+    - Cell: tButton
+    - Cell: yButton
+    - Cell: uButton
+    - Cell: iButton
+    - Cell: oButton
+    - Cell: pButton
+    - Cell: bracketLeftButton
+    - Cell: bracketRightButton
+    - Cell: ideographicCommaButton
+- HStack:
+    subviews:
+    - Cell: asciiModeButton
+    - Cell: aButton
+    - Cell: sButton
+    - Cell: dButton
+    - Cell: fButton
+    - Cell: gButton
+    - Cell: hButton
+    - Cell: jButton
+    - Cell: kButton
+    - Cell: lButton
+    - Cell: semicolonButton
+    - Cell: quoteButton
+    - Cell: enterButton
+- HStack:
+    subviews:
+    - Cell: leftShiftButton
+    - Cell: zButton
+    - Cell: xButton
+    - Cell: cButton
+    - Cell: vButton
+    - Cell: bButton
+    - Cell: nButton
+    - Cell: mButton
+    - Cell: commaButton
+    - Cell: periodButton
+    - Cell: slashButton
+    - Cell: rightShiftButton
+- HStack:
+    subviews:
+    - Cell: globeButton
+    - Cell: numericButton
+    - Cell: spaceButton
+    - Cell: numericRightButton
+    - Cell: dismissButton
+graveButton:
+  action:
+    character: "`"
+  animation:
+  - keyPressScale
+  backgroundStyle: letterKeyBackground
+  foregroundStyle:
+  - graveLabel
+  - graveBadge
+  swipeUpAction:
+    character: "~"
+  size:
+    width: "69/1000"
+graveLabel:
+  buttonStyleType: text
+  text: "`"
+  fontSize: 18.5
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+graveBadge:
+  buttonStyleType: text
+  text: "~"
+  fontSize: 9.5
+  center:
+    "y": 0.21
+  normalColor: "#536785A6"
+  highlightColor: "#536785A6"
+oneButton:
+  action:
+    character: '1'
+  animation:
+  - keyPressScale
+  backgroundStyle: letterKeyBackground
+  foregroundStyle:
+  - oneLabel
+  - oneBadge
+  swipeUpAction:
+    character: "!"
+  size:
+    width: "69/1000"
+oneLabel:
+  buttonStyleType: text
+  text: '1'
+  fontSize: 19.5
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+oneBadge:
+  buttonStyleType: text
+  text: "!"
+  fontSize: 9.5
+  center:
+    "y": 0.21
+  normalColor: "#536785A6"
+  highlightColor: "#536785A6"
+twoButton:
+  action:
+    character: '2'
+  animation:
+  - keyPressScale
+  backgroundStyle: letterKeyBackground
+  foregroundStyle:
+  - twoLabel
+  - twoBadge
+  swipeUpAction:
+    character: "@"
+  size:
+    width: "69/1000"
+twoLabel:
+  buttonStyleType: text
+  text: '2'
+  fontSize: 19.5
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+twoBadge:
+  buttonStyleType: text
+  text: "@"
+  fontSize: 9.5
+  center:
+    "y": 0.21
+  normalColor: "#536785A6"
+  highlightColor: "#536785A6"
+threeButton:
+  action:
+    character: '3'
+  animation:
+  - keyPressScale
+  backgroundStyle: letterKeyBackground
+  foregroundStyle:
+  - threeLabel
+  - threeBadge
+  swipeUpAction:
+    character: "#"
+  size:
+    width: "69/1000"
+threeLabel:
+  buttonStyleType: text
+  text: '3'
+  fontSize: 19.5
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+threeBadge:
+  buttonStyleType: text
+  text: "#"
+  fontSize: 9.5
+  center:
+    "y": 0.21
+  normalColor: "#536785A6"
+  highlightColor: "#536785A6"
+fourButton:
+  action:
+    character: '4'
+  animation:
+  - keyPressScale
+  backgroundStyle: letterKeyBackground
+  foregroundStyle:
+  - fourLabel
+  - fourBadge
+  swipeUpAction:
+    character: "$"
+  size:
+    width: "69/1000"
+fourLabel:
+  buttonStyleType: text
+  text: '4'
+  fontSize: 19.5
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+fourBadge:
+  buttonStyleType: text
+  text: "$"
+  fontSize: 9.5
+  center:
+    "y": 0.21
+  normalColor: "#536785A6"
+  highlightColor: "#536785A6"
+fiveButton:
+  action:
+    character: '5'
+  animation:
+  - keyPressScale
+  backgroundStyle: letterKeyBackground
+  foregroundStyle:
+  - fiveLabel
+  - fiveBadge
+  swipeUpAction:
+    character: "%"
+  size:
+    width: "69/1000"
+fiveLabel:
+  buttonStyleType: text
+  text: '5'
+  fontSize: 19.5
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+fiveBadge:
+  buttonStyleType: text
+  text: "%"
+  fontSize: 9.5
+  center:
+    "y": 0.21
+  normalColor: "#536785A6"
+  highlightColor: "#536785A6"
+sixButton:
+  action:
+    character: '6'
+  animation:
+  - keyPressScale
+  backgroundStyle: letterKeyBackground
+  foregroundStyle:
+  - sixLabel
+  - sixBadge
+  swipeUpAction:
+    character: ^
+  size:
+    width: "69/1000"
+sixLabel:
+  buttonStyleType: text
+  text: '6'
+  fontSize: 19.5
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+sixBadge:
+  buttonStyleType: text
+  text: ^
+  fontSize: 9.5
+  center:
+    "y": 0.21
+  normalColor: "#536785A6"
+  highlightColor: "#536785A6"
+sevenButton:
+  action:
+    character: '7'
+  animation:
+  - keyPressScale
+  backgroundStyle: letterKeyBackground
+  foregroundStyle:
+  - sevenLabel
+  - sevenBadge
+  swipeUpAction:
+    character: "&"
+  size:
+    width: "69/1000"
+sevenLabel:
+  buttonStyleType: text
+  text: '7'
+  fontSize: 19.5
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+sevenBadge:
+  buttonStyleType: text
+  text: "&"
+  fontSize: 9.5
+  center:
+    "y": 0.21
+  normalColor: "#536785A6"
+  highlightColor: "#536785A6"
+eightButton:
+  action:
+    character: '8'
+  animation:
+  - keyPressScale
+  backgroundStyle: letterKeyBackground
+  foregroundStyle:
+  - eightLabel
+  - eightBadge
+  swipeUpAction:
+    character: "*"
+  size:
+    width: "69/1000"
+eightLabel:
+  buttonStyleType: text
+  text: '8'
+  fontSize: 19.5
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+eightBadge:
+  buttonStyleType: text
+  text: "*"
+  fontSize: 9.5
+  center:
+    "y": 0.21
+  normalColor: "#536785A6"
+  highlightColor: "#536785A6"
+nineButton:
+  action:
+    character: '9'
+  animation:
+  - keyPressScale
+  backgroundStyle: letterKeyBackground
+  foregroundStyle:
+  - nineLabel
+  - nineBadge
+  swipeUpAction:
+    character: (
+  size:
+    width: "69/1000"
+nineLabel:
+  buttonStyleType: text
+  text: '9'
+  fontSize: 19.5
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+nineBadge:
+  buttonStyleType: text
+  text: (
+  fontSize: 9.5
+  center:
+    "y": 0.21
+  normalColor: "#536785A6"
+  highlightColor: "#536785A6"
+zeroButton:
+  action:
+    character: '0'
+  animation:
+  - keyPressScale
+  backgroundStyle: letterKeyBackground
+  foregroundStyle:
+  - zeroLabel
+  - zeroBadge
+  swipeUpAction:
+    character: )
+  size:
+    width: "69/1000"
+zeroLabel:
+  buttonStyleType: text
+  text: '0'
+  fontSize: 19.5
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+zeroBadge:
+  buttonStyleType: text
+  text: )
+  fontSize: 9.5
+  center:
+    "y": 0.21
+  normalColor: "#536785A6"
+  highlightColor: "#536785A6"
+hyphenButton:
+  action:
+    character: "-"
+  animation:
+  - keyPressScale
+  backgroundStyle: letterKeyBackground
+  foregroundStyle:
+  - hyphenLabel
+  - hyphenBadge
+  swipeUpAction:
+    character: _
+  size:
+    width: "69/1000"
+hyphenLabel:
+  buttonStyleType: text
+  text: "-"
+  fontSize: 19.5
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+hyphenBadge:
+  buttonStyleType: text
+  text: _
+  fontSize: 9.5
+  center:
+    "y": 0.21
+  normalColor: "#536785A6"
+  highlightColor: "#536785A6"
+equalButton:
+  action:
+    character: '='
+  animation:
+  - keyPressScale
+  backgroundStyle: letterKeyBackground
+  foregroundStyle:
+  - equalLabel
+  - equalBadge
+  swipeUpAction:
+    character: +
+  size:
+    width: "69/1000"
+equalLabel:
+  buttonStyleType: text
+  text: '='
+  fontSize: 19.5
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+equalBadge:
+  buttonStyleType: text
+  text: +
+  fontSize: 9.5
+  center:
+    "y": 0.21
+  normalColor: "#536785A6"
+  highlightColor: "#536785A6"
+backspaceButton:
+  size:
+    width: "103/1000"
+  action: backspace
+  repeatAction: backspace
+  animation:
+  - keyPressScale
+  backgroundStyle: functionalKeyBackground
+  foregroundStyle: backspaceIcon
+backspaceIcon:
+  buttonStyleType: systemImage
+  systemImageName: delete.left
+  highlightSystemImageName: delete.left.fill
+  fontSize: 19
+  normalColor: "#2B3F5E"
+  highlightColor: "#142238"
+tabButton:
+  size:
+    width: "103/1000"
+  action: tab
+  animation:
+  - keyPressScale
+  backgroundStyle: functionalKeyBackground
+  foregroundStyle: tabLabel
+tabLabel:
+  buttonStyleType: text
+  text: tab
+  fontSize: 15.5
+  fontWeight: medium
+  normalColor: "#2B3F5E"
+  highlightColor: "#142238"
+qButton:
+  action:
+    character: q
+  uppercasedStateAction:
+    character: Q
+  swipeUpAction:
+    character: '1'
+  animation:
+  - keyPressScale
+  backgroundStyle: letterKeyBackground
+  foregroundStyle:
+  - qLabel
+  - qBadge
+  uppercasedStateForegroundStyle:
+  - qUpperLabel
+  - qBadge
+  hintStyle: qHint
+  hintSymbolsGridStyle: qGrid
+  size:
+    width: "69/1000"
+qLabel:
+  buttonStyleType: text
+  text: q
+  fontSize: 20.5
+  fontWeight: regular
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+qUpperLabel:
+  buttonStyleType: text
+  text: Q
+  fontSize: 20.5
+  fontWeight: regular
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+qBadge:
+  buttonStyleType: text
+  text: '1'
+  fontSize: 9.5
+  center:
+    "y": 0.21
+  normalColor: "#536785A6"
+  highlightColor: "#536785A6"
+qHint:
+  size:
+    width: 48
+    height: 48
+  backgroundStyle: hintBackgroundStyle
+  foregroundStyle: qHintLabel
+  swipeUpForegroundStyle: qHintSwipeUpLabel
+qHintLabel:
+  buttonStyleType: text
+  text: Q
+  fontSize: 26
+  fontWeight: regular
+  normalColor: "#1A2333"
+  highlightColor: "#1A2333"
+qHintSwipeUpLabel:
+  buttonStyleType: text
+  text: '1'
+  fontSize: 24
+  fontWeight: regular
+  normalColor: "#1A2333"
+  highlightColor: "#1A2333"
+qGridCell0:
+  action:
+    character: Q
+  foregroundStyle: qGridCell0Label
+qGridCell0Label:
+  buttonStyleType: text
+  text: Q
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+qGridCell1:
+  action:
+    character: '1'
+  foregroundStyle: qGridCell1Label
+qGridCell1Label:
+  buttonStyleType: text
+  text: '1'
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+qGridCell2:
+  action:
+    character: q
+  foregroundStyle: qGridCell2Label
+qGridCell2Label:
+  buttonStyleType: text
+  text: q
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+qGrid:
+  size:
+    width: 36
+    height: 42
+  spacing:
+    horizontal: 3
+    vertical: 3
+  insets:
+    top: 5
+    left: 5
+    bottom: 5
+    right: 5
+  anchor:
+    row: 0
+    col: 1
+  selected:
+    row: 0
+    col: 1
+  offset:
+    x: 0
+    "y": -54
+  moveThreshold: 8
+  backgroundStyle: hintGridBackgroundStyle
+  selectedBackgroundStyle: hintGridSelectedBackgroundStyle
+  symbolRows:
+  - - qGridCell0
+    - qGridCell1
+    - qGridCell2
+wButton:
+  action:
+    character: w
+  uppercasedStateAction:
+    character: W
+  swipeUpAction:
+    character: '2'
+  animation:
+  - keyPressScale
+  backgroundStyle: letterKeyBackground
+  foregroundStyle:
+  - wLabel
+  - wBadge
+  uppercasedStateForegroundStyle:
+  - wUpperLabel
+  - wBadge
+  hintStyle: wHint
+  hintSymbolsGridStyle: wGrid
+  size:
+    width: "69/1000"
+wLabel:
+  buttonStyleType: text
+  text: w
+  fontSize: 20.5
+  fontWeight: regular
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+wUpperLabel:
+  buttonStyleType: text
+  text: W
+  fontSize: 20.5
+  fontWeight: regular
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+wBadge:
+  buttonStyleType: text
+  text: '2'
+  fontSize: 9.5
+  center:
+    "y": 0.21
+  normalColor: "#536785A6"
+  highlightColor: "#536785A6"
+wHint:
+  size:
+    width: 48
+    height: 48
+  backgroundStyle: hintBackgroundStyle
+  foregroundStyle: wHintLabel
+  swipeUpForegroundStyle: wHintSwipeUpLabel
+wHintLabel:
+  buttonStyleType: text
+  text: W
+  fontSize: 26
+  fontWeight: regular
+  normalColor: "#1A2333"
+  highlightColor: "#1A2333"
+wHintSwipeUpLabel:
+  buttonStyleType: text
+  text: '2'
+  fontSize: 24
+  fontWeight: regular
+  normalColor: "#1A2333"
+  highlightColor: "#1A2333"
+wGridCell0:
+  action:
+    character: W
+  foregroundStyle: wGridCell0Label
+wGridCell0Label:
+  buttonStyleType: text
+  text: W
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+wGridCell1:
+  action:
+    character: '2'
+  foregroundStyle: wGridCell1Label
+wGridCell1Label:
+  buttonStyleType: text
+  text: '2'
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+wGridCell2:
+  action:
+    character: w
+  foregroundStyle: wGridCell2Label
+wGridCell2Label:
+  buttonStyleType: text
+  text: w
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+wGrid:
+  size:
+    width: 36
+    height: 42
+  spacing:
+    horizontal: 3
+    vertical: 3
+  insets:
+    top: 5
+    left: 5
+    bottom: 5
+    right: 5
+  anchor:
+    row: 0
+    col: 1
+  selected:
+    row: 0
+    col: 1
+  offset:
+    x: 0
+    "y": -54
+  moveThreshold: 8
+  backgroundStyle: hintGridBackgroundStyle
+  selectedBackgroundStyle: hintGridSelectedBackgroundStyle
+  symbolRows:
+  - - wGridCell0
+    - wGridCell1
+    - wGridCell2
+eButton:
+  action:
+    character: e
+  uppercasedStateAction:
+    character: E
+  swipeUpAction:
+    character: '3'
+  animation:
+  - keyPressScale
+  backgroundStyle: letterKeyBackground
+  foregroundStyle:
+  - eLabel
+  - eBadge
+  uppercasedStateForegroundStyle:
+  - eUpperLabel
+  - eBadge
+  hintStyle: eHint
+  hintSymbolsGridStyle: eGrid
+  size:
+    width: "69/1000"
+eLabel:
+  buttonStyleType: text
+  text: e
+  fontSize: 20.5
+  fontWeight: regular
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+eUpperLabel:
+  buttonStyleType: text
+  text: E
+  fontSize: 20.5
+  fontWeight: regular
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+eBadge:
+  buttonStyleType: text
+  text: '3'
+  fontSize: 9.5
+  center:
+    "y": 0.21
+  normalColor: "#536785A6"
+  highlightColor: "#536785A6"
+eHint:
+  size:
+    width: 48
+    height: 48
+  backgroundStyle: hintBackgroundStyle
+  foregroundStyle: eHintLabel
+  swipeUpForegroundStyle: eHintSwipeUpLabel
+eHintLabel:
+  buttonStyleType: text
+  text: E
+  fontSize: 26
+  fontWeight: regular
+  normalColor: "#1A2333"
+  highlightColor: "#1A2333"
+eHintSwipeUpLabel:
+  buttonStyleType: text
+  text: '3'
+  fontSize: 24
+  fontWeight: regular
+  normalColor: "#1A2333"
+  highlightColor: "#1A2333"
+eGridCell0:
+  action:
+    character: E
+  foregroundStyle: eGridCell0Label
+eGridCell0Label:
+  buttonStyleType: text
+  text: E
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+eGridCell1:
+  action:
+    character: '3'
+  foregroundStyle: eGridCell1Label
+eGridCell1Label:
+  buttonStyleType: text
+  text: '3'
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+eGridCell2:
+  action:
+    character: e
+  foregroundStyle: eGridCell2Label
+eGridCell2Label:
+  buttonStyleType: text
+  text: e
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+eGrid:
+  size:
+    width: 36
+    height: 42
+  spacing:
+    horizontal: 3
+    vertical: 3
+  insets:
+    top: 5
+    left: 5
+    bottom: 5
+    right: 5
+  anchor:
+    row: 0
+    col: 1
+  selected:
+    row: 0
+    col: 1
+  offset:
+    x: 0
+    "y": -54
+  moveThreshold: 8
+  backgroundStyle: hintGridBackgroundStyle
+  selectedBackgroundStyle: hintGridSelectedBackgroundStyle
+  symbolRows:
+  - - eGridCell0
+    - eGridCell1
+    - eGridCell2
+rButton:
+  action:
+    character: r
+  uppercasedStateAction:
+    character: R
+  swipeUpAction:
+    character: '4'
+  animation:
+  - keyPressScale
+  backgroundStyle: letterKeyBackground
+  foregroundStyle:
+  - rLabel
+  - rBadge
+  uppercasedStateForegroundStyle:
+  - rUpperLabel
+  - rBadge
+  hintStyle: rHint
+  hintSymbolsGridStyle: rGrid
+  size:
+    width: "69/1000"
+rLabel:
+  buttonStyleType: text
+  text: r
+  fontSize: 20.5
+  fontWeight: regular
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+rUpperLabel:
+  buttonStyleType: text
+  text: R
+  fontSize: 20.5
+  fontWeight: regular
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+rBadge:
+  buttonStyleType: text
+  text: '4'
+  fontSize: 9.5
+  center:
+    "y": 0.21
+  normalColor: "#536785A6"
+  highlightColor: "#536785A6"
+rHint:
+  size:
+    width: 48
+    height: 48
+  backgroundStyle: hintBackgroundStyle
+  foregroundStyle: rHintLabel
+  swipeUpForegroundStyle: rHintSwipeUpLabel
+rHintLabel:
+  buttonStyleType: text
+  text: R
+  fontSize: 26
+  fontWeight: regular
+  normalColor: "#1A2333"
+  highlightColor: "#1A2333"
+rHintSwipeUpLabel:
+  buttonStyleType: text
+  text: '4'
+  fontSize: 24
+  fontWeight: regular
+  normalColor: "#1A2333"
+  highlightColor: "#1A2333"
+rGridCell0:
+  action:
+    character: R
+  foregroundStyle: rGridCell0Label
+rGridCell0Label:
+  buttonStyleType: text
+  text: R
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+rGridCell1:
+  action:
+    character: '4'
+  foregroundStyle: rGridCell1Label
+rGridCell1Label:
+  buttonStyleType: text
+  text: '4'
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+rGridCell2:
+  action:
+    character: r
+  foregroundStyle: rGridCell2Label
+rGridCell2Label:
+  buttonStyleType: text
+  text: r
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+rGrid:
+  size:
+    width: 36
+    height: 42
+  spacing:
+    horizontal: 3
+    vertical: 3
+  insets:
+    top: 5
+    left: 5
+    bottom: 5
+    right: 5
+  anchor:
+    row: 0
+    col: 1
+  selected:
+    row: 0
+    col: 1
+  offset:
+    x: 0
+    "y": -54
+  moveThreshold: 8
+  backgroundStyle: hintGridBackgroundStyle
+  selectedBackgroundStyle: hintGridSelectedBackgroundStyle
+  symbolRows:
+  - - rGridCell0
+    - rGridCell1
+    - rGridCell2
+tButton:
+  action:
+    character: t
+  uppercasedStateAction:
+    character: T
+  swipeUpAction:
+    character: '5'
+  animation:
+  - keyPressScale
+  backgroundStyle: letterKeyBackground
+  foregroundStyle:
+  - tLabel
+  - tBadge
+  uppercasedStateForegroundStyle:
+  - tUpperLabel
+  - tBadge
+  hintStyle: tHint
+  hintSymbolsGridStyle: tGrid
+  size:
+    width: "69/1000"
+tLabel:
+  buttonStyleType: text
+  text: t
+  fontSize: 20.5
+  fontWeight: regular
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+tUpperLabel:
+  buttonStyleType: text
+  text: T
+  fontSize: 20.5
+  fontWeight: regular
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+tBadge:
+  buttonStyleType: text
+  text: '5'
+  fontSize: 9.5
+  center:
+    "y": 0.21
+  normalColor: "#536785A6"
+  highlightColor: "#536785A6"
+tHint:
+  size:
+    width: 48
+    height: 48
+  backgroundStyle: hintBackgroundStyle
+  foregroundStyle: tHintLabel
+  swipeUpForegroundStyle: tHintSwipeUpLabel
+tHintLabel:
+  buttonStyleType: text
+  text: T
+  fontSize: 26
+  fontWeight: regular
+  normalColor: "#1A2333"
+  highlightColor: "#1A2333"
+tHintSwipeUpLabel:
+  buttonStyleType: text
+  text: '5'
+  fontSize: 24
+  fontWeight: regular
+  normalColor: "#1A2333"
+  highlightColor: "#1A2333"
+tGridCell0:
+  action:
+    character: T
+  foregroundStyle: tGridCell0Label
+tGridCell0Label:
+  buttonStyleType: text
+  text: T
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+tGridCell1:
+  action:
+    character: '5'
+  foregroundStyle: tGridCell1Label
+tGridCell1Label:
+  buttonStyleType: text
+  text: '5'
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+tGridCell2:
+  action:
+    character: t
+  foregroundStyle: tGridCell2Label
+tGridCell2Label:
+  buttonStyleType: text
+  text: t
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+tGrid:
+  size:
+    width: 36
+    height: 42
+  spacing:
+    horizontal: 3
+    vertical: 3
+  insets:
+    top: 5
+    left: 5
+    bottom: 5
+    right: 5
+  anchor:
+    row: 0
+    col: 1
+  selected:
+    row: 0
+    col: 1
+  offset:
+    x: 0
+    "y": -54
+  moveThreshold: 8
+  backgroundStyle: hintGridBackgroundStyle
+  selectedBackgroundStyle: hintGridSelectedBackgroundStyle
+  symbolRows:
+  - - tGridCell0
+    - tGridCell1
+    - tGridCell2
+yButton:
+  action:
+    character: "y"
+  uppercasedStateAction:
+    character: "Y"
+  swipeUpAction:
+    character: '6'
+  animation:
+  - keyPressScale
+  backgroundStyle: letterKeyBackground
+  foregroundStyle:
+  - yLabel
+  - yBadge
+  uppercasedStateForegroundStyle:
+  - yUpperLabel
+  - yBadge
+  hintStyle: yHint
+  hintSymbolsGridStyle: yGrid
+  size:
+    width: "69/1000"
+yLabel:
+  buttonStyleType: text
+  text: "y"
+  fontSize: 20.5
+  fontWeight: regular
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+yUpperLabel:
+  buttonStyleType: text
+  text: "Y"
+  fontSize: 20.5
+  fontWeight: regular
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+yBadge:
+  buttonStyleType: text
+  text: '6'
+  fontSize: 9.5
+  center:
+    "y": 0.21
+  normalColor: "#536785A6"
+  highlightColor: "#536785A6"
+yHint:
+  size:
+    width: 48
+    height: 48
+  backgroundStyle: hintBackgroundStyle
+  foregroundStyle: yHintLabel
+  swipeUpForegroundStyle: yHintSwipeUpLabel
+yHintLabel:
+  buttonStyleType: text
+  text: "Y"
+  fontSize: 26
+  fontWeight: regular
+  normalColor: "#1A2333"
+  highlightColor: "#1A2333"
+yHintSwipeUpLabel:
+  buttonStyleType: text
+  text: '6'
+  fontSize: 24
+  fontWeight: regular
+  normalColor: "#1A2333"
+  highlightColor: "#1A2333"
+yGridCell0:
+  action:
+    character: "Y"
+  foregroundStyle: yGridCell0Label
+yGridCell0Label:
+  buttonStyleType: text
+  text: "Y"
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+yGridCell1:
+  action:
+    character: '6'
+  foregroundStyle: yGridCell1Label
+yGridCell1Label:
+  buttonStyleType: text
+  text: '6'
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+yGridCell2:
+  action:
+    character: "y"
+  foregroundStyle: yGridCell2Label
+yGridCell2Label:
+  buttonStyleType: text
+  text: "y"
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+yGrid:
+  size:
+    width: 36
+    height: 42
+  spacing:
+    horizontal: 3
+    vertical: 3
+  insets:
+    top: 5
+    left: 5
+    bottom: 5
+    right: 5
+  anchor:
+    row: 0
+    col: 1
+  selected:
+    row: 0
+    col: 1
+  offset:
+    x: 0
+    "y": -54
+  moveThreshold: 8
+  backgroundStyle: hintGridBackgroundStyle
+  selectedBackgroundStyle: hintGridSelectedBackgroundStyle
+  symbolRows:
+  - - yGridCell0
+    - yGridCell1
+    - yGridCell2
+uButton:
+  action:
+    character: u
+  uppercasedStateAction:
+    character: U
+  swipeUpAction:
+    character: '7'
+  animation:
+  - keyPressScale
+  backgroundStyle: letterKeyBackground
+  foregroundStyle:
+  - uLabel
+  - uBadge
+  uppercasedStateForegroundStyle:
+  - uUpperLabel
+  - uBadge
+  hintStyle: uHint
+  hintSymbolsGridStyle: uGrid
+  size:
+    width: "69/1000"
+uLabel:
+  buttonStyleType: text
+  text: u
+  fontSize: 20.5
+  fontWeight: regular
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+uUpperLabel:
+  buttonStyleType: text
+  text: U
+  fontSize: 20.5
+  fontWeight: regular
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+uBadge:
+  buttonStyleType: text
+  text: '7'
+  fontSize: 9.5
+  center:
+    "y": 0.21
+  normalColor: "#536785A6"
+  highlightColor: "#536785A6"
+uHint:
+  size:
+    width: 48
+    height: 48
+  backgroundStyle: hintBackgroundStyle
+  foregroundStyle: uHintLabel
+  swipeUpForegroundStyle: uHintSwipeUpLabel
+uHintLabel:
+  buttonStyleType: text
+  text: U
+  fontSize: 26
+  fontWeight: regular
+  normalColor: "#1A2333"
+  highlightColor: "#1A2333"
+uHintSwipeUpLabel:
+  buttonStyleType: text
+  text: '7'
+  fontSize: 24
+  fontWeight: regular
+  normalColor: "#1A2333"
+  highlightColor: "#1A2333"
+uGridCell0:
+  action:
+    character: U
+  foregroundStyle: uGridCell0Label
+uGridCell0Label:
+  buttonStyleType: text
+  text: U
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+uGridCell1:
+  action:
+    character: '7'
+  foregroundStyle: uGridCell1Label
+uGridCell1Label:
+  buttonStyleType: text
+  text: '7'
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+uGridCell2:
+  action:
+    character: u
+  foregroundStyle: uGridCell2Label
+uGridCell2Label:
+  buttonStyleType: text
+  text: u
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+uGrid:
+  size:
+    width: 36
+    height: 42
+  spacing:
+    horizontal: 3
+    vertical: 3
+  insets:
+    top: 5
+    left: 5
+    bottom: 5
+    right: 5
+  anchor:
+    row: 0
+    col: 1
+  selected:
+    row: 0
+    col: 1
+  offset:
+    x: 0
+    "y": -54
+  moveThreshold: 8
+  backgroundStyle: hintGridBackgroundStyle
+  selectedBackgroundStyle: hintGridSelectedBackgroundStyle
+  symbolRows:
+  - - uGridCell0
+    - uGridCell1
+    - uGridCell2
+iButton:
+  action:
+    character: i
+  uppercasedStateAction:
+    character: I
+  swipeUpAction:
+    character: '8'
+  animation:
+  - keyPressScale
+  backgroundStyle: letterKeyBackground
+  foregroundStyle:
+  - iLabel
+  - iBadge
+  uppercasedStateForegroundStyle:
+  - iUpperLabel
+  - iBadge
+  hintStyle: iHint
+  hintSymbolsGridStyle: iGrid
+  size:
+    width: "69/1000"
+iLabel:
+  buttonStyleType: text
+  text: i
+  fontSize: 20.5
+  fontWeight: regular
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+iUpperLabel:
+  buttonStyleType: text
+  text: I
+  fontSize: 20.5
+  fontWeight: regular
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+iBadge:
+  buttonStyleType: text
+  text: '8'
+  fontSize: 9.5
+  center:
+    "y": 0.21
+  normalColor: "#536785A6"
+  highlightColor: "#536785A6"
+iHint:
+  size:
+    width: 48
+    height: 48
+  backgroundStyle: hintBackgroundStyle
+  foregroundStyle: iHintLabel
+  swipeUpForegroundStyle: iHintSwipeUpLabel
+iHintLabel:
+  buttonStyleType: text
+  text: I
+  fontSize: 26
+  fontWeight: regular
+  normalColor: "#1A2333"
+  highlightColor: "#1A2333"
+iHintSwipeUpLabel:
+  buttonStyleType: text
+  text: '8'
+  fontSize: 24
+  fontWeight: regular
+  normalColor: "#1A2333"
+  highlightColor: "#1A2333"
+iGridCell0:
+  action:
+    character: I
+  foregroundStyle: iGridCell0Label
+iGridCell0Label:
+  buttonStyleType: text
+  text: I
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+iGridCell1:
+  action:
+    character: '8'
+  foregroundStyle: iGridCell1Label
+iGridCell1Label:
+  buttonStyleType: text
+  text: '8'
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+iGridCell2:
+  action:
+    character: i
+  foregroundStyle: iGridCell2Label
+iGridCell2Label:
+  buttonStyleType: text
+  text: i
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+iGrid:
+  size:
+    width: 36
+    height: 42
+  spacing:
+    horizontal: 3
+    vertical: 3
+  insets:
+    top: 5
+    left: 5
+    bottom: 5
+    right: 5
+  anchor:
+    row: 0
+    col: 1
+  selected:
+    row: 0
+    col: 1
+  offset:
+    x: 0
+    "y": -54
+  moveThreshold: 8
+  backgroundStyle: hintGridBackgroundStyle
+  selectedBackgroundStyle: hintGridSelectedBackgroundStyle
+  symbolRows:
+  - - iGridCell0
+    - iGridCell1
+    - iGridCell2
+oButton:
+  action:
+    character: o
+  uppercasedStateAction:
+    character: O
+  swipeUpAction:
+    character: '9'
+  animation:
+  - keyPressScale
+  backgroundStyle: letterKeyBackground
+  foregroundStyle:
+  - oLabel
+  - oBadge
+  uppercasedStateForegroundStyle:
+  - oUpperLabel
+  - oBadge
+  hintStyle: oHint
+  hintSymbolsGridStyle: oGrid
+  size:
+    width: "69/1000"
+oLabel:
+  buttonStyleType: text
+  text: o
+  fontSize: 20.5
+  fontWeight: regular
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+oUpperLabel:
+  buttonStyleType: text
+  text: O
+  fontSize: 20.5
+  fontWeight: regular
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+oBadge:
+  buttonStyleType: text
+  text: '9'
+  fontSize: 9.5
+  center:
+    "y": 0.21
+  normalColor: "#536785A6"
+  highlightColor: "#536785A6"
+oHint:
+  size:
+    width: 48
+    height: 48
+  backgroundStyle: hintBackgroundStyle
+  foregroundStyle: oHintLabel
+  swipeUpForegroundStyle: oHintSwipeUpLabel
+oHintLabel:
+  buttonStyleType: text
+  text: O
+  fontSize: 26
+  fontWeight: regular
+  normalColor: "#1A2333"
+  highlightColor: "#1A2333"
+oHintSwipeUpLabel:
+  buttonStyleType: text
+  text: '9'
+  fontSize: 24
+  fontWeight: regular
+  normalColor: "#1A2333"
+  highlightColor: "#1A2333"
+oGridCell0:
+  action:
+    character: O
+  foregroundStyle: oGridCell0Label
+oGridCell0Label:
+  buttonStyleType: text
+  text: O
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+oGridCell1:
+  action:
+    character: '9'
+  foregroundStyle: oGridCell1Label
+oGridCell1Label:
+  buttonStyleType: text
+  text: '9'
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+oGridCell2:
+  action:
+    character: o
+  foregroundStyle: oGridCell2Label
+oGridCell2Label:
+  buttonStyleType: text
+  text: o
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+oGrid:
+  size:
+    width: 36
+    height: 42
+  spacing:
+    horizontal: 3
+    vertical: 3
+  insets:
+    top: 5
+    left: 5
+    bottom: 5
+    right: 5
+  anchor:
+    row: 0
+    col: 1
+  selected:
+    row: 0
+    col: 1
+  offset:
+    x: 0
+    "y": -54
+  moveThreshold: 8
+  backgroundStyle: hintGridBackgroundStyle
+  selectedBackgroundStyle: hintGridSelectedBackgroundStyle
+  symbolRows:
+  - - oGridCell0
+    - oGridCell1
+    - oGridCell2
+pButton:
+  action:
+    character: p
+  uppercasedStateAction:
+    character: P
+  swipeUpAction:
+    character: '0'
+  animation:
+  - keyPressScale
+  backgroundStyle: letterKeyBackground
+  foregroundStyle:
+  - pLabel
+  - pBadge
+  uppercasedStateForegroundStyle:
+  - pUpperLabel
+  - pBadge
+  hintStyle: pHint
+  hintSymbolsGridStyle: pGrid
+  size:
+    width: "69/1000"
+pLabel:
+  buttonStyleType: text
+  text: p
+  fontSize: 20.5
+  fontWeight: regular
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+pUpperLabel:
+  buttonStyleType: text
+  text: P
+  fontSize: 20.5
+  fontWeight: regular
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+pBadge:
+  buttonStyleType: text
+  text: '0'
+  fontSize: 9.5
+  center:
+    "y": 0.21
+  normalColor: "#536785A6"
+  highlightColor: "#536785A6"
+pHint:
+  size:
+    width: 48
+    height: 48
+  backgroundStyle: hintBackgroundStyle
+  foregroundStyle: pHintLabel
+  swipeUpForegroundStyle: pHintSwipeUpLabel
+pHintLabel:
+  buttonStyleType: text
+  text: P
+  fontSize: 26
+  fontWeight: regular
+  normalColor: "#1A2333"
+  highlightColor: "#1A2333"
+pHintSwipeUpLabel:
+  buttonStyleType: text
+  text: '0'
+  fontSize: 24
+  fontWeight: regular
+  normalColor: "#1A2333"
+  highlightColor: "#1A2333"
+pGridCell0:
+  action:
+    character: P
+  foregroundStyle: pGridCell0Label
+pGridCell0Label:
+  buttonStyleType: text
+  text: P
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+pGridCell1:
+  action:
+    character: '0'
+  foregroundStyle: pGridCell1Label
+pGridCell1Label:
+  buttonStyleType: text
+  text: '0'
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+pGridCell2:
+  action:
+    character: p
+  foregroundStyle: pGridCell2Label
+pGridCell2Label:
+  buttonStyleType: text
+  text: p
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+pGrid:
+  size:
+    width: 36
+    height: 42
+  spacing:
+    horizontal: 3
+    vertical: 3
+  insets:
+    top: 5
+    left: 5
+    bottom: 5
+    right: 5
+  anchor:
+    row: 0
+    col: 1
+  selected:
+    row: 0
+    col: 1
+  offset:
+    x: 0
+    "y": -54
+  moveThreshold: 8
+  backgroundStyle: hintGridBackgroundStyle
+  selectedBackgroundStyle: hintGridSelectedBackgroundStyle
+  symbolRows:
+  - - pGridCell0
+    - pGridCell1
+    - pGridCell2
+bracketLeftButton:
+  action:
+    character: "["
+  animation:
+  - keyPressScale
+  backgroundStyle: letterKeyBackground
+  foregroundStyle:
+  - bracketLeftLabel
+  - bracketLeftBadge
+  swipeUpAction:
+    character: "{"
+  size:
+    width: "69/1000"
+bracketLeftLabel:
+  buttonStyleType: text
+  text: "["
+  fontSize: 18.5
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+bracketLeftBadge:
+  buttonStyleType: text
+  text: "{"
+  fontSize: 9.5
+  center:
+    "y": 0.21
+  normalColor: "#536785A6"
+  highlightColor: "#536785A6"
+bracketRightButton:
+  action:
+    character: "]"
+  animation:
+  - keyPressScale
+  backgroundStyle: letterKeyBackground
+  foregroundStyle:
+  - bracketRightLabel
+  - bracketRightBadge
+  swipeUpAction:
+    character: "}"
+  size:
+    width: "69/1000"
+bracketRightLabel:
+  buttonStyleType: text
+  text: "]"
+  fontSize: 18.5
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+bracketRightBadge:
+  buttonStyleType: text
+  text: "}"
+  fontSize: 9.5
+  center:
+    "y": 0.21
+  normalColor: "#536785A6"
+  highlightColor: "#536785A6"
+ideographicCommaButton:
+  action:
+    character: 、
+  animation:
+  - keyPressScale
+  backgroundStyle: letterKeyBackground
+  foregroundStyle:
+  - ideographicCommaLabel
+  - ideographicCommaBadge
+  swipeUpAction:
+    character: \
+  size:
+    width: "69/1000"
+ideographicCommaLabel:
+  buttonStyleType: text
+  text: 、
+  fontSize: 18.5
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+ideographicCommaBadge:
+  buttonStyleType: text
+  text: \
+  fontSize: 9.5
+  center:
+    "y": 0.21
+  normalColor: "#536785A6"
+  highlightColor: "#536785A6"
+asciiModeButton:
+  size:
+    width: "116/1000"
+  action:
+    shortcut: "#中英切换"
+  preeditStateAction:
+    shortcut: "#次选上屏"
+  animation:
+  - keyPressScale
+  backgroundStyle: functionalKeyBackground
+  foregroundStyle:
+  - conditionKey: rime$ascii_mode
+    conditionValue: true
+    styleName: asciiModeEnLabel
+  - conditionKey: rime$ascii_mode
+    conditionValue: false
+    styleName: asciiModeZhLabel
+  notification:
+  - asciiModeEnNotification
+  - asciiModePreeditNotification
+asciiModeZhLabel:
+  buttonStyleType: text
+  text: 中
+  fontSize: 15.5
+  fontWeight: medium
+  normalColor: "#2B3F5E"
+  highlightColor: "#142238"
+asciiModeEnLabel:
+  buttonStyleType: text
+  text: En
+  fontSize: 15.0
+  fontWeight: medium
+  normalColor: "#2B3F5E"
+  highlightColor: "#142238"
+asciiModeSecondLabel:
+  buttonStyleType: text
+  text: 次
+  fontSize: 15.5
+  fontWeight: medium
+  normalColor: "#2B3F5E"
+  highlightColor: "#142238"
+asciiModeEnNotification:
+  notificationType: rime
+  rimeNotificationType: optionChanged
+  rimeOptionName: ascii_mode
+  rimeOptionValue: true
+  backgroundStyle: functionalKeyBackground
+  foregroundStyle: asciiModeEnLabel
+asciiModePreeditNotification:
+  notificationType: preeditChanged
+  backgroundStyle: functionalKeyBackground
+  foregroundStyle: asciiModeSecondLabel
+aButton:
+  action:
+    character: a
+  uppercasedStateAction:
+    character: A
+  swipeUpAction:
+    character: "`"
+  animation:
+  - keyPressScale
+  backgroundStyle: letterKeyBackground
+  foregroundStyle:
+  - aLabel
+  - aBadge
+  uppercasedStateForegroundStyle:
+  - aUpperLabel
+  - aBadge
+  hintStyle: aHint
+  hintSymbolsGridStyle: aGrid
+  size:
+    width: "69/1000"
+aLabel:
+  buttonStyleType: text
+  text: a
+  fontSize: 20.5
+  fontWeight: regular
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+aUpperLabel:
+  buttonStyleType: text
+  text: A
+  fontSize: 20.5
+  fontWeight: regular
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+aBadge:
+  buttonStyleType: text
+  text: "`"
+  fontSize: 9.5
+  center:
+    "y": 0.21
+  normalColor: "#536785A6"
+  highlightColor: "#536785A6"
+aHint:
+  size:
+    width: 48
+    height: 48
+  backgroundStyle: hintBackgroundStyle
+  foregroundStyle: aHintLabel
+  swipeUpForegroundStyle: aHintSwipeUpLabel
+aHintLabel:
+  buttonStyleType: text
+  text: A
+  fontSize: 26
+  fontWeight: regular
+  normalColor: "#1A2333"
+  highlightColor: "#1A2333"
+aHintSwipeUpLabel:
+  buttonStyleType: text
+  text: "`"
+  fontSize: 24
+  fontWeight: regular
+  normalColor: "#1A2333"
+  highlightColor: "#1A2333"
+aGridCell0:
+  action:
+    character: A
+  foregroundStyle: aGridCell0Label
+aGridCell0Label:
+  buttonStyleType: text
+  text: A
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+aGridCell1:
+  action:
+    character: "`"
+  foregroundStyle: aGridCell1Label
+aGridCell1Label:
+  buttonStyleType: text
+  text: "`"
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+aGridCell2:
+  action:
+    character: a
+  foregroundStyle: aGridCell2Label
+aGridCell2Label:
+  buttonStyleType: text
+  text: a
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+aGrid:
+  size:
+    width: 36
+    height: 42
+  spacing:
+    horizontal: 3
+    vertical: 3
+  insets:
+    top: 5
+    left: 5
+    bottom: 5
+    right: 5
+  anchor:
+    row: 0
+    col: 1
+  selected:
+    row: 0
+    col: 1
+  offset:
+    x: 0
+    "y": -54
+  moveThreshold: 8
+  backgroundStyle: hintGridBackgroundStyle
+  selectedBackgroundStyle: hintGridSelectedBackgroundStyle
+  symbolRows:
+  - - aGridCell0
+    - aGridCell1
+    - aGridCell2
+sButton:
+  action:
+    character: s
+  uppercasedStateAction:
+    character: S
+  swipeUpAction:
+    character: "@"
+  animation:
+  - keyPressScale
+  backgroundStyle: letterKeyBackground
+  foregroundStyle:
+  - sLabel
+  - sBadge
+  uppercasedStateForegroundStyle:
+  - sUpperLabel
+  - sBadge
+  hintStyle: sHint
+  hintSymbolsGridStyle: sGrid
+  size:
+    width: "69/1000"
+sLabel:
+  buttonStyleType: text
+  text: s
+  fontSize: 20.5
+  fontWeight: regular
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+sUpperLabel:
+  buttonStyleType: text
+  text: S
+  fontSize: 20.5
+  fontWeight: regular
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+sBadge:
+  buttonStyleType: text
+  text: "@"
+  fontSize: 9.5
+  center:
+    "y": 0.21
+  normalColor: "#536785A6"
+  highlightColor: "#536785A6"
+sHint:
+  size:
+    width: 48
+    height: 48
+  backgroundStyle: hintBackgroundStyle
+  foregroundStyle: sHintLabel
+  swipeUpForegroundStyle: sHintSwipeUpLabel
+sHintLabel:
+  buttonStyleType: text
+  text: S
+  fontSize: 26
+  fontWeight: regular
+  normalColor: "#1A2333"
+  highlightColor: "#1A2333"
+sHintSwipeUpLabel:
+  buttonStyleType: text
+  text: "@"
+  fontSize: 24
+  fontWeight: regular
+  normalColor: "#1A2333"
+  highlightColor: "#1A2333"
+sGridCell0:
+  action:
+    character: S
+  foregroundStyle: sGridCell0Label
+sGridCell0Label:
+  buttonStyleType: text
+  text: S
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+sGridCell1:
+  action:
+    character: "@"
+  foregroundStyle: sGridCell1Label
+sGridCell1Label:
+  buttonStyleType: text
+  text: "@"
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+sGridCell2:
+  action:
+    character: s
+  foregroundStyle: sGridCell2Label
+sGridCell2Label:
+  buttonStyleType: text
+  text: s
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+sGrid:
+  size:
+    width: 36
+    height: 42
+  spacing:
+    horizontal: 3
+    vertical: 3
+  insets:
+    top: 5
+    left: 5
+    bottom: 5
+    right: 5
+  anchor:
+    row: 0
+    col: 1
+  selected:
+    row: 0
+    col: 1
+  offset:
+    x: 0
+    "y": -54
+  moveThreshold: 8
+  backgroundStyle: hintGridBackgroundStyle
+  selectedBackgroundStyle: hintGridSelectedBackgroundStyle
+  symbolRows:
+  - - sGridCell0
+    - sGridCell1
+    - sGridCell2
+dButton:
+  action:
+    character: d
+  uppercasedStateAction:
+    character: D
+  swipeUpAction:
+    character: ":"
+  animation:
+  - keyPressScale
+  backgroundStyle: letterKeyBackground
+  foregroundStyle:
+  - dLabel
+  - dBadge
+  uppercasedStateForegroundStyle:
+  - dUpperLabel
+  - dBadge
+  hintStyle: dHint
+  hintSymbolsGridStyle: dGrid
+  size:
+    width: "69/1000"
+dLabel:
+  buttonStyleType: text
+  text: d
+  fontSize: 20.5
+  fontWeight: regular
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+dUpperLabel:
+  buttonStyleType: text
+  text: D
+  fontSize: 20.5
+  fontWeight: regular
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+dBadge:
+  buttonStyleType: text
+  text: ":"
+  fontSize: 9.5
+  center:
+    "y": 0.21
+  normalColor: "#536785A6"
+  highlightColor: "#536785A6"
+dHint:
+  size:
+    width: 48
+    height: 48
+  backgroundStyle: hintBackgroundStyle
+  foregroundStyle: dHintLabel
+  swipeUpForegroundStyle: dHintSwipeUpLabel
+dHintLabel:
+  buttonStyleType: text
+  text: D
+  fontSize: 26
+  fontWeight: regular
+  normalColor: "#1A2333"
+  highlightColor: "#1A2333"
+dHintSwipeUpLabel:
+  buttonStyleType: text
+  text: ":"
+  fontSize: 24
+  fontWeight: regular
+  normalColor: "#1A2333"
+  highlightColor: "#1A2333"
+dGridCell0:
+  action:
+    character: D
+  foregroundStyle: dGridCell0Label
+dGridCell0Label:
+  buttonStyleType: text
+  text: D
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+dGridCell1:
+  action:
+    character: ":"
+  foregroundStyle: dGridCell1Label
+dGridCell1Label:
+  buttonStyleType: text
+  text: ":"
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+dGridCell2:
+  action:
+    character: d
+  foregroundStyle: dGridCell2Label
+dGridCell2Label:
+  buttonStyleType: text
+  text: d
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+dGrid:
+  size:
+    width: 36
+    height: 42
+  spacing:
+    horizontal: 3
+    vertical: 3
+  insets:
+    top: 5
+    left: 5
+    bottom: 5
+    right: 5
+  anchor:
+    row: 0
+    col: 1
+  selected:
+    row: 0
+    col: 1
+  offset:
+    x: 0
+    "y": -54
+  moveThreshold: 8
+  backgroundStyle: hintGridBackgroundStyle
+  selectedBackgroundStyle: hintGridSelectedBackgroundStyle
+  symbolRows:
+  - - dGridCell0
+    - dGridCell1
+    - dGridCell2
+fButton:
+  action:
+    character: f
+  uppercasedStateAction:
+    character: F
+  swipeUpAction:
+    character: ;
+  animation:
+  - keyPressScale
+  backgroundStyle: letterKeyBackground
+  foregroundStyle:
+  - fLabel
+  - fBadge
+  uppercasedStateForegroundStyle:
+  - fUpperLabel
+  - fBadge
+  hintStyle: fHint
+  hintSymbolsGridStyle: fGrid
+  size:
+    width: "69/1000"
+fLabel:
+  buttonStyleType: text
+  text: f
+  fontSize: 20.5
+  fontWeight: regular
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+fUpperLabel:
+  buttonStyleType: text
+  text: F
+  fontSize: 20.5
+  fontWeight: regular
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+fBadge:
+  buttonStyleType: text
+  text: ;
+  fontSize: 9.5
+  center:
+    "y": 0.21
+  normalColor: "#536785A6"
+  highlightColor: "#536785A6"
+fHint:
+  size:
+    width: 48
+    height: 48
+  backgroundStyle: hintBackgroundStyle
+  foregroundStyle: fHintLabel
+  swipeUpForegroundStyle: fHintSwipeUpLabel
+fHintLabel:
+  buttonStyleType: text
+  text: F
+  fontSize: 26
+  fontWeight: regular
+  normalColor: "#1A2333"
+  highlightColor: "#1A2333"
+fHintSwipeUpLabel:
+  buttonStyleType: text
+  text: ;
+  fontSize: 24
+  fontWeight: regular
+  normalColor: "#1A2333"
+  highlightColor: "#1A2333"
+fGridCell0:
+  action:
+    character: F
+  foregroundStyle: fGridCell0Label
+fGridCell0Label:
+  buttonStyleType: text
+  text: F
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+fGridCell1:
+  action:
+    character: ;
+  foregroundStyle: fGridCell1Label
+fGridCell1Label:
+  buttonStyleType: text
+  text: ;
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+fGridCell2:
+  action:
+    character: f
+  foregroundStyle: fGridCell2Label
+fGridCell2Label:
+  buttonStyleType: text
+  text: f
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+fGrid:
+  size:
+    width: 36
+    height: 42
+  spacing:
+    horizontal: 3
+    vertical: 3
+  insets:
+    top: 5
+    left: 5
+    bottom: 5
+    right: 5
+  anchor:
+    row: 0
+    col: 1
+  selected:
+    row: 0
+    col: 1
+  offset:
+    x: 0
+    "y": -54
+  moveThreshold: 8
+  backgroundStyle: hintGridBackgroundStyle
+  selectedBackgroundStyle: hintGridSelectedBackgroundStyle
+  symbolRows:
+  - - fGridCell0
+    - fGridCell1
+    - fGridCell2
+gButton:
+  action:
+    character: g
+  uppercasedStateAction:
+    character: G
+  swipeUpAction:
+    character: (
+  animation:
+  - keyPressScale
+  backgroundStyle: letterKeyBackground
+  foregroundStyle:
+  - gLabel
+  - gBadge
+  uppercasedStateForegroundStyle:
+  - gUpperLabel
+  - gBadge
+  hintStyle: gHint
+  hintSymbolsGridStyle: gGrid
+  size:
+    width: "69/1000"
+gLabel:
+  buttonStyleType: text
+  text: g
+  fontSize: 20.5
+  fontWeight: regular
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+gUpperLabel:
+  buttonStyleType: text
+  text: G
+  fontSize: 20.5
+  fontWeight: regular
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+gBadge:
+  buttonStyleType: text
+  text: (
+  fontSize: 9.5
+  center:
+    "y": 0.21
+  normalColor: "#536785A6"
+  highlightColor: "#536785A6"
+gHint:
+  size:
+    width: 48
+    height: 48
+  backgroundStyle: hintBackgroundStyle
+  foregroundStyle: gHintLabel
+  swipeUpForegroundStyle: gHintSwipeUpLabel
+gHintLabel:
+  buttonStyleType: text
+  text: G
+  fontSize: 26
+  fontWeight: regular
+  normalColor: "#1A2333"
+  highlightColor: "#1A2333"
+gHintSwipeUpLabel:
+  buttonStyleType: text
+  text: (
+  fontSize: 24
+  fontWeight: regular
+  normalColor: "#1A2333"
+  highlightColor: "#1A2333"
+gGridCell0:
+  action:
+    character: G
+  foregroundStyle: gGridCell0Label
+gGridCell0Label:
+  buttonStyleType: text
+  text: G
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+gGridCell1:
+  action:
+    character: (
+  foregroundStyle: gGridCell1Label
+gGridCell1Label:
+  buttonStyleType: text
+  text: (
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+gGridCell2:
+  action:
+    character: g
+  foregroundStyle: gGridCell2Label
+gGridCell2Label:
+  buttonStyleType: text
+  text: g
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+gGrid:
+  size:
+    width: 36
+    height: 42
+  spacing:
+    horizontal: 3
+    vertical: 3
+  insets:
+    top: 5
+    left: 5
+    bottom: 5
+    right: 5
+  anchor:
+    row: 0
+    col: 1
+  selected:
+    row: 0
+    col: 1
+  offset:
+    x: 0
+    "y": -54
+  moveThreshold: 8
+  backgroundStyle: hintGridBackgroundStyle
+  selectedBackgroundStyle: hintGridSelectedBackgroundStyle
+  symbolRows:
+  - - gGridCell0
+    - gGridCell1
+    - gGridCell2
+hButton:
+  action:
+    character: h
+  uppercasedStateAction:
+    character: H
+  swipeUpAction:
+    character: )
+  animation:
+  - keyPressScale
+  backgroundStyle: letterKeyBackground
+  foregroundStyle:
+  - hLabel
+  - hBadge
+  uppercasedStateForegroundStyle:
+  - hUpperLabel
+  - hBadge
+  hintStyle: hHint
+  hintSymbolsGridStyle: hGrid
+  size:
+    width: "69/1000"
+hLabel:
+  buttonStyleType: text
+  text: h
+  fontSize: 20.5
+  fontWeight: regular
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+hUpperLabel:
+  buttonStyleType: text
+  text: H
+  fontSize: 20.5
+  fontWeight: regular
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+hBadge:
+  buttonStyleType: text
+  text: )
+  fontSize: 9.5
+  center:
+    "y": 0.21
+  normalColor: "#536785A6"
+  highlightColor: "#536785A6"
+hHint:
+  size:
+    width: 48
+    height: 48
+  backgroundStyle: hintBackgroundStyle
+  foregroundStyle: hHintLabel
+  swipeUpForegroundStyle: hHintSwipeUpLabel
+hHintLabel:
+  buttonStyleType: text
+  text: H
+  fontSize: 26
+  fontWeight: regular
+  normalColor: "#1A2333"
+  highlightColor: "#1A2333"
+hHintSwipeUpLabel:
+  buttonStyleType: text
+  text: )
+  fontSize: 24
+  fontWeight: regular
+  normalColor: "#1A2333"
+  highlightColor: "#1A2333"
+hGridCell0:
+  action:
+    character: H
+  foregroundStyle: hGridCell0Label
+hGridCell0Label:
+  buttonStyleType: text
+  text: H
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+hGridCell1:
+  action:
+    character: )
+  foregroundStyle: hGridCell1Label
+hGridCell1Label:
+  buttonStyleType: text
+  text: )
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+hGridCell2:
+  action:
+    character: h
+  foregroundStyle: hGridCell2Label
+hGridCell2Label:
+  buttonStyleType: text
+  text: h
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+hGrid:
+  size:
+    width: 36
+    height: 42
+  spacing:
+    horizontal: 3
+    vertical: 3
+  insets:
+    top: 5
+    left: 5
+    bottom: 5
+    right: 5
+  anchor:
+    row: 0
+    col: 1
+  selected:
+    row: 0
+    col: 1
+  offset:
+    x: 0
+    "y": -54
+  moveThreshold: 8
+  backgroundStyle: hintGridBackgroundStyle
+  selectedBackgroundStyle: hintGridSelectedBackgroundStyle
+  symbolRows:
+  - - hGridCell0
+    - hGridCell1
+    - hGridCell2
+jButton:
+  action:
+    character: j
+  uppercasedStateAction:
+    character: J
+  swipeUpAction:
+    character: "~"
+  animation:
+  - keyPressScale
+  backgroundStyle: letterKeyBackground
+  foregroundStyle:
+  - jLabel
+  - jBadge
+  uppercasedStateForegroundStyle:
+  - jUpperLabel
+  - jBadge
+  hintStyle: jHint
+  hintSymbolsGridStyle: jGrid
+  size:
+    width: "69/1000"
+jLabel:
+  buttonStyleType: text
+  text: j
+  fontSize: 20.5
+  fontWeight: regular
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+jUpperLabel:
+  buttonStyleType: text
+  text: J
+  fontSize: 20.5
+  fontWeight: regular
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+jBadge:
+  buttonStyleType: text
+  text: "~"
+  fontSize: 9.5
+  center:
+    "y": 0.21
+  normalColor: "#536785A6"
+  highlightColor: "#536785A6"
+jHint:
+  size:
+    width: 48
+    height: 48
+  backgroundStyle: hintBackgroundStyle
+  foregroundStyle: jHintLabel
+  swipeUpForegroundStyle: jHintSwipeUpLabel
+jHintLabel:
+  buttonStyleType: text
+  text: J
+  fontSize: 26
+  fontWeight: regular
+  normalColor: "#1A2333"
+  highlightColor: "#1A2333"
+jHintSwipeUpLabel:
+  buttonStyleType: text
+  text: "~"
+  fontSize: 24
+  fontWeight: regular
+  normalColor: "#1A2333"
+  highlightColor: "#1A2333"
+jGridCell0:
+  action:
+    character: J
+  foregroundStyle: jGridCell0Label
+jGridCell0Label:
+  buttonStyleType: text
+  text: J
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+jGridCell1:
+  action:
+    character: "~"
+  foregroundStyle: jGridCell1Label
+jGridCell1Label:
+  buttonStyleType: text
+  text: "~"
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+jGridCell2:
+  action:
+    character: j
+  foregroundStyle: jGridCell2Label
+jGridCell2Label:
+  buttonStyleType: text
+  text: j
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+jGrid:
+  size:
+    width: 36
+    height: 42
+  spacing:
+    horizontal: 3
+    vertical: 3
+  insets:
+    top: 5
+    left: 5
+    bottom: 5
+    right: 5
+  anchor:
+    row: 0
+    col: 1
+  selected:
+    row: 0
+    col: 1
+  offset:
+    x: 0
+    "y": -54
+  moveThreshold: 8
+  backgroundStyle: hintGridBackgroundStyle
+  selectedBackgroundStyle: hintGridSelectedBackgroundStyle
+  symbolRows:
+  - - jGridCell0
+    - jGridCell1
+    - jGridCell2
+kButton:
+  action:
+    character: k
+  uppercasedStateAction:
+    character: K
+  swipeUpAction:
+    character: “
+  animation:
+  - keyPressScale
+  backgroundStyle: letterKeyBackground
+  foregroundStyle:
+  - kLabel
+  - kBadge
+  uppercasedStateForegroundStyle:
+  - kUpperLabel
+  - kBadge
+  hintStyle: kHint
+  hintSymbolsGridStyle: kGrid
+  size:
+    width: "69/1000"
+kLabel:
+  buttonStyleType: text
+  text: k
+  fontSize: 20.5
+  fontWeight: regular
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+kUpperLabel:
+  buttonStyleType: text
+  text: K
+  fontSize: 20.5
+  fontWeight: regular
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+kBadge:
+  buttonStyleType: text
+  text: “
+  fontSize: 9.5
+  center:
+    "y": 0.21
+  normalColor: "#536785A6"
+  highlightColor: "#536785A6"
+kHint:
+  size:
+    width: 48
+    height: 48
+  backgroundStyle: hintBackgroundStyle
+  foregroundStyle: kHintLabel
+  swipeUpForegroundStyle: kHintSwipeUpLabel
+kHintLabel:
+  buttonStyleType: text
+  text: K
+  fontSize: 26
+  fontWeight: regular
+  normalColor: "#1A2333"
+  highlightColor: "#1A2333"
+kHintSwipeUpLabel:
+  buttonStyleType: text
+  text: “
+  fontSize: 24
+  fontWeight: regular
+  normalColor: "#1A2333"
+  highlightColor: "#1A2333"
+kGridCell0:
+  action:
+    character: K
+  foregroundStyle: kGridCell0Label
+kGridCell0Label:
+  buttonStyleType: text
+  text: K
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+kGridCell1:
+  action:
+    character: “
+  foregroundStyle: kGridCell1Label
+kGridCell1Label:
+  buttonStyleType: text
+  text: “
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+kGridCell2:
+  action:
+    character: k
+  foregroundStyle: kGridCell2Label
+kGridCell2Label:
+  buttonStyleType: text
+  text: k
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+kGrid:
+  size:
+    width: 36
+    height: 42
+  spacing:
+    horizontal: 3
+    vertical: 3
+  insets:
+    top: 5
+    left: 5
+    bottom: 5
+    right: 5
+  anchor:
+    row: 0
+    col: 1
+  selected:
+    row: 0
+    col: 1
+  offset:
+    x: 0
+    "y": -54
+  moveThreshold: 8
+  backgroundStyle: hintGridBackgroundStyle
+  selectedBackgroundStyle: hintGridSelectedBackgroundStyle
+  symbolRows:
+  - - kGridCell0
+    - kGridCell1
+    - kGridCell2
+lButton:
+  action:
+    character: l
+  uppercasedStateAction:
+    character: L
+  swipeUpAction:
+    character: ”
+  animation:
+  - keyPressScale
+  backgroundStyle: letterKeyBackground
+  foregroundStyle:
+  - lLabel
+  - lBadge
+  uppercasedStateForegroundStyle:
+  - lUpperLabel
+  - lBadge
+  hintStyle: lHint
+  hintSymbolsGridStyle: lGrid
+  size:
+    width: "69/1000"
+lLabel:
+  buttonStyleType: text
+  text: l
+  fontSize: 20.5
+  fontWeight: regular
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+lUpperLabel:
+  buttonStyleType: text
+  text: L
+  fontSize: 20.5
+  fontWeight: regular
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+lBadge:
+  buttonStyleType: text
+  text: ”
+  fontSize: 9.5
+  center:
+    "y": 0.21
+  normalColor: "#536785A6"
+  highlightColor: "#536785A6"
+lHint:
+  size:
+    width: 48
+    height: 48
+  backgroundStyle: hintBackgroundStyle
+  foregroundStyle: lHintLabel
+  swipeUpForegroundStyle: lHintSwipeUpLabel
+lHintLabel:
+  buttonStyleType: text
+  text: L
+  fontSize: 26
+  fontWeight: regular
+  normalColor: "#1A2333"
+  highlightColor: "#1A2333"
+lHintSwipeUpLabel:
+  buttonStyleType: text
+  text: ”
+  fontSize: 24
+  fontWeight: regular
+  normalColor: "#1A2333"
+  highlightColor: "#1A2333"
+lGridCell0:
+  action:
+    character: L
+  foregroundStyle: lGridCell0Label
+lGridCell0Label:
+  buttonStyleType: text
+  text: L
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+lGridCell1:
+  action:
+    character: ”
+  foregroundStyle: lGridCell1Label
+lGridCell1Label:
+  buttonStyleType: text
+  text: ”
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+lGridCell2:
+  action:
+    character: l
+  foregroundStyle: lGridCell2Label
+lGridCell2Label:
+  buttonStyleType: text
+  text: l
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+lGrid:
+  size:
+    width: 36
+    height: 42
+  spacing:
+    horizontal: 3
+    vertical: 3
+  insets:
+    top: 5
+    left: 5
+    bottom: 5
+    right: 5
+  anchor:
+    row: 0
+    col: 1
+  selected:
+    row: 0
+    col: 1
+  offset:
+    x: 0
+    "y": -54
+  moveThreshold: 8
+  backgroundStyle: hintGridBackgroundStyle
+  selectedBackgroundStyle: hintGridSelectedBackgroundStyle
+  symbolRows:
+  - - lGridCell0
+    - lGridCell1
+    - lGridCell2
+semicolonButton:
+  action:
+    character: ;
+  animation:
+  - keyPressScale
+  backgroundStyle: letterKeyBackground
+  foregroundStyle:
+  - semicolonLabel
+  - semicolonBadge
+  swipeUpAction:
+    character: ":"
+  size:
+    width: "69/1000"
+semicolonLabel:
+  buttonStyleType: text
+  text: ;
+  fontSize: 18.5
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+semicolonBadge:
+  buttonStyleType: text
+  text: ":"
+  fontSize: 9.5
+  center:
+    "y": 0.21
+  normalColor: "#536785A6"
+  highlightColor: "#536785A6"
+quoteButton:
+  action:
+    character: "'"
+  animation:
+  - keyPressScale
+  backgroundStyle: letterKeyBackground
+  foregroundStyle:
+  - quoteLabel
+  - quoteBadge
+  swipeUpAction:
+    character: "\""
+  size:
+    width: "69/1000"
+quoteLabel:
+  buttonStyleType: text
+  text: "'"
+  fontSize: 18.5
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+quoteBadge:
+  buttonStyleType: text
+  text: "\""
+  fontSize: 9.5
+  center:
+    "y": 0.21
+  normalColor: "#536785A6"
+  highlightColor: "#536785A6"
+enterButton:
+  action: enter
+  swipeUpAction:
+    symbol: "\r\n"
+  animation:
+  - keyPressScale
+  backgroundStyle:
+  - conditionKey: "$returnKeyType"
+    conditionValue:
+    - 0
+    - 2
+    - 3
+    - 5
+    - 6
+    - 8
+    - 11
+    styleName: enterKeyBackground
+  - conditionKey: "$returnKeyType"
+    conditionValue:
+    - 1
+    - 4
+    - 7
+    - 9
+    - 10
+    styleName: enterAccentKeyBackground
+  foregroundStyle:
+  - conditionKey: "$returnKeyType"
+    conditionValue:
+    - 0
+    - 2
+    - 3
+    - 5
+    - 6
+    - 8
+    - 11
+    styleName: enterButtonLabel
+  - conditionKey: "$returnKeyType"
+    conditionValue:
+    - 1
+    - 4
+    - 7
+    - 9
+    - 10
+    styleName: enterButtonAccentLabel
+  notification:
+  - enterReturnKeyTypeNotification
+  size:
+    width: "125/1000"
+enterButtonLabel:
+  buttonStyleType: text
+  text: "$returnKeyType"
+  fontSize: 15.5
+  fontWeight: medium
+  normalColor: "#1B4B78"
+  highlightColor: "#0F3254"
+enterButtonAccentLabel:
+  buttonStyleType: text
+  text: "$returnKeyType"
+  fontSize: 15.5
+  fontWeight: semibold
+  normalColor: "#FFFFFF"
+  highlightColor: "#FFFFFF"
+enterReturnKeyTypeNotification:
+  notificationType: returnKeyType
+  returnKeyType:
+  - 1
+  - 4
+  - 7
+  - 9
+  - 10
+  backgroundStyle: enterAccentKeyBackground
+  foregroundStyle: enterButtonAccentLabel
+leftShiftButton:
+  size:
+    width: "155/1000"
+  action: shift
+  animation:
+  - keyPressScale
+  backgroundStyle: functionalKeyBackground
+  foregroundStyle: shiftIcon
+  uppercasedStateForegroundStyle: shiftUpperIcon
+  capsLockedStateForegroundStyle: shiftCapsIcon
+rightShiftButton:
+  size:
+    width: "155/1000"
+  action: shift
+  animation:
+  - keyPressScale
+  backgroundStyle: functionalKeyBackground
+  foregroundStyle: shiftIcon
+  uppercasedStateForegroundStyle: shiftUpperIcon
+  capsLockedStateForegroundStyle: shiftCapsIcon
+shiftIcon:
+  buttonStyleType: systemImage
+  systemImageName: shift
+  fontSize: 19
+  normalColor: "#2B3F5E"
+  highlightColor: "#142238"
+shiftUpperIcon:
+  buttonStyleType: systemImage
+  systemImageName: shift.fill
+  fontSize: 19
+  normalColor: "#2364A6"
+  highlightColor: "#142238"
+shiftCapsIcon:
+  buttonStyleType: systemImage
+  systemImageName: capslock.fill
+  fontSize: 19
+  normalColor: "#2364A6"
+  highlightColor: "#142238"
+zButton:
+  action:
+    character: z
+  uppercasedStateAction:
+    character: Z
+  swipeUpAction:
+    character: "!"
+  animation:
+  - keyPressScale
+  backgroundStyle: letterKeyBackground
+  foregroundStyle:
+  - zLabel
+  - zBadge
+  uppercasedStateForegroundStyle:
+  - zUpperLabel
+  - zBadge
+  hintStyle: zHint
+  hintSymbolsGridStyle: zGrid
+  size:
+    width: "69/1000"
+zLabel:
+  buttonStyleType: text
+  text: z
+  fontSize: 20.5
+  fontWeight: regular
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+zUpperLabel:
+  buttonStyleType: text
+  text: Z
+  fontSize: 20.5
+  fontWeight: regular
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+zBadge:
+  buttonStyleType: text
+  text: "!"
+  fontSize: 9.5
+  center:
+    "y": 0.21
+  normalColor: "#536785A6"
+  highlightColor: "#536785A6"
+zHint:
+  size:
+    width: 48
+    height: 48
+  backgroundStyle: hintBackgroundStyle
+  foregroundStyle: zHintLabel
+  swipeUpForegroundStyle: zHintSwipeUpLabel
+zHintLabel:
+  buttonStyleType: text
+  text: Z
+  fontSize: 26
+  fontWeight: regular
+  normalColor: "#1A2333"
+  highlightColor: "#1A2333"
+zHintSwipeUpLabel:
+  buttonStyleType: text
+  text: "!"
+  fontSize: 24
+  fontWeight: regular
+  normalColor: "#1A2333"
+  highlightColor: "#1A2333"
+zGridCell0:
+  action:
+    character: Z
+  foregroundStyle: zGridCell0Label
+zGridCell0Label:
+  buttonStyleType: text
+  text: Z
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+zGridCell1:
+  action:
+    character: "!"
+  foregroundStyle: zGridCell1Label
+zGridCell1Label:
+  buttonStyleType: text
+  text: "!"
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+zGridCell2:
+  action:
+    character: z
+  foregroundStyle: zGridCell2Label
+zGridCell2Label:
+  buttonStyleType: text
+  text: z
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+zGrid:
+  size:
+    width: 36
+    height: 42
+  spacing:
+    horizontal: 3
+    vertical: 3
+  insets:
+    top: 5
+    left: 5
+    bottom: 5
+    right: 5
+  anchor:
+    row: 0
+    col: 1
+  selected:
+    row: 0
+    col: 1
+  offset:
+    x: 0
+    "y": -54
+  moveThreshold: 8
+  backgroundStyle: hintGridBackgroundStyle
+  selectedBackgroundStyle: hintGridSelectedBackgroundStyle
+  symbolRows:
+  - - zGridCell0
+    - zGridCell1
+    - zGridCell2
+xButton:
+  action:
+    character: x
+  uppercasedStateAction:
+    character: X
+  swipeUpAction:
+    character: "-"
+  animation:
+  - keyPressScale
+  backgroundStyle: letterKeyBackground
+  foregroundStyle:
+  - xLabel
+  - xBadge
+  uppercasedStateForegroundStyle:
+  - xUpperLabel
+  - xBadge
+  hintStyle: xHint
+  hintSymbolsGridStyle: xGrid
+  size:
+    width: "69/1000"
+xLabel:
+  buttonStyleType: text
+  text: x
+  fontSize: 20.5
+  fontWeight: regular
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+xUpperLabel:
+  buttonStyleType: text
+  text: X
+  fontSize: 20.5
+  fontWeight: regular
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+xBadge:
+  buttonStyleType: text
+  text: "-"
+  fontSize: 9.5
+  center:
+    "y": 0.21
+  normalColor: "#536785A6"
+  highlightColor: "#536785A6"
+xHint:
+  size:
+    width: 48
+    height: 48
+  backgroundStyle: hintBackgroundStyle
+  foregroundStyle: xHintLabel
+  swipeUpForegroundStyle: xHintSwipeUpLabel
+xHintLabel:
+  buttonStyleType: text
+  text: X
+  fontSize: 26
+  fontWeight: regular
+  normalColor: "#1A2333"
+  highlightColor: "#1A2333"
+xHintSwipeUpLabel:
+  buttonStyleType: text
+  text: "-"
+  fontSize: 24
+  fontWeight: regular
+  normalColor: "#1A2333"
+  highlightColor: "#1A2333"
+xGridCell0:
+  action:
+    character: X
+  foregroundStyle: xGridCell0Label
+xGridCell0Label:
+  buttonStyleType: text
+  text: X
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+xGridCell1:
+  action:
+    character: "-"
+  foregroundStyle: xGridCell1Label
+xGridCell1Label:
+  buttonStyleType: text
+  text: "-"
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+xGridCell2:
+  action:
+    character: x
+  foregroundStyle: xGridCell2Label
+xGridCell2Label:
+  buttonStyleType: text
+  text: x
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+xGrid:
+  size:
+    width: 36
+    height: 42
+  spacing:
+    horizontal: 3
+    vertical: 3
+  insets:
+    top: 5
+    left: 5
+    bottom: 5
+    right: 5
+  anchor:
+    row: 0
+    col: 1
+  selected:
+    row: 0
+    col: 1
+  offset:
+    x: 0
+    "y": -54
+  moveThreshold: 8
+  backgroundStyle: hintGridBackgroundStyle
+  selectedBackgroundStyle: hintGridSelectedBackgroundStyle
+  symbolRows:
+  - - xGridCell0
+    - xGridCell1
+    - xGridCell2
+cButton:
+  action:
+    character: c
+  uppercasedStateAction:
+    character: C
+  swipeUpAction:
+    character: "#"
+  animation:
+  - keyPressScale
+  backgroundStyle: letterKeyBackground
+  foregroundStyle:
+  - cLabel
+  - cBadge
+  uppercasedStateForegroundStyle:
+  - cUpperLabel
+  - cBadge
+  hintStyle: cHint
+  hintSymbolsGridStyle: cGrid
+  size:
+    width: "69/1000"
+cLabel:
+  buttonStyleType: text
+  text: c
+  fontSize: 20.5
+  fontWeight: regular
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+cUpperLabel:
+  buttonStyleType: text
+  text: C
+  fontSize: 20.5
+  fontWeight: regular
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+cBadge:
+  buttonStyleType: text
+  text: "#"
+  fontSize: 9.5
+  center:
+    "y": 0.21
+  normalColor: "#536785A6"
+  highlightColor: "#536785A6"
+cHint:
+  size:
+    width: 48
+    height: 48
+  backgroundStyle: hintBackgroundStyle
+  foregroundStyle: cHintLabel
+  swipeUpForegroundStyle: cHintSwipeUpLabel
+cHintLabel:
+  buttonStyleType: text
+  text: C
+  fontSize: 26
+  fontWeight: regular
+  normalColor: "#1A2333"
+  highlightColor: "#1A2333"
+cHintSwipeUpLabel:
+  buttonStyleType: text
+  text: "#"
+  fontSize: 24
+  fontWeight: regular
+  normalColor: "#1A2333"
+  highlightColor: "#1A2333"
+cGridCell0:
+  action:
+    character: C
+  foregroundStyle: cGridCell0Label
+cGridCell0Label:
+  buttonStyleType: text
+  text: C
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+cGridCell1:
+  action:
+    character: "#"
+  foregroundStyle: cGridCell1Label
+cGridCell1Label:
+  buttonStyleType: text
+  text: "#"
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+cGridCell2:
+  action:
+    character: c
+  foregroundStyle: cGridCell2Label
+cGridCell2Label:
+  buttonStyleType: text
+  text: c
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+cGrid:
+  size:
+    width: 36
+    height: 42
+  spacing:
+    horizontal: 3
+    vertical: 3
+  insets:
+    top: 5
+    left: 5
+    bottom: 5
+    right: 5
+  anchor:
+    row: 0
+    col: 1
+  selected:
+    row: 0
+    col: 1
+  offset:
+    x: 0
+    "y": -54
+  moveThreshold: 8
+  backgroundStyle: hintGridBackgroundStyle
+  selectedBackgroundStyle: hintGridSelectedBackgroundStyle
+  symbolRows:
+  - - cGridCell0
+    - cGridCell1
+    - cGridCell2
+vButton:
+  action:
+    character: v
+  uppercasedStateAction:
+    character: V
+  swipeUpAction:
+    character: "/"
+  animation:
+  - keyPressScale
+  backgroundStyle: letterKeyBackground
+  foregroundStyle:
+  - vLabel
+  - vBadge
+  uppercasedStateForegroundStyle:
+  - vUpperLabel
+  - vBadge
+  hintStyle: vHint
+  hintSymbolsGridStyle: vGrid
+  size:
+    width: "69/1000"
+vLabel:
+  buttonStyleType: text
+  text: v
+  fontSize: 20.5
+  fontWeight: regular
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+vUpperLabel:
+  buttonStyleType: text
+  text: V
+  fontSize: 20.5
+  fontWeight: regular
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+vBadge:
+  buttonStyleType: text
+  text: "/"
+  fontSize: 9.5
+  center:
+    "y": 0.21
+  normalColor: "#536785A6"
+  highlightColor: "#536785A6"
+vHint:
+  size:
+    width: 48
+    height: 48
+  backgroundStyle: hintBackgroundStyle
+  foregroundStyle: vHintLabel
+  swipeUpForegroundStyle: vHintSwipeUpLabel
+vHintLabel:
+  buttonStyleType: text
+  text: V
+  fontSize: 26
+  fontWeight: regular
+  normalColor: "#1A2333"
+  highlightColor: "#1A2333"
+vHintSwipeUpLabel:
+  buttonStyleType: text
+  text: "/"
+  fontSize: 24
+  fontWeight: regular
+  normalColor: "#1A2333"
+  highlightColor: "#1A2333"
+vGridCell0:
+  action:
+    character: V
+  foregroundStyle: vGridCell0Label
+vGridCell0Label:
+  buttonStyleType: text
+  text: V
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+vGridCell1:
+  action:
+    character: "/"
+  foregroundStyle: vGridCell1Label
+vGridCell1Label:
+  buttonStyleType: text
+  text: "/"
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+vGridCell2:
+  action:
+    character: v
+  foregroundStyle: vGridCell2Label
+vGridCell2Label:
+  buttonStyleType: text
+  text: v
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+vGrid:
+  size:
+    width: 36
+    height: 42
+  spacing:
+    horizontal: 3
+    vertical: 3
+  insets:
+    top: 5
+    left: 5
+    bottom: 5
+    right: 5
+  anchor:
+    row: 0
+    col: 1
+  selected:
+    row: 0
+    col: 1
+  offset:
+    x: 0
+    "y": -54
+  moveThreshold: 8
+  backgroundStyle: hintGridBackgroundStyle
+  selectedBackgroundStyle: hintGridSelectedBackgroundStyle
+  symbolRows:
+  - - vGridCell0
+    - vGridCell1
+    - vGridCell2
+bButton:
+  action:
+    character: b
+  uppercasedStateAction:
+    character: B
+  swipeUpAction:
+    character: "?"
+  animation:
+  - keyPressScale
+  backgroundStyle: letterKeyBackground
+  foregroundStyle:
+  - bLabel
+  - bBadge
+  uppercasedStateForegroundStyle:
+  - bUpperLabel
+  - bBadge
+  hintStyle: bHint
+  hintSymbolsGridStyle: bGrid
+  size:
+    width: "69/1000"
+bLabel:
+  buttonStyleType: text
+  text: b
+  fontSize: 20.5
+  fontWeight: regular
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+bUpperLabel:
+  buttonStyleType: text
+  text: B
+  fontSize: 20.5
+  fontWeight: regular
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+bBadge:
+  buttonStyleType: text
+  text: "?"
+  fontSize: 9.5
+  center:
+    "y": 0.21
+  normalColor: "#536785A6"
+  highlightColor: "#536785A6"
+bHint:
+  size:
+    width: 48
+    height: 48
+  backgroundStyle: hintBackgroundStyle
+  foregroundStyle: bHintLabel
+  swipeUpForegroundStyle: bHintSwipeUpLabel
+bHintLabel:
+  buttonStyleType: text
+  text: B
+  fontSize: 26
+  fontWeight: regular
+  normalColor: "#1A2333"
+  highlightColor: "#1A2333"
+bHintSwipeUpLabel:
+  buttonStyleType: text
+  text: "?"
+  fontSize: 24
+  fontWeight: regular
+  normalColor: "#1A2333"
+  highlightColor: "#1A2333"
+bGridCell0:
+  action:
+    character: B
+  foregroundStyle: bGridCell0Label
+bGridCell0Label:
+  buttonStyleType: text
+  text: B
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+bGridCell1:
+  action:
+    character: "?"
+  foregroundStyle: bGridCell1Label
+bGridCell1Label:
+  buttonStyleType: text
+  text: "?"
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+bGridCell2:
+  action:
+    character: b
+  foregroundStyle: bGridCell2Label
+bGridCell2Label:
+  buttonStyleType: text
+  text: b
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+bGrid:
+  size:
+    width: 36
+    height: 42
+  spacing:
+    horizontal: 3
+    vertical: 3
+  insets:
+    top: 5
+    left: 5
+    bottom: 5
+    right: 5
+  anchor:
+    row: 0
+    col: 1
+  selected:
+    row: 0
+    col: 1
+  offset:
+    x: 0
+    "y": -54
+  moveThreshold: 8
+  backgroundStyle: hintGridBackgroundStyle
+  selectedBackgroundStyle: hintGridSelectedBackgroundStyle
+  symbolRows:
+  - - bGridCell0
+    - bGridCell1
+    - bGridCell2
+nButton:
+  action:
+    character: "n"
+  uppercasedStateAction:
+    character: "N"
+  swipeUpAction:
+    character: ！
+  animation:
+  - keyPressScale
+  backgroundStyle: letterKeyBackground
+  foregroundStyle:
+  - nLabel
+  - nBadge
+  uppercasedStateForegroundStyle:
+  - nUpperLabel
+  - nBadge
+  hintStyle: nHint
+  hintSymbolsGridStyle: nGrid
+  size:
+    width: "69/1000"
+nLabel:
+  buttonStyleType: text
+  text: "n"
+  fontSize: 20.5
+  fontWeight: regular
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+nUpperLabel:
+  buttonStyleType: text
+  text: "N"
+  fontSize: 20.5
+  fontWeight: regular
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+nBadge:
+  buttonStyleType: text
+  text: ！
+  fontSize: 9.5
+  center:
+    "y": 0.21
+  normalColor: "#536785A6"
+  highlightColor: "#536785A6"
+nHint:
+  size:
+    width: 48
+    height: 48
+  backgroundStyle: hintBackgroundStyle
+  foregroundStyle: nHintLabel
+  swipeUpForegroundStyle: nHintSwipeUpLabel
+nHintLabel:
+  buttonStyleType: text
+  text: "N"
+  fontSize: 26
+  fontWeight: regular
+  normalColor: "#1A2333"
+  highlightColor: "#1A2333"
+nHintSwipeUpLabel:
+  buttonStyleType: text
+  text: ！
+  fontSize: 24
+  fontWeight: regular
+  normalColor: "#1A2333"
+  highlightColor: "#1A2333"
+nGridCell0:
+  action:
+    character: "N"
+  foregroundStyle: nGridCell0Label
+nGridCell0Label:
+  buttonStyleType: text
+  text: "N"
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+nGridCell1:
+  action:
+    character: ！
+  foregroundStyle: nGridCell1Label
+nGridCell1Label:
+  buttonStyleType: text
+  text: ！
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+nGridCell2:
+  action:
+    character: "n"
+  foregroundStyle: nGridCell2Label
+nGridCell2Label:
+  buttonStyleType: text
+  text: "n"
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+nGrid:
+  size:
+    width: 36
+    height: 42
+  spacing:
+    horizontal: 3
+    vertical: 3
+  insets:
+    top: 5
+    left: 5
+    bottom: 5
+    right: 5
+  anchor:
+    row: 0
+    col: 1
+  selected:
+    row: 0
+    col: 1
+  offset:
+    x: 0
+    "y": -54
+  moveThreshold: 8
+  backgroundStyle: hintGridBackgroundStyle
+  selectedBackgroundStyle: hintGridSelectedBackgroundStyle
+  symbolRows:
+  - - nGridCell0
+    - nGridCell1
+    - nGridCell2
+mButton:
+  action:
+    character: m
+  uppercasedStateAction:
+    character: M
+  swipeUpAction:
+    character: …
+  animation:
+  - keyPressScale
+  backgroundStyle: letterKeyBackground
+  foregroundStyle:
+  - mLabel
+  - mBadge
+  uppercasedStateForegroundStyle:
+  - mUpperLabel
+  - mBadge
+  hintStyle: mHint
+  hintSymbolsGridStyle: mGrid
+  size:
+    width: "69/1000"
+mLabel:
+  buttonStyleType: text
+  text: m
+  fontSize: 20.5
+  fontWeight: regular
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+mUpperLabel:
+  buttonStyleType: text
+  text: M
+  fontSize: 20.5
+  fontWeight: regular
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+mBadge:
+  buttonStyleType: text
+  text: …
+  fontSize: 9.5
+  center:
+    "y": 0.21
+  normalColor: "#536785A6"
+  highlightColor: "#536785A6"
+mHint:
+  size:
+    width: 48
+    height: 48
+  backgroundStyle: hintBackgroundStyle
+  foregroundStyle: mHintLabel
+  swipeUpForegroundStyle: mHintSwipeUpLabel
+mHintLabel:
+  buttonStyleType: text
+  text: M
+  fontSize: 26
+  fontWeight: regular
+  normalColor: "#1A2333"
+  highlightColor: "#1A2333"
+mHintSwipeUpLabel:
+  buttonStyleType: text
+  text: …
+  fontSize: 24
+  fontWeight: regular
+  normalColor: "#1A2333"
+  highlightColor: "#1A2333"
+mGridCell0:
+  action:
+    character: M
+  foregroundStyle: mGridCell0Label
+mGridCell0Label:
+  buttonStyleType: text
+  text: M
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+mGridCell1:
+  action:
+    character: …
+  foregroundStyle: mGridCell1Label
+mGridCell1Label:
+  buttonStyleType: text
+  text: …
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+mGridCell2:
+  action:
+    character: m
+  foregroundStyle: mGridCell2Label
+mGridCell2Label:
+  buttonStyleType: text
+  text: m
+  fontSize: 19
+  normalColor: "#1A2333"
+  highlightColor: "#FFFFFF"
+mGrid:
+  size:
+    width: 36
+    height: 42
+  spacing:
+    horizontal: 3
+    vertical: 3
+  insets:
+    top: 5
+    left: 5
+    bottom: 5
+    right: 5
+  anchor:
+    row: 0
+    col: 1
+  selected:
+    row: 0
+    col: 1
+  offset:
+    x: 0
+    "y": -54
+  moveThreshold: 8
+  backgroundStyle: hintGridBackgroundStyle
+  selectedBackgroundStyle: hintGridSelectedBackgroundStyle
+  symbolRows:
+  - - mGridCell0
+    - mGridCell1
+    - mGridCell2
+commaButton:
+  action:
+    character: ","
+  animation:
+  - keyPressScale
+  backgroundStyle: letterKeyBackground
+  foregroundStyle:
+  - commaLabel
+  - commaBadge
+  swipeUpAction:
+    character: <
+  size:
+    width: "69/1000"
+commaLabel:
+  buttonStyleType: text
+  text: ","
+  fontSize: 18.5
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+commaBadge:
+  buttonStyleType: text
+  text: <
+  fontSize: 9.5
+  center:
+    "y": 0.21
+  normalColor: "#536785A6"
+  highlightColor: "#536785A6"
+periodButton:
+  action:
+    character: .
+  animation:
+  - keyPressScale
+  backgroundStyle: letterKeyBackground
+  foregroundStyle:
+  - periodLabel
+  - periodBadge
+  swipeUpAction:
+    character: '>'
+  size:
+    width: "69/1000"
+periodLabel:
+  buttonStyleType: text
+  text: .
+  fontSize: 18.5
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+periodBadge:
+  buttonStyleType: text
+  text: '>'
+  fontSize: 9.5
+  center:
+    "y": 0.21
+  normalColor: "#536785A6"
+  highlightColor: "#536785A6"
+slashButton:
+  action:
+    character: "/"
+  animation:
+  - keyPressScale
+  backgroundStyle: letterKeyBackground
+  foregroundStyle:
+  - slashLabel
+  - slashBadge
+  swipeUpAction:
+    character: "?"
+  size:
+    width: "69/1000"
+slashLabel:
+  buttonStyleType: text
+  text: "/"
+  fontSize: 18.5
+  center:
+    "y": 0.56
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+slashBadge:
+  buttonStyleType: text
+  text: "?"
+  fontSize: 9.5
+  center:
+    "y": 0.21
+  normalColor: "#536785A6"
+  highlightColor: "#536785A6"
+globeButton:
+  size:
+    width: "95/1000"
+  action: nextKeyboard
+  animation:
+  - keyPressScale
+  backgroundStyle: functionalKeyBackground
+  foregroundStyle: globeIcon
+globeIcon:
+  buttonStyleType: systemImage
+  systemImageName: globe
+  fontSize: 19
+  normalColor: "#2B3F5E"
+  highlightColor: "#142238"
+numericButton:
+  size:
+    width: "95/1000"
+  action:
+    keyboardType: numeric
+  animation:
+  - keyPressScale
+  backgroundStyle: functionalKeyBackground
+  foregroundStyle: numericButtonLabel
+numericRightButton:
+  size:
+    width: "95/1000"
+  action:
+    keyboardType: numeric
+  animation:
+  - keyPressScale
+  backgroundStyle: functionalKeyBackground
+  foregroundStyle: numericButtonLabel
+numericButtonLabel:
+  buttonStyleType: text
+  text: '123'
+  fontSize: 15.5
+  fontWeight: medium
+  normalColor: "#2B3F5E"
+  highlightColor: "#142238"
+spaceButton:
+  action: space
+  swipeUpAction:
+    shortcut: "#次选上屏"
+  animation:
+  - keyPressScale
+  backgroundStyle: spaceKeyBackground
+  foregroundStyle: spaceButtonLabel
+  notification:
+  - spacePreeditNotification
+spaceButtonLabel:
+  buttonStyleType: text
+  text: "$rimeSchemaName"
+  fontSize: 15
+  fontWeight: regular
+  normalColor: "#435875DB"
+  highlightColor: "#1A2333"
+spaceButtonCommitLabel:
+  buttonStyleType: text
+  text: 选定
+  fontSize: 15.5
+  fontWeight: medium
+  normalColor: "#435875DB"
+  highlightColor: "#1A2333"
+spacePreeditNotification:
+  notificationType: preeditChanged
+  backgroundStyle: spaceKeyBackground
+  foregroundStyle: spaceButtonCommitLabel
+dismissButton:
+  size:
+    width: "95/1000"
+  action: dismissKeyboard
+  animation:
+  - keyPressScale
+  backgroundStyle: functionalKeyBackground
+  foregroundStyle: dismissIcon
+dismissIcon:
+  buttonStyleType: systemImage
+  systemImageName: keyboard.chevron.compact.down
+  fontSize: 19
+  normalColor: "#2B3F5E"
+  highlightColor: "#142238"

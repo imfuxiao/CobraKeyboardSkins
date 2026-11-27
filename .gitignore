@@ -15,3 +15,8 @@ build/
 *_bak/
 *.json
 build-solid/
+
+# 全 yaml 键盘
+!石墨玻璃/dark/
+!石墨玻璃/light/
+!石墨玻璃/config.yaml

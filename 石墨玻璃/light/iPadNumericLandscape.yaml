@@ -1,0 +1,958 @@
+# 石墨玻璃 — 浅色模式（冰晶石墨玻璃） — iPadNumericLandscape
+preeditHeight: 26
+toolbarHeight: 44
+keyboardHeight: 370
+transparentBackgroundStyle:
+  buttonStyleType: geometry
+  normalColor: "#E8EEF601"
+  highlightColor: "#E8EEF601"
+verticalCandidatesBackgroundStyle:
+  buttonStyleType: geometry
+  cornerRadius: 12
+  normalColor: &id001
+  - "#F3F7FCFA"
+  - "#E6EEF8FC"
+  highlightColor: *id001
+  colorLocation:
+  - 0
+  - 1
+  colorStartPoint:
+    x: 0.5
+    "y": 0
+  colorEndPoint:
+    x: 0.5
+    "y": 1
+  colorGradientType: axial
+  borderSize: 0.5
+  normalBorderColor: "#FFFFFFD6"
+  highlightBorderColor: "#FFFFFFD6"
+preeditStyle:
+  backgroundStyle: transparentBackgroundStyle
+  foregroundStyle: preeditForegroundStyle
+  insets:
+    top: 2
+    left: 8
+    bottom: 1
+    right: 8
+preeditForegroundStyle:
+  buttonStyleType: text
+  fontSize: 15
+  fontWeight: medium
+  textColor: "#2364A6"
+toolbarStyle:
+  backgroundStyle: transparentBackgroundStyle
+  insets:
+    left: 4
+    right: 4
+toolbarLayout:
+- HStack:
+    subviews:
+    - Cell: toolbarMenuButton
+    - Cell: toolbarSpacer
+    - Cell: toolbarDismissButton
+toolbarMenuButton:
+  size:
+    width: 44
+  action:
+    shortcut: "#keyboardMenu"
+  foregroundStyle: toolbarMenuButtonIcon
+toolbarMenuButtonIcon:
+  buttonStyleType: systemImage
+  systemImageName: command
+  fontSize: 17
+  fontWeight: regular
+  normalColor: "#334866D9"
+  highlightColor: "#2364A6"
+toolbarSpacer: {}
+toolbarDismissButton:
+  size:
+    width: 44
+  action: dismissKeyboard
+  foregroundStyle: toolbarDismissButtonIcon
+toolbarDismissButtonIcon:
+  buttonStyleType: systemImage
+  systemImageName: keyboard.chevron.compact.down
+  fontSize: 18
+  fontWeight: regular
+  normalColor: "#334866D9"
+  highlightColor: "#2364A6"
+horizontalCandidatesStyle:
+  backgroundStyle: transparentBackgroundStyle
+  insets:
+    top: 3
+    left: 6
+    bottom: 2
+    right: 4
+horizontalCandidatesLayout:
+- HStack:
+    subviews:
+    - Cell: horizontalCandidatesCell
+    - Cell: candidatesExpandButton
+horizontalCandidatesCell:
+  type: horizontalCandidates
+  candidateStyle: candidateCellStyle
+  maxColumns: 7
+candidatesExpandButton:
+  size:
+    width: 44
+  action:
+    shortcut: "#candidatesBarStateToggle"
+  foregroundStyle: candidatesExpandButtonIcon
+candidatesExpandButtonIcon:
+  buttonStyleType: systemImage
+  systemImageName: chevron.down
+  fontSize: 15
+  fontWeight: medium
+  normalColor: "#334866D9"
+  highlightColor: "#2364A6"
+verticalCandidatesStyle:
+  backgroundStyle: verticalCandidatesBackgroundStyle
+  insets:
+    top: 6
+    left: 6
+    bottom: 6
+    right: 6
+verticalCandidatesLayout:
+- HStack:
+    subviews:
+    - Cell: verticalCandidatesCell
+- HStack:
+    style: verticalLastRowStyle
+    subviews:
+    - Cell: verticalPageUpButton
+    - Cell: verticalPageDownButton
+    - Cell: verticalReturnButton
+    - Cell: verticalBackspaceButton
+verticalCandidatesCell:
+  type: verticalCandidates
+  candidateStyle: candidateCellStyle
+  maxRows: 5
+  maxColumns: 8
+  separatorColor: "#3B4D6B24"
+  insets:
+    top: 4
+    left: 4
+    bottom: 4
+    right: 4
+verticalLastRowStyle:
+  size:
+    height: 52
+verticalPageUpButton:
+  action:
+    shortcut: "#verticalCandidatesPageUp"
+  animation:
+  - keyPressScale
+  backgroundStyle: functionalKeyBackground
+  foregroundStyle: verticalPageUpIcon
+verticalPageUpIcon:
+  buttonStyleType: systemImage
+  systemImageName: chevron.up
+  fontSize: 18
+  normalColor: "#2B3F5E"
+  highlightColor: "#142238"
+verticalPageDownButton:
+  action:
+    shortcut: "#verticalCandidatesPageDown"
+  animation:
+  - keyPressScale
+  backgroundStyle: functionalKeyBackground
+  foregroundStyle: verticalPageDownIcon
+verticalPageDownIcon:
+  buttonStyleType: systemImage
+  systemImageName: chevron.down
+  fontSize: 18
+  normalColor: "#2B3F5E"
+  highlightColor: "#142238"
+verticalReturnButton:
+  action:
+    shortcut: "#candidatesBarStateToggle"
+  animation:
+  - keyPressScale
+  backgroundStyle: functionalKeyBackground
+  foregroundStyle: verticalReturnIcon
+verticalReturnIcon:
+  buttonStyleType: systemImage
+  systemImageName: return
+  fontSize: 18
+  normalColor: "#2B3F5E"
+  highlightColor: "#142238"
+verticalBackspaceButton:
+  action: backspace
+  repeatAction: backspace
+  animation:
+  - keyPressScale
+  backgroundStyle: functionalKeyBackground
+  foregroundStyle: verticalBackspaceIcon
+verticalBackspaceIcon:
+  buttonStyleType: systemImage
+  systemImageName: delete.left
+  highlightSystemImageName: delete.left.fill
+  fontSize: 18
+  normalColor: "#2B3F5E"
+  highlightColor: "#142238"
+candidateCellStyle:
+  insets:
+    top: 3
+    left: 8
+    bottom: 3
+    right: 8
+  backgroundCornerRadius: 8
+  textFontSize: 17
+  commentFontSize: 12
+  indexFontSize: 11
+  textColor: "#1B2536"
+  commentColor: "#5E728FC4"
+  indexColor: "#6C809EB0"
+  preferredBackgroundColor: "#3A8CD426"
+  preferredTextColor: "#185691"
+  preferredCommentColor: "#2A6AA6CC"
+  preferredIndexColor: "#2A6AA6B8"
+  highlightBackgroundColor: "#3A8CD43A"
+candidateContextMenu:
+- name: 复制
+  action:
+    shortcut: "#copy"
+keyboardStyle:
+  backgroundStyle: transparentBackgroundStyle
+keyPressScale:
+  animationType: scale
+  scale: 0.94
+  pressDuration: 45
+  releaseDuration: 95
+  isAutoReverse: false
+letterKeyBackground:
+  buttonStyleType: geometry
+  insets: &id002
+    top: 4
+    left: 4
+    bottom: 4
+    right: 4
+  cornerRadius: 11
+  normalColor:
+  - "#FFFFFFDB"
+  - "#EFF5FCCB"
+  highlightColor:
+  - "#D6EAFAE3"
+  - "#BCDDF7D6"
+  colorLocation:
+  - 0
+  - 1
+  colorStartPoint:
+    x: 0.5
+    "y": 0
+  colorEndPoint:
+    x: 0.5
+    "y": 1
+  colorGradientType: axial
+  borderSize: 0.5
+  normalBorderColor: "#FFFFFFF2"
+  highlightBorderColor: "#5CAEEB9E"
+  normalShadowColor: "#283B5826"
+  highlightShadowColor: "#283B5826"
+  shadowOpacity: 0.45
+  shadowRadius: 2.2
+  shadowOffset:
+    x: 0
+    "y": 1.5
+spaceKeyBackground:
+  buttonStyleType: geometry
+  insets: *id002
+  cornerRadius: 11
+  normalColor:
+  - "#FFFFFFD4"
+  - "#ECF2FAC2"
+  highlightColor:
+  - "#D6EAFAE3"
+  - "#BCDDF7D6"
+  colorLocation:
+  - 0
+  - 1
+  colorStartPoint:
+    x: 0.5
+    "y": 0
+  colorEndPoint:
+    x: 0.5
+    "y": 1
+  colorGradientType: axial
+  borderSize: 0.5
+  normalBorderColor: "#FFFFFFEB"
+  highlightBorderColor: "#5CAEEB99"
+  normalShadowColor: "#283B5826"
+  highlightShadowColor: "#283B5826"
+  shadowOpacity: 0.45
+  shadowRadius: 2.2
+  shadowOffset:
+    x: 0
+    "y": 1.5
+functionalKeyBackground:
+  buttonStyleType: geometry
+  insets: *id002
+  cornerRadius: 11
+  normalColor:
+  - "#DCE5F5BA"
+  - "#CBD6EBAA"
+  highlightColor:
+  - "#C2D8F2CF"
+  - "#B0CCEAC4"
+  colorLocation:
+  - 0
+  - 1
+  colorStartPoint:
+    x: 0.5
+    "y": 0
+  colorEndPoint:
+    x: 0.5
+    "y": 1
+  colorGradientType: axial
+  borderSize: 0.5
+  normalBorderColor: "#FFFFFFCC"
+  highlightBorderColor: "#5CAEEB85"
+  normalShadowColor: "#283B5826"
+  highlightShadowColor: "#283B5826"
+  shadowOpacity: 0.45
+  shadowRadius: 2.2
+  shadowOffset:
+    x: 0
+    "y": 1.5
+enterKeyBackground:
+  buttonStyleType: geometry
+  insets: *id002
+  cornerRadius: 11
+  normalColor:
+  - "#CBE2F7C7"
+  - "#B6D3F0B8"
+  highlightColor:
+  - "#B0D4F4DB"
+  - "#9AC4ECE0"
+  colorLocation:
+  - 0
+  - 1
+  colorStartPoint:
+    x: 0.5
+    "y": 0
+  colorEndPoint:
+    x: 0.5
+    "y": 1
+  colorGradientType: axial
+  borderSize: 0.5
+  normalBorderColor: "#FFFFFFD6"
+  highlightBorderColor: "#4A9CE09E"
+  normalShadowColor: "#283B5826"
+  highlightShadowColor: "#283B5826"
+  shadowOpacity: 0.45
+  shadowRadius: 2.2
+  shadowOffset:
+    x: 0
+    "y": 1.5
+enterAccentKeyBackground:
+  buttonStyleType: geometry
+  insets: *id002
+  cornerRadius: 11
+  normalColor:
+  - "#489CE3F0"
+  - "#2F7CC4EB"
+  highlightColor:
+  - "#3A8DD6F5"
+  - "#246DB3F0"
+  colorLocation:
+  - 0
+  - 1
+  colorStartPoint:
+    x: 0.5
+    "y": 0
+  colorEndPoint:
+    x: 0.5
+    "y": 1
+  colorGradientType: axial
+  borderSize: 0.5
+  normalBorderColor: "#A8D8FF9E"
+  highlightBorderColor: "#D1EBFFBF"
+  normalShadowColor: "#283B5826"
+  highlightShadowColor: "#283B5826"
+  shadowOpacity: 0.45
+  shadowRadius: 2.2
+  shadowOffset:
+    x: 0
+    "y": 1.5
+operatorKeyBackground:
+  buttonStyleType: geometry
+  insets: *id002
+  cornerRadius: 11
+  normalColor:
+  - "#CBE0F2C4"
+  - "#B8D3EBB5"
+  highlightColor:
+  - "#B3D2EED9"
+  - "#9AC3E8CC"
+  colorLocation:
+  - 0
+  - 1
+  colorStartPoint:
+    x: 0.5
+    "y": 0
+  colorEndPoint:
+    x: 0.5
+    "y": 1
+  colorGradientType: axial
+  borderSize: 0.5
+  normalBorderColor: "#FFFFFFD4"
+  highlightBorderColor: "#4A9CE099"
+  normalShadowColor: "#283B5826"
+  highlightShadowColor: "#283B5826"
+  shadowOpacity: 0.45
+  shadowRadius: 2.2
+  shadowOffset:
+    x: 0
+    "y": 1.5
+colNarrow:
+  size:
+    width: "82/1000"
+colWide:
+  size:
+    width: "105/1000"
+colNarrowRight:
+  size:
+    width: "83/1000"
+colGap:
+  size:
+    width: "40/1000"
+colCategory:
+  size:
+    width: "480/1000"
+layoutSpacer: {}
+numericCategoryPanel:
+  type: categorySymbols
+  backgroundStyle: spaceKeyBackground
+  separatorLineColor: "#3B4D6B24"
+  insets:
+    top: 4
+    left: 4
+    bottom: 4
+    right: 4
+keyboardLayout:
+- VStack:
+    style: colNarrow
+    subviews:
+    - Cell: numericSymbolList
+    - Cell: symbolicButton
+- VStack:
+    style: colWide
+    subviews:
+    - Cell: oneButton
+    - Cell: fourButton
+    - Cell: sevenButton
+    - Cell: returnLastKeyboardButton
+- VStack:
+    style: colWide
+    subviews:
+    - Cell: twoButton
+    - Cell: fiveButton
+    - Cell: eightButton
+    - Cell: zeroButton
+- VStack:
+    style: colWide
+    subviews:
+    - Cell: threeButton
+    - Cell: sixButton
+    - Cell: nineButton
+    - Cell: spaceButton
+- VStack:
+    style: colNarrowRight
+    subviews:
+    - Cell: backspaceButton
+    - Cell: periodButton
+    - Cell: equalButton
+    - Cell: enterButton
+- VStack:
+    style: colGap
+    subviews:
+    - Cell: layoutSpacer
+- VStack:
+    style: colCategory
+    subviews:
+    - Cell: numericCategoryPanel
+numericSymbolList:
+  type: numericSymbols
+  backgroundStyle: spaceKeyBackground
+  separatorLineColor: "#3B4D6B24"
+  insets:
+    top: 6
+    left: 4
+    bottom: 4
+    right: 4
+symbolicButton:
+  size:
+    height: "1/4"
+  action:
+    keyboardType: symbolic
+  animation:
+  - keyPressScale
+  backgroundStyle: functionalKeyBackground
+  foregroundStyle: symbolicButtonLabel
+symbolicButtonLabel:
+  buttonStyleType: text
+  text: "#+="
+  fontSize: 17
+  fontWeight: medium
+  normalColor: "#2B3F5E"
+  highlightColor: "#142238"
+oneButton:
+  action:
+    character: '1'
+  swipeUpAction:
+    character: "!"
+  animation:
+  - keyPressScale
+  backgroundStyle: letterKeyBackground
+  foregroundStyle:
+  - oneLabel
+  - oneBadge
+oneLabel:
+  buttonStyleType: text
+  text: '1'
+  fontSize: 26
+  fontWeight: regular
+  center:
+    "y": 0.55
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+oneBadge:
+  buttonStyleType: text
+  text: "!"
+  fontSize: 10.0
+  center:
+    "y": 0.21
+  normalColor: "#536785A6"
+  highlightColor: "#536785A6"
+twoButton:
+  action:
+    character: '2'
+  swipeUpAction:
+    character: "@"
+  animation:
+  - keyPressScale
+  backgroundStyle: letterKeyBackground
+  foregroundStyle:
+  - twoLabel
+  - twoBadge
+twoLabel:
+  buttonStyleType: text
+  text: '2'
+  fontSize: 26
+  fontWeight: regular
+  center:
+    "y": 0.55
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+twoBadge:
+  buttonStyleType: text
+  text: "@"
+  fontSize: 10.0
+  center:
+    "y": 0.21
+  normalColor: "#536785A6"
+  highlightColor: "#536785A6"
+threeButton:
+  action:
+    character: '3'
+  swipeUpAction:
+    character: "#"
+  animation:
+  - keyPressScale
+  backgroundStyle: letterKeyBackground
+  foregroundStyle:
+  - threeLabel
+  - threeBadge
+threeLabel:
+  buttonStyleType: text
+  text: '3'
+  fontSize: 26
+  fontWeight: regular
+  center:
+    "y": 0.55
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+threeBadge:
+  buttonStyleType: text
+  text: "#"
+  fontSize: 10.0
+  center:
+    "y": 0.21
+  normalColor: "#536785A6"
+  highlightColor: "#536785A6"
+fourButton:
+  action:
+    character: '4'
+  swipeUpAction:
+    character: "$"
+  animation:
+  - keyPressScale
+  backgroundStyle: letterKeyBackground
+  foregroundStyle:
+  - fourLabel
+  - fourBadge
+fourLabel:
+  buttonStyleType: text
+  text: '4'
+  fontSize: 26
+  fontWeight: regular
+  center:
+    "y": 0.55
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+fourBadge:
+  buttonStyleType: text
+  text: "$"
+  fontSize: 10.0
+  center:
+    "y": 0.21
+  normalColor: "#536785A6"
+  highlightColor: "#536785A6"
+fiveButton:
+  action:
+    character: '5'
+  swipeUpAction:
+    character: "%"
+  animation:
+  - keyPressScale
+  backgroundStyle: letterKeyBackground
+  foregroundStyle:
+  - fiveLabel
+  - fiveBadge
+fiveLabel:
+  buttonStyleType: text
+  text: '5'
+  fontSize: 26
+  fontWeight: regular
+  center:
+    "y": 0.55
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+fiveBadge:
+  buttonStyleType: text
+  text: "%"
+  fontSize: 10.0
+  center:
+    "y": 0.21
+  normalColor: "#536785A6"
+  highlightColor: "#536785A6"
+sixButton:
+  action:
+    character: '6'
+  swipeUpAction:
+    character: ^
+  animation:
+  - keyPressScale
+  backgroundStyle: letterKeyBackground
+  foregroundStyle:
+  - sixLabel
+  - sixBadge
+sixLabel:
+  buttonStyleType: text
+  text: '6'
+  fontSize: 26
+  fontWeight: regular
+  center:
+    "y": 0.55
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+sixBadge:
+  buttonStyleType: text
+  text: ^
+  fontSize: 10.0
+  center:
+    "y": 0.21
+  normalColor: "#536785A6"
+  highlightColor: "#536785A6"
+sevenButton:
+  action:
+    character: '7'
+  swipeUpAction:
+    character: "&"
+  animation:
+  - keyPressScale
+  backgroundStyle: letterKeyBackground
+  foregroundStyle:
+  - sevenLabel
+  - sevenBadge
+sevenLabel:
+  buttonStyleType: text
+  text: '7'
+  fontSize: 26
+  fontWeight: regular
+  center:
+    "y": 0.55
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+sevenBadge:
+  buttonStyleType: text
+  text: "&"
+  fontSize: 10.0
+  center:
+    "y": 0.21
+  normalColor: "#536785A6"
+  highlightColor: "#536785A6"
+eightButton:
+  action:
+    character: '8'
+  swipeUpAction:
+    character: "*"
+  animation:
+  - keyPressScale
+  backgroundStyle: letterKeyBackground
+  foregroundStyle:
+  - eightLabel
+  - eightBadge
+eightLabel:
+  buttonStyleType: text
+  text: '8'
+  fontSize: 26
+  fontWeight: regular
+  center:
+    "y": 0.55
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+eightBadge:
+  buttonStyleType: text
+  text: "*"
+  fontSize: 10.0
+  center:
+    "y": 0.21
+  normalColor: "#536785A6"
+  highlightColor: "#536785A6"
+nineButton:
+  action:
+    character: '9'
+  swipeUpAction:
+    character: (
+  animation:
+  - keyPressScale
+  backgroundStyle: letterKeyBackground
+  foregroundStyle:
+  - nineLabel
+  - nineBadge
+nineLabel:
+  buttonStyleType: text
+  text: '9'
+  fontSize: 26
+  fontWeight: regular
+  center:
+    "y": 0.55
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+nineBadge:
+  buttonStyleType: text
+  text: (
+  fontSize: 10.0
+  center:
+    "y": 0.21
+  normalColor: "#536785A6"
+  highlightColor: "#536785A6"
+zeroButton:
+  action:
+    character: '0'
+  swipeUpAction:
+    character: )
+  animation:
+  - keyPressScale
+  backgroundStyle: letterKeyBackground
+  foregroundStyle:
+  - zeroLabel
+  - zeroBadge
+zeroLabel:
+  buttonStyleType: text
+  text: '0'
+  fontSize: 26
+  fontWeight: regular
+  center:
+    "y": 0.55
+  normalColor: "#1A2333"
+  highlightColor: "#0E1624"
+zeroBadge:
+  buttonStyleType: text
+  text: )
+  fontSize: 10.0
+  center:
+    "y": 0.21
+  normalColor: "#536785A6"
+  highlightColor: "#536785A6"
+returnLastKeyboardButton:
+  action: returnLastKeyboard
+  animation:
+  - keyPressScale
+  backgroundStyle: functionalKeyBackground
+  foregroundStyle: returnLastKeyboardLabel
+returnLastKeyboardLabel:
+  buttonStyleType: text
+  text: 返回
+  fontSize: 17
+  fontWeight: medium
+  normalColor: "#2B3F5E"
+  highlightColor: "#142238"
+spaceButton:
+  action: space
+  swipeUpAction:
+    shortcut: "#次选上屏"
+  animation:
+  - keyPressScale
+  backgroundStyle: spaceKeyBackground
+  foregroundStyle: spaceButtonLabel
+  notification:
+  - spacePreeditNotification
+spaceButtonLabel:
+  buttonStyleType: systemImage
+  systemImageName: space
+  fontSize: 18
+  normalColor: "#435875DB"
+  highlightColor: "#1A2333"
+spaceButtonCommitLabel:
+  buttonStyleType: text
+  text: 选定
+  fontSize: 17.5
+  fontWeight: medium
+  normalColor: "#435875DB"
+  highlightColor: "#1A2333"
+spacePreeditNotification:
+  notificationType: preeditChanged
+  backgroundStyle: spaceKeyBackground
+  foregroundStyle: spaceButtonCommitLabel
+backspaceButton:
+  action: backspace
+  repeatAction: backspace
+  animation:
+  - keyPressScale
+  backgroundStyle: functionalKeyBackground
+  foregroundStyle: backspaceIcon
+backspaceIcon:
+  buttonStyleType: systemImage
+  systemImageName: delete.left
+  highlightSystemImageName: delete.left.fill
+  fontSize: 21
+  normalColor: "#2B3F5E"
+  highlightColor: "#142238"
+periodButton:
+  action:
+    symbol: .
+  preeditStateAction:
+    character: .
+  swipeUpAction:
+    character: ","
+  animation:
+  - keyPressScale
+  backgroundStyle: functionalKeyBackground
+  foregroundStyle:
+  - periodLabel
+  - periodBadge
+periodLabel:
+  buttonStyleType: text
+  text: .
+  fontSize: 26
+  center:
+    "y": 0.52
+  normalColor: "#2B3F5E"
+  highlightColor: "#142238"
+periodBadge:
+  buttonStyleType: text
+  text: ","
+  fontSize: 10.0
+  center:
+    "y": 0.21
+  normalColor: "#536785A6"
+  highlightColor: "#536785A6"
+equalButton:
+  action:
+    character: '='
+  swipeUpAction:
+    character: +
+  animation:
+  - keyPressScale
+  backgroundStyle: operatorKeyBackground
+  foregroundStyle:
+  - equalLabel
+  - equalBadge
+equalLabel:
+  buttonStyleType: text
+  text: '='
+  fontSize: 25
+  center:
+    "y": 0.55
+  normalColor: "#1D4A75"
+  highlightColor: "#142238"
+equalBadge:
+  buttonStyleType: text
+  text: +
+  fontSize: 10.0
+  center:
+    "y": 0.21
+  normalColor: "#1D4A75"
+  highlightColor: "#142238"
+enterButton:
+  action: enter
+  swipeUpAction:
+    symbol: "\r\n"
+  animation:
+  - keyPressScale
+  backgroundStyle:
+  - conditionKey: "$returnKeyType"
+    conditionValue:
+    - 0
+    - 2
+    - 3
+    - 5
+    - 6
+    - 8
+    - 11
+    styleName: enterKeyBackground
+  - conditionKey: "$returnKeyType"
+    conditionValue:
+    - 1
+    - 4
+    - 7
+    - 9
+    - 10
+    styleName: enterAccentKeyBackground
+  foregroundStyle:
+  - conditionKey: "$returnKeyType"
+    conditionValue:
+    - 0
+    - 2
+    - 3
+    - 5
+    - 6
+    - 8
+    - 11
+    styleName: enterButtonLabel
+  - conditionKey: "$returnKeyType"
+    conditionValue:
+    - 1
+    - 4
+    - 7
+    - 9
+    - 10
+    styleName: enterButtonAccentLabel
+  notification:
+  - enterReturnKeyTypeNotification
+enterButtonLabel:
+  buttonStyleType: text
+  text: "$returnKeyType"
+  fontSize: 17
+  fontWeight: medium
+  normalColor: "#1B4B78"
+  highlightColor: "#0F3254"
+enterButtonAccentLabel:
+  buttonStyleType: text
+  text: "$returnKeyType"
+  fontSize: 17
+  fontWeight: semibold
+  normalColor: "#FFFFFF"
+  highlightColor: "#FFFFFF"
+enterReturnKeyTypeNotification:
+  notificationType: returnKeyType
+  returnKeyType:
+  - 1
+  - 4
+  - 7
+  - 9
+  - 10
+  backgroundStyle: enterAccentKeyBackground
+  foregroundStyle: enterButtonAccentLabel

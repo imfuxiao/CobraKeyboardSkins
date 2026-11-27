@@ -1,0 +1,19 @@
+# 石墨玻璃（Glass Slate）键盘皮肤配置
+name: 石墨玻璃
+author: Hamster3
+pinyin:
+  phone:
+    portrait: pinyinPortrait
+    landscape: pinyinLandscape
+  pad:
+    portrait: iPadPinyinPortrait
+    landscape: iPadPinyinLandscape
+    floating: pinyinPortrait
+numeric:
+  phone:
+    portrait: numericPortrait
+    landscape: numericLandscape
+  pad:
+    portrait: iPadNumericPortrait
+    landscape: iPadNumericLandscape
+    floating: numericPortrait
